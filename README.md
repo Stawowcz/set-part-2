@@ -8,7 +8,7 @@ Automated end-to-end tests using [Playwright](https://playwright.dev/) with Type
 
 ```bash
 git clone https://github.com/Stawowcz/set-part-2.git
-
+cd set-part-2
 ```
 
 2. Install dependencies:
