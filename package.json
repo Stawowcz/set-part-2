@@ -1,0 +1,26 @@
+{
+  "name": "allwyn-playwright-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test-debug:chrome": "playwright test --debug --project=Chromium",
+    "report": "npx playwright show-report",
+    "test:safari": "npx playwright test --project=Safari",
+    "test:firefox": "npx playwright test --project=Firefox",
+    "test:chromium": "npx playwright test --project=Chromium",
+    "test:chromium:debug": "npx playwright test --project=Chromium --debug",
+    "test:all": "npx playwright test",
+    "prettier": "npx prettier --write ."
+  },
+  "keywords": [],
+  "author": "Jakub Stawowczyk",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@faker-js/faker": "^9.8.0",
+    "@playwright/test": "^1.53.0",
+    "dotenv": "^16.5.0",
+    "prettier": "^3.5.3"
+  }
+}
