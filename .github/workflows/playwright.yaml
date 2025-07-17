@@ -1,0 +1,52 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches:
+      - "**"
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      SAUCE_DEMO_PASSWORD: ${{ secrets.SAUCE_DEMO_PASSWORD }}
+      SAUCE_DEMO_INCORRECT_PASSWORD: ${{ secrets.SAUCE_DEMO_INCORRECT_PASSWORD }}
+      SAUCE_DEMO_STANDARD_USER: ${{ secrets.SAUCE_DEMO_STANDARD_USER }}
+      SAUCE_DEMO_INCORRECT_USER: ${{ secrets.SAUCE_DEMO_INCORRECT_USER }}
+      SAUCE_DEMO_LOCKED_OUT_USER: ${{ secrets.SAUCE_DEMO_LOCKED_OUT_USER }}
+      SAUCE_DEMO_PROBLEM_USER: ${{ secrets.SAUCE_DEMO_PROBLEM_USER }}
+      SAUCE_DEMO_PERFORMACE_GLITCH_USER: ${{ secrets.SAUCE_DEMO_PERFORMACE_GLITCH_USER }}
+      SAUCE_DEMO_ERROR_USER: ${{ secrets.SAUCE_DEMO_ERROR_USER }}
+      SAUCE_DEMO_VISUAL_USER: ${{ secrets.SAUCE_DEMO_VISUAL_USER }}
+      SAUCE_DEMO_BASEURL: ${{ secrets.SAUCE_DEMO_BASEURL }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run tests
+        run: npm run test:all
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
