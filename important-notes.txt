@@ -1,0 +1,12 @@
+1. For all tests where the framework detected a bug in the application, I added annotations in the test titles.
+These tests are not failing due to issues in the test framework — they fail because of actual bugs in the application.
+
+2. Test results:
+Single browser (e.g. Chrome): 28 out of 64 tests should pass
+Single browser (e.g. Chrome): 36 out of 64 tests should fail
+All browsers (Chrome + Firefox + Safari): 84 out of 192 tests should pass
+All browsers (Chrome + Firefox + Safari): 108 out of 192 tests should fail
+
+3. In some places, I added comments suggesting that certain things could be done differently, but I intentionally kept the current approach.
+
+4. You can run the tests manually at any time using the "Run workflow" button in the GitHub Actions tab.
