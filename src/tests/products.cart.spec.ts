@@ -238,15 +238,19 @@ test.describe("Add/Remove from cart - different users", () => {
       await productsPage.removeFromProjectDetails();
 
       const isBadgeVisible = await cartBadge.isVisible();
+
       expect.soft(isBadgeVisible).toBe(false);
 
       const isAddBackInDetails = await addBtnDetails.isVisible();
+
       expect.soft(isAddBackInDetails).toBe(true);
 
       const start = Date.now();
       await productsPage.clickBackToProducts();
       const durationBackToProduct = Date.now() - start;
+
       expect.soft(durationBackToProduct).toBeLessThanOrEqual(1500);
+
       const isAddBack = await addBtn.isVisible();
 
       expect.soft(isAddBack).toBe(true);
@@ -297,10 +301,13 @@ test.describe("Add/Remove from cart - different users", () => {
       await productsPage.removeFromProjectDetails();
 
       const isBadgeVisible = await cartBadge.isVisible();
+
       expect.soft(isBadgeVisible).toBe(false);
 
       const isAddBackInDetails = await addBtnDetails.isVisible();
+
       expect.soft(isAddBackInDetails).toBe(true);
+
       const start = Date.now();
       await productsPage.clickBackToProducts();
       const durationBackToProduct = Date.now() - start;

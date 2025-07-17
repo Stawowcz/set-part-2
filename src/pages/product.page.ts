@@ -31,24 +31,35 @@ export class ProductsPage extends BasePage {
     this.page.getByTestId("reset-sidebar-link");
   public readonly menuLogoutLink = this.page.getByTestId("logout-sidebar-link");
   public readonly menuAboutLink = this.page.getByTestId("about-sidebar-link");
-  public getAddToCartButton(productId: ProductsCartIds): Locator {
-    return this.page.getByTestId(`add-to-cart-${productId}`);
-  }
-  public getRemoveFromCartButton(productId: ProductsCartIds): Locator {
-    return this.page.getByTestId(`remove-${productId}`);
-  }
   public readonly getCartBadge: Locator = this.page.getByTestId(
     "shopping-cart-badge",
   );
-
   public readonly sortDropdown: Locator = this.page.getByTestId(
     "product-sort-container",
   );
   public readonly backToProductsButton =
     this.page.getByTestId("back-to-products");
+  public readonly getAllProductDescription: Locator = this.page.getByTestId(
+    "inventory-item-desc",
+  );
   public readonly getAllProductTitles: Locator = this.page.getByTestId(
     "inventory-item-name",
   );
+  public readonly getAddToCartButtonByRole: Locator = this.page.getByRole(
+    "button",
+    { name: /add to cart/i },
+  );
+  public readonly getAllProductPrices: Locator = this.page.getByTestId(
+    "inventory-item-price",
+  );
+
+  public getAddToCartButton(productId: ProductsCartIds): Locator {
+    return this.page.getByTestId(`add-to-cart-${productId}`);
+  }
+
+  public getRemoveFromCartButton(productId: ProductsCartIds): Locator {
+    return this.page.getByTestId(`remove-${productId}`);
+  }
 
   public async clickOnCartBasket(): Promise<void> {
     await this.safeClick(this.cartLink);

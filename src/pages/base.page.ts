@@ -58,10 +58,8 @@ export class BasePage {
         .getByTestId("inventory-item-name")
         .filter({ hasText: productName }),
     });
-
     const priceLocator = productItem.getByTestId("inventory-item-price");
     await priceLocator.waitFor({ state: "visible", timeout: 5000 });
-
     const raw = await priceLocator.textContent();
     if (!raw) {
       throw new Error("Products price text is missing");

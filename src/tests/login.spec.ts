@@ -66,9 +66,7 @@ test.describe("Positive scenarios – authentication with different users", () =
 });
 
 test.describe("Negatvie scenarios - authentication with user using wrong credentials", () => {
-  test("should show error for incorrect username", async ({
-    loginPage,
-  }) => {
+  test("should show error for incorrect username", async ({ loginPage }) => {
     await loginPage.login(
       process.env.SAUCE_DEMO_INCORRECT_USER ?? "<unknown>",
       process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
@@ -80,9 +78,7 @@ test.describe("Negatvie scenarios - authentication with user using wrong credent
       .toHaveText(LoginPageTexts.WrongPasswordOrUser);
   });
 
-  test("should show error for incorrect password", async ({
-    loginPage,
-  }) => {
+  test("should show error for incorrect password", async ({ loginPage }) => {
     await loginPage.login(
       process.env.SAUCE_DEMO_STANDARD_USER ?? "<unknown>",
       process.env.SAUCE_DEMO_INCORRECT_PASSWORD ?? "<unknown>",

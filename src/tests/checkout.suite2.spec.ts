@@ -56,6 +56,7 @@ test.describe("Checkout flow - error user", () => {
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
+
     for (let i = 0; i < cartQuantities; i++) {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
@@ -71,8 +72,9 @@ test.describe("Checkout flow - error user", () => {
     expect.soft(cartPriceBP).toBeCloseTo(inventoryPriceBP, 2);
     expect.soft(cartPriceBL).toBeCloseTo(inventoryPriceBL, 2);
 
-    const classAttr = await cartPage.checkoutButton.getAttribute('class');
-    expect.soft(classAttr).not.toContain('btn_visual_failure');
+    const classAttr = await cartPage.checkoutButton.getAttribute("class");
+
+    expect.soft(classAttr).not.toContain("btn_visual_failure");
 
     await cartPage.clickCheckout();
 
@@ -91,6 +93,7 @@ test.describe("Checkout flow - error user", () => {
       .toHaveText(CheckoutPageTexts.SecondaryHeader2ndStep);
 
     const overviewQuantities = await checkoutPage.itemQuantity.count();
+
     for (let i = 0; i < overviewQuantities; i++) {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
@@ -144,7 +147,6 @@ test.describe("Checkout flow - error user", () => {
       ProductsNames.SauceLabsBackpack,
     );
     const expectedTotal = inventoryPriceBP;
-
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
@@ -154,6 +156,7 @@ test.describe("Checkout flow - error user", () => {
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
+
     for (let i = 0; i < cartQuantities; i++) {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
@@ -170,11 +173,9 @@ test.describe("Checkout flow - error user", () => {
     const continueShoppingDuration = Date.now() - start;
 
     expect.soft(continueShoppingDuration).toBeLessThanOrEqual(1500);
-
     await expect.soft(page).toHaveURL(/.*inventory/);
 
     await productsPage.removeProductToCart(ProductsCartIds.SauceLabsBikeLight);
-
     await badge.waitFor({ state: "visible" });
 
     await expect.soft(badge).toHaveText("1");
@@ -182,12 +183,12 @@ test.describe("Checkout flow - error user", () => {
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-
     await expect
       .soft(cartPage.header)
       .toHaveText(CartPageTexts.SecondaryHeader);
 
     const updatedCartQuantities = await checkoutPage.itemQuantity.count();
+
     for (let i = 0; i < updatedCartQuantities; i++) {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
@@ -210,6 +211,7 @@ test.describe("Checkout flow - error user", () => {
       .toHaveText(CheckoutPageTexts.SecondaryHeader2ndStep);
 
     const overviewQuantities = await checkoutPage.itemQuantity.count();
+
     for (let i = 0; i < overviewQuantities; i++) {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
@@ -234,7 +236,6 @@ test.describe("Checkout flow - error user", () => {
     expect.soft(await checkoutPage.getOverviewItemsCount()).toBe(1);
 
     await checkoutPage.clickFinish();
-
     await checkoutPage.completeHeader.waitFor({ state: "visible" });
 
     await expect
@@ -242,7 +243,6 @@ test.describe("Checkout flow - error user", () => {
       .toContainText(CheckoutPageTexts.SuccessThx);
     await expect.soft(page).toHaveURL(/.*checkout-complete/);
   });
-
 });
 
 // I didn’t repeat all the same tests for the glitch user as for the standard user to reduce the amount of code to review.
@@ -287,6 +287,7 @@ test.describe("Checkout flow - glitch user", () => {
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
+
     for (let i = 0; i < cartQuantities; i++) {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
@@ -303,7 +304,6 @@ test.describe("Checkout flow - glitch user", () => {
     const continueShoppingDuration = Date.now() - start;
 
     expect.soft(continueShoppingDuration).toBeLessThanOrEqual(1500);
-
     await expect.soft(page).toHaveURL(/.*inventory/);
 
     await productsPage.removeProductToCart(ProductsCartIds.SauceLabsBikeLight);
@@ -323,6 +323,7 @@ test.describe("Checkout flow - glitch user", () => {
       .toHaveText(CartPageTexts.SecondaryHeader);
 
     const updatedCartQuantities = await checkoutPage.itemQuantity.count();
+
     for (let i = 0; i < updatedCartQuantities; i++) {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
@@ -345,6 +346,7 @@ test.describe("Checkout flow - glitch user", () => {
       .toHaveText(CheckoutPageTexts.SecondaryHeader2ndStep);
 
     const overviewQuantities = await checkoutPage.itemQuantity.count();
+
     for (let i = 0; i < overviewQuantities; i++) {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
@@ -395,11 +397,11 @@ test.describe("Checkout flow - glitch user", () => {
     await expect.soft(page).toHaveURL(/.*cart/);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
+
     for (let i = 0; i < cartQuantities; i++) {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
     }
-
     await expect
       .soft(cartPage.header)
       .toHaveText(CartPageTexts.SecondaryHeader);
@@ -417,6 +419,7 @@ test.describe("Checkout flow - glitch user", () => {
     await expect.soft(page).toHaveURL(/.*checkout-step-two/);
 
     const overviewQuantities = await checkoutPage.itemQuantity.count();
+
     for (let i = 0; i < overviewQuantities; i++) {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
@@ -455,7 +458,7 @@ test.describe("Checkout flow - visual user", () => {
       .toContainText(ProductsPageTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
   });
- 
+
   test("should add 2 items and complete checkout successfully --> BUGS: incorrect price in the inventory, and forbidden class on the checkout button", async ({
     page,
     productsPage,
@@ -475,7 +478,6 @@ test.describe("Checkout flow - visual user", () => {
       ProductsNames.SauceLabsBikeLight,
     );
     const expectedTotal = inventoryPriceBP + inventoryPriceBL;
-
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
@@ -485,6 +487,7 @@ test.describe("Checkout flow - visual user", () => {
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
+
     for (let i = 0; i < cartQuantities; i++) {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
@@ -500,9 +503,8 @@ test.describe("Checkout flow - visual user", () => {
     expect.soft(cartPriceBP).toBeCloseTo(inventoryPriceBP, 2);
     expect.soft(cartPriceBL).toBeCloseTo(inventoryPriceBL, 2);
 
-    const classAttr = await cartPage.checkoutButton.getAttribute('class');
-    expect.soft(classAttr).not.toContain('btn_visual_failure');
-
+    const classAttr = await cartPage.checkoutButton.getAttribute("class");
+    expect.soft(classAttr).not.toContain("btn_visual_failure");
 
     await cartPage.clickCheckout();
 
@@ -539,7 +541,6 @@ test.describe("Checkout flow - visual user", () => {
     const subtotalPrice = await checkoutPage.getSubtotalPrice();
     const displayedTax = await checkoutPage.getTax();
     const displayedTotal = await checkoutPage.getTotalPrice();
-
     const expectedTax = PricingUtils.calculateTax(expectedTotal);
     const expectedTotalWithTax =
       PricingUtils.calculateTotalWithTax(expectedTotal);
@@ -604,6 +605,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
       await checkoutPage.fillLastName(formData.lastName);
       await checkoutPage.fillPostalCode(formData.postalCode);
       await checkoutPage.clickContinue();
+
       await expect
         .soft(checkoutPage.error)
         .toHaveText(CheckoutPageErrorMsg.FirstName);
@@ -614,6 +616,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
       await checkoutPage.fillFirstName(formData.firstName);
       await checkoutPage.fillPostalCode(formData.postalCode);
       await checkoutPage.clickContinue();
+
       await expect
         .soft(checkoutPage.error)
         .toHaveText(CheckoutPageErrorMsg.LastName);
@@ -624,6 +627,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
       await checkoutPage.fillFirstName(formData.firstName);
       await checkoutPage.fillLastName(formData.lastName);
       await checkoutPage.clickContinue();
+
       await expect
         .soft(checkoutPage.error)
         .toHaveText(CheckoutPageErrorMsg.PostalCode);
@@ -674,6 +678,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
       await checkoutPage.fillLastName(formData.lastName);
       await checkoutPage.fillPostalCode(formData.postalCode);
       await checkoutPage.clickContinue();
+
       await expect
         .soft(checkoutPage.error)
         .toHaveText(CheckoutPageErrorMsg.FirstName);
@@ -684,6 +689,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
       await checkoutPage.fillFirstName(formData.firstName);
       await checkoutPage.fillPostalCode(formData.postalCode);
       await checkoutPage.clickContinue();
+
       await expect
         .soft(checkoutPage.error)
         .toHaveText(CheckoutPageErrorMsg.LastName);
@@ -694,6 +700,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
       await checkoutPage.fillFirstName(formData.firstName);
       await checkoutPage.fillLastName(formData.lastName);
       await checkoutPage.clickContinue();
+
       await expect
         .soft(checkoutPage.error)
         .toHaveText(CheckoutPageErrorMsg.PostalCode);
@@ -744,6 +751,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
       await checkoutPage.fillLastName(formData.lastName);
       await checkoutPage.fillPostalCode(formData.postalCode);
       await checkoutPage.clickContinue();
+
       await expect
         .soft(checkoutPage.error)
         .toHaveText(CheckoutPageErrorMsg.FirstName);
@@ -754,6 +762,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
       await checkoutPage.fillFirstName(formData.firstName);
       await checkoutPage.fillPostalCode(formData.postalCode);
       await checkoutPage.clickContinue();
+
       await expect
         .soft(checkoutPage.error)
         .toHaveText(CheckoutPageErrorMsg.LastName);
@@ -764,6 +773,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
       await checkoutPage.fillFirstName(formData.firstName);
       await checkoutPage.fillLastName(formData.lastName);
       await checkoutPage.clickContinue();
+
       await expect
         .soft(checkoutPage.error)
         .toHaveText(CheckoutPageErrorMsg.PostalCode);

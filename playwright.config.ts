@@ -19,20 +19,20 @@ export default defineConfig({
       name: "Chromium",
       use: { ...devices["Desktop Chrome"] },
     },
-    // {
-    //   name: "Firefox",
-    //   use: { ...devices["Desktop Firefox"] },
-    // },
-    // {
-    //   name: "Safari",
-    //   use: { ...devices["Desktop Safari"] },
-    // },
+    {
+      name: "Firefox",
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "Safari",
+      use: { ...devices["Desktop Safari"] },
+    },
   ],
 
   outputDir: "test-results/",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 0 : 0,
-  workers: process.env.CI ? "100%" : "55%",
-  globalSetup: "./global-setup.ts"
+  workers: process.env.CI ? "100%" : "50%",
+  globalSetup: "./global-setup.ts",
 });
