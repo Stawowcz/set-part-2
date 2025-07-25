@@ -1,6 +1,6 @@
-import { test } from "../fixtures/fixtures";
+import { test } from "../../fixtures";
 import { expect } from "@playwright/test";
-import { ProductsPageTexts } from "../types/productsPage.enums";
+import { ProductsPageTexts } from "../../types/productsPage.enums";
 
 test.describe("Filters - different users", () => {
   test.describe("Filters - standard user", () => {

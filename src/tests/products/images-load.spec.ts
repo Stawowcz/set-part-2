@@ -1,10 +1,10 @@
-import { test } from "../fixtures/fixtures";
+import { test } from "../../fixtures";
 import { expect } from "@playwright/test";
 import {
   ProductsPageTexts,
   ProductsImages,
   ProductsNames,
-} from "../types/productsPage.enums";
+} from "../../types/productsPage.enums";
 
 test.describe("Images loading - different users", () => {
   test("should load images correctly on the product page - standard user", async ({

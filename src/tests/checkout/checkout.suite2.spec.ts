@@ -1,15 +1,17 @@
-import { test } from "../fixtures/fixtures";
-import { expect } from "@playwright/test";
-import { ProductsCartIds, ProductsNames } from "../types/productsPage.enums";
-import { CheckoutFormData } from "../types/userData";
-import { CheckoutDataGenerator } from "../utils/testData";
-import { CartPageTexts } from "../types/cartPage.enums";
+// import { test } from "../fixtures/fixtures";
+import { test, expect } from '../../fixtures';
+
+// import { expect } from "@playwright/test";
+import { ProductsCartIds, ProductsNames } from "../../types/productsPage.enums";
+import { CheckoutFormData } from "../../types/userData";
+import { CheckoutDataGenerator } from "../../utils/testData";
+import { CartPageTexts } from "../../types/cartPage.enums";
 import {
   CheckoutPageTexts,
   CheckoutPageErrorMsg,
-} from "../types/checkoutPage.enum";
-import { ProductsPageTexts } from "../types/productsPage.enums";
-import { PricingUtils } from "../utils/pricing.utils";
+} from "../../types/checkoutPage.enum";
+import { ProductsPageTexts } from "../../types/productsPage.enums";
+import { PricingUtils } from "../../utils/pricing.utils";
 
 // I didn’t repeat all the same tests for the error user as for the standard user to reduce the amount of code to review.
 // Most of them fail the same way for this user — the bug is that the finish button can not be clicked.

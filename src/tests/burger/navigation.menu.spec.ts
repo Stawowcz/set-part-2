@@ -1,7 +1,7 @@
-import { test } from "../fixtures/fixtures";
+import { test } from "../../fixtures";
 import { expect } from "@playwright/test";
-import { ProductsPageTexts } from "../types/productsPage.enums";
-import { ProductsCartIds } from "../types/productsPage.enums";
+import { ProductsPageTexts } from "../../types/productsPage.enums";
+import { ProductsCartIds } from "../../types/productsPage.enums";
 
 test.describe("Navigation - burger menu scenarios for different users", () => {
   test.describe("Burger menu scenarios - standard user", () => {

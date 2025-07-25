@@ -1,12 +1,12 @@
-import { test } from "../fixtures/fixtures";
-import { expect } from "@playwright/test";
-import { ProductsCartIds, ProductsNames } from "../types/productsPage.enums";
-import { CheckoutFormData } from "../types/userData";
-import { CheckoutDataGenerator } from "../utils/testData";
-import { CartPageTexts } from "../types/cartPage.enums";
-import { CheckoutPageTexts } from "../types/checkoutPage.enum";
-import { ProductsPageTexts } from "../types/productsPage.enums";
-import { PricingUtils } from "../utils/pricing.utils";
+import { test, expect } from '../../fixtures';  
+// import { expect } from "@playwright/test";
+import { ProductsCartIds, ProductsNames } from "../../types/productsPage.enums";
+import { CheckoutFormData } from "../../types/userData";
+import { CheckoutDataGenerator } from "../../utils/testData";
+import { CartPageTexts } from "../../types/cartPage.enums";
+import { CheckoutPageTexts } from "../../types/checkoutPage.enum";
+import { ProductsPageTexts } from "../../types/productsPage.enums";
+import { PricingUtils } from "../../utils/pricing.utils";
 
 test.describe("Checkout flow - standard user", () => {
   test.beforeEach(async ({ page, loginPage, productsPage }) => {
@@ -22,7 +22,7 @@ test.describe("Checkout flow - standard user", () => {
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
   });
 
-  test("should add 2 items and complete checkout successfully", async ({
+  test.only("should add 2 items and complete checkout successfully", async ({
     page,
     productsPage,
     checkoutPage,

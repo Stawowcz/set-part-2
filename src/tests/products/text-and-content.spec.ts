@@ -1,7 +1,7 @@
-import { test } from "../fixtures/fixtures";
+import { test } from "../../fixtures";
 import { expect } from "@playwright/test";
-import { ProductsPageTexts } from "../types/productsPage.enums";
-import { suspiciousPatterns, forbiddenClasses } from "../utils/patterns.utils";
+import { ProductsPageTexts } from "../../types/productsPage.enums";
+import { suspiciousPatterns, forbiddenClasses } from "../../utils/patterns.utils";
 
 test.describe("Products - content and style checks - standard user", () => {
   test.beforeEach(async ({ page, loginPage, productsPage }) => {

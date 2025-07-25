@@ -1,10 +1,10 @@
-import { test } from "../fixtures/fixtures";
+import { test } from "../../fixtures";
 import { expect } from "@playwright/test";
 import {
   ProductsPageTexts,
   ProductsCartIds,
   ProductsNames,
-} from "../types/productsPage.enums";
+} from "../../types/productsPage.enums";
 
 test.describe("Add/Remove from cart - different users", () => {
   test("should add and remove items from cart - standard user", async ({
