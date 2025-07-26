@@ -1,6 +1,6 @@
-import { test } from "../../fixtures";
+import { test } from "@fixtures";
 import { expect } from "@playwright/test";
-import { ProductsPageTexts } from "../../types/productsPage.enums";
+import { SharedTexts } from "@typings/common/common-enums"
 
 test.describe("Filters - different users", () => {
   test.describe("Filters - standard user", () => {
@@ -13,7 +13,7 @@ test.describe("Filters - different users", () => {
       await expect.soft(page).toHaveURL(/.*inventory/);
       await expect
         .soft(productsPage.primaryHeader)
-        .toContainText(ProductsPageTexts.PrimaryHeader);
+        .toContainText(SharedTexts.PrimaryHeader);
       await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     });
 
@@ -72,7 +72,7 @@ test.describe("Filters - different users", () => {
       await expect.soft(page).toHaveURL(/.*inventory/);
       await expect
         .soft(productsPage.primaryHeader)
-        .toContainText(ProductsPageTexts.PrimaryHeader);
+        .toContainText(SharedTexts.PrimaryHeader);
       await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     });
 
@@ -137,7 +137,7 @@ test.describe("Filters - different users", () => {
       await expect.soft(page).toHaveURL(/.*inventory/);
       await expect
         .soft(productsPage.primaryHeader)
-        .toContainText(ProductsPageTexts.PrimaryHeader);
+        .toContainText(SharedTexts.PrimaryHeader);
       await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     });
 
@@ -202,7 +202,7 @@ test.describe("Filters - different users", () => {
       await expect.soft(page).toHaveURL(/.*inventory/);
       await expect
         .soft(productsPage.primaryHeader)
-        .toContainText(ProductsPageTexts.PrimaryHeader);
+        .toContainText(SharedTexts.PrimaryHeader);
       await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     });
 
@@ -265,7 +265,7 @@ test.describe("Filters - different users", () => {
       await expect.soft(page).toHaveURL(/.*inventory/);
       await expect
         .soft(productsPage.primaryHeader)
-        .toContainText(ProductsPageTexts.PrimaryHeader);
+        .toContainText(SharedTexts.PrimaryHeader);
       await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     });
 

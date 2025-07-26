@@ -1,10 +1,10 @@
-import { test } from "../../fixtures";
+import { test } from "@fixtures";
 import { expect } from "@playwright/test";
 import {
-  ProductsPageTexts,
-  ProductsCartIds,
-  ProductsNames,
-} from "../../types/productsPage.enums";
+  ProductPageNames,
+  ProductPageItemIds,
+} from "@typings/products/products-enums";
+import { SharedTexts } from "@typings/common/common-enums";
 
 test.describe("Add/Remove from cart - different users", () => {
   test("should add and remove items from cart - standard user", async ({
@@ -20,14 +20,14 @@ test.describe("Add/Remove from cart - different users", () => {
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     await expect.soft(productsPage.shoppingCartLink).toBeVisible();
     await expect
       .soft(productsPage.shopingCartContainer)
       .not.toContainClass("visual_failure");
 
-    for (const productId of Object.values(ProductsCartIds)) {
+    for (const productId of Object.values(ProductPageItemIds)) {
       const addBtn = productsPage.getAddToCartButton(productId);
       const removeBtn = productsPage.getRemoveFromCartButton(productId);
       const cartBadge = productsPage.getCartBadge;
@@ -67,14 +67,14 @@ test.describe("Add/Remove from cart - different users", () => {
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     await expect.soft(productsPage.shoppingCartLink).toBeVisible();
     await expect
       .soft(productsPage.shopingCartContainer)
       .not.toContainClass("visual_failure");
 
-    for (const productId of Object.values(ProductsCartIds)) {
+    for (const productId of Object.values(ProductPageItemIds)) {
       const addBtn = productsPage.getAddToCartButton(productId);
       const removeBtn = productsPage.getRemoveFromCartButton(productId);
       const cartBadge = productsPage.getCartBadge;
@@ -114,14 +114,14 @@ test.describe("Add/Remove from cart - different users", () => {
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     await expect.soft(productsPage.shoppingCartLink).toBeVisible();
     await expect
       .soft(productsPage.shopingCartContainer)
       .not.toContainClass("visual_failure");
 
-    for (const productId of Object.values(ProductsCartIds)) {
+    for (const productId of Object.values(ProductPageItemIds)) {
       const addBtn = productsPage.getAddToCartButton(productId);
       const removeBtn = productsPage.getRemoveFromCartButton(productId);
       const cartBadge = productsPage.getCartBadge;
@@ -161,14 +161,14 @@ test.describe("Add/Remove from cart - different users", () => {
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     await expect.soft(productsPage.shoppingCartLink).toBeVisible();
     await expect
       .soft(productsPage.shopingCartContainer)
       .not.toContainClass("visual_failure");
 
-    for (const productId of Object.values(ProductsCartIds)) {
+    for (const productId of Object.values(ProductPageItemIds)) {
       const addBtn = productsPage.getAddToCartButton(productId);
       const removeBtn = productsPage.getRemoveFromCartButton(productId);
       const cartBadge = productsPage.getCartBadge;
@@ -208,7 +208,7 @@ test.describe("Add/Remove from cart - different users", () => {
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     await expect.soft(productsPage.shoppingCartLink).toBeVisible();
     await expect
@@ -216,11 +216,11 @@ test.describe("Add/Remove from cart - different users", () => {
       .not.toContainClass("visual_failure");
 
     const addBtn = productsPage.getAddToCartButton(
-      ProductsCartIds.SauceLabsBackpack,
+      ProductPageItemIds.Backpack,
     );
     const addBtnDetails = productsPage.addToCardButton;
     const removeBtn = productsPage.getRemoveFromCartButton(
-      ProductsCartIds.SauceLabsBackpack,
+      ProductPageItemIds.Backpack,
     );
     const cartBadge = productsPage.getCartBadge;
     await addBtn.click();
@@ -234,7 +234,7 @@ test.describe("Add/Remove from cart - different users", () => {
     expect.soft(isRemoveVisible).toBe(true);
 
     if (isRemoveVisible) {
-      await productsPage.openProductByName(ProductsNames.SauceLabsBackpack);
+      await productsPage.openProductByName(ProductPageNames.Backpack);
       await productsPage.removeFromProjectDetails();
 
       const isBadgeVisible = await cartBadge.isVisible();
@@ -271,7 +271,7 @@ test.describe("Add/Remove from cart - different users", () => {
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     await expect.soft(productsPage.shoppingCartLink).toBeVisible();
     await expect
@@ -279,11 +279,11 @@ test.describe("Add/Remove from cart - different users", () => {
       .not.toContainClass("visual_failure");
 
     const addBtn = productsPage.getAddToCartButton(
-      ProductsCartIds.SauceLabsBackpack,
+      ProductPageItemIds.Backpack,
     );
     const addBtnDetails = productsPage.addToCardButton;
     const removeBtn = productsPage.getRemoveFromCartButton(
-      ProductsCartIds.SauceLabsBackpack,
+      ProductPageItemIds.Backpack,
     );
     const cartBadge = productsPage.getCartBadge;
     await addBtn.click();
@@ -297,7 +297,7 @@ test.describe("Add/Remove from cart - different users", () => {
     expect.soft(isRemoveVisible).toBe(true);
 
     if (isRemoveVisible) {
-      await productsPage.openProductByName(ProductsNames.SauceLabsBackpack);
+      await productsPage.openProductByName(ProductPageNames.Backpack);
       await productsPage.removeFromProjectDetails();
 
       const isBadgeVisible = await cartBadge.isVisible();

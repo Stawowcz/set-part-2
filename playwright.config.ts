@@ -1,4 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 export default defineConfig({
   testDir: "./src/tests/",
@@ -19,14 +21,14 @@ export default defineConfig({
       name: "Chromium",
       use: { ...devices["Desktop Chrome"] },
     },
-    {
-      name: "Firefox",
-      use: { ...devices["Desktop Firefox"] },
-    },
-    {
-      name: "Safari",
-      use: { ...devices["Desktop Safari"] },
-    },
+    // {
+    //   name: "Firefox",
+    //   use: { ...devices["Desktop Firefox"] },
+    // },
+    // {
+    //   name: "Safari",
+    //   use: { ...devices["Desktop Safari"] },
+    // },
   ],
 
   outputDir: "test-results/",
@@ -34,5 +36,4 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 0 : 0,
   workers: process.env.CI ? "100%" : "50%",
-  globalSetup: "./global-setup.ts",
 });

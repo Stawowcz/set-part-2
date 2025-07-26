@@ -1,17 +1,17 @@
 export const suspiciousPatterns = [
-  "test.",
-  "test(",
+  "test\\.",
+  "test\\(",
   "function",
   "=>",
   "allTheThings",
   "eval",
-  "console.",
-  "document.",
-  "{}",
-  "();",
+  "console\\.",
+  "document\\.",
+  "\\{\\}",
+  "\\(\\);",
 ] as const;
 
-export const forbiddenClasses = [
+export const forbiddenCssClasses = [
   "btn_inventory_misaligned",
   "btn_hidden",
   "btn_stretched",

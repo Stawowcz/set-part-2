@@ -1,6 +1,6 @@
 import { Locator } from "@playwright/test";
-import { BasePage } from "./base.page";
-import { ProductsCartIds, ProductsNames } from "../types/productsPage.enums";
+import { BasePage } from "./base-page";
+import { ProductPageItemIds, ProductPageNames } from "../types/products/products-enums";
 
 export class ProductsPage extends BasePage {
   public readonly title: Locator = this.page.getByTestId("title");
@@ -53,11 +53,11 @@ export class ProductsPage extends BasePage {
     "inventory-item-price",
   );
 
-  public getAddToCartButton(productId: ProductsCartIds): Locator {
+  public getAddToCartButton(productId: ProductPageItemIds): Locator {
     return this.page.getByTestId(`add-to-cart-${productId}`);
   }
 
-  public getRemoveFromCartButton(productId: ProductsCartIds): Locator {
+  public getRemoveFromCartButton(productId: ProductPageItemIds): Locator {
     return this.page.getByTestId(`remove-${productId}`);
   }
 
@@ -71,7 +71,7 @@ export class ProductsPage extends BasePage {
     return this.cartBadge;
   }
 
-  public async addProductToCart(productId: ProductsCartIds): Promise<void> {
+  public async addProductToCart(productId: ProductPageItemIds): Promise<void> {
     const btn = this.getAddToCartButton(productId);
     await this.safeClick(btn);
   }
@@ -84,7 +84,7 @@ export class ProductsPage extends BasePage {
     await this.safeClick(this.removeFromCardButton);
   }
 
-  public async removeProductToCart(productId: ProductsCartIds): Promise<void> {
+  public async removeProductToCart(productId: ProductPageItemIds): Promise<void> {
     const btn = this.getRemoveFromCartButton(productId);
     await this.safeClick(btn);
   }
@@ -105,13 +105,13 @@ export class ProductsPage extends BasePage {
     await this.safeClick(this.resetAppButton);
   }
 
-  public getProductNameLocatorByName(productName: ProductsNames): Locator {
+  public getProductNameLocatorByName(productName: ProductPageNames): Locator {
     return this.page
       .getByTestId("inventory-item-name")
       .filter({ hasText: productName });
   }
 
-  public async openProductByName(productName: ProductsNames): Promise<void> {
+  public async openProductByName(productName: ProductPageNames): Promise<void> {
     const productNameLocator = this.getProductNameLocatorByName(productName);
     await this.safeClick(productNameLocator);
   }

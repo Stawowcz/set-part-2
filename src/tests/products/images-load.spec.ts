@@ -1,10 +1,11 @@
-import { test } from "../../fixtures";
+import { test } from "@fixtures";
 import { expect } from "@playwright/test";
 import {
   ProductsPageTexts,
-  ProductsImages,
-  ProductsNames,
-} from "../../types/productsPage.enums";
+  ProductPageNames,
+  ProductPageImagePaths,
+} from "../../types/products/products-enums";
+import { SharedTexts } from "../../types/common/common-enums";
 
 test.describe("Images loading - different users", () => {
   test("should load images correctly on the product page - standard user", async ({
@@ -21,19 +22,19 @@ test.describe("Images loading - different users", () => {
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     await expect.soft(productsPage.shoppingCartLink).toBeVisible();
 
     const expectedImages = {
-      [ProductsNames.SauceLabsBackpack]: ProductsImages.SauceLabsBackpack,
-      [ProductsNames.SauceLabsBikeLight]: ProductsImages.SauceLabsBikeLight,
-      [ProductsNames.SauceLabsBoltTShirt]: ProductsImages.SauceLabsBoltTShirt,
-      [ProductsNames.SauceLabsFleeceJacket]:
-        ProductsImages.SauceLabsFleeceJacket,
-      [ProductsNames.SauceLabsOnesie]: ProductsImages.SauceLabsOnesie,
-      [ProductsNames.TestAllTheThingsTShirtRed]:
-        ProductsImages.TestAllTheThingsTShirtRed,
+      [ProductPageNames.Backpack]: ProductPageImagePaths.Backpack,
+      [ProductPageNames.BikeLight]: ProductPageImagePaths.BikeLight,
+      [ProductPageNames.BoltTShirt]: ProductPageImagePaths.BoltTShirt,
+      [ProductPageNames.FleeceJacket]:
+        ProductPageImagePaths.FleeceJacket,
+      [ProductPageNames.Onesie]: ProductPageImagePaths.Onesie,
+      [ProductPageNames.RedTShirt]:
+        ProductPageImagePaths.RedTShirt,
     };
 
     for (const [productName, expectedSrc] of Object.entries(expectedImages)) {
@@ -59,19 +60,19 @@ test.describe("Images loading - different users", () => {
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     await expect.soft(productsPage.shoppingCartLink).toBeVisible();
 
     const expectedImages = {
-      [ProductsNames.SauceLabsBackpack]: ProductsImages.SauceLabsBackpack,
-      [ProductsNames.SauceLabsBikeLight]: ProductsImages.SauceLabsBikeLight,
-      [ProductsNames.SauceLabsBoltTShirt]: ProductsImages.SauceLabsBoltTShirt,
-      [ProductsNames.SauceLabsFleeceJacket]:
-        ProductsImages.SauceLabsFleeceJacket,
-      [ProductsNames.SauceLabsOnesie]: ProductsImages.SauceLabsOnesie,
-      [ProductsNames.TestAllTheThingsTShirtRed]:
-        ProductsImages.TestAllTheThingsTShirtRed,
+      [ProductPageNames.Backpack]: ProductPageImagePaths.Backpack,
+      [ProductPageNames.BikeLight]: ProductPageImagePaths.BikeLight,
+      [ProductPageNames.BoltTShirt]: ProductPageImagePaths.BoltTShirt,
+      [ProductPageNames.FleeceJacket]:
+        ProductPageImagePaths.FleeceJacket,
+      [ProductPageNames.Onesie]: ProductPageImagePaths.Onesie,
+      [ProductPageNames.RedTShirt]:
+        ProductPageImagePaths.RedTShirt,
     };
 
     for (const [productName, expectedSrc] of Object.entries(expectedImages)) {
@@ -97,19 +98,19 @@ test.describe("Images loading - different users", () => {
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     await expect.soft(productsPage.shoppingCartLink).toBeVisible();
 
     const expectedImages = {
-      [ProductsNames.SauceLabsBackpack]: ProductsImages.SauceLabsBackpack,
-      [ProductsNames.SauceLabsBikeLight]: ProductsImages.SauceLabsBikeLight,
-      [ProductsNames.SauceLabsBoltTShirt]: ProductsImages.SauceLabsBoltTShirt,
-      [ProductsNames.SauceLabsFleeceJacket]:
-        ProductsImages.SauceLabsFleeceJacket,
-      [ProductsNames.SauceLabsOnesie]: ProductsImages.SauceLabsOnesie,
-      [ProductsNames.TestAllTheThingsTShirtRed]:
-        ProductsImages.TestAllTheThingsTShirtRed,
+      [ProductPageNames.Backpack]: ProductPageImagePaths.Backpack,
+      [ProductPageNames.BikeLight]: ProductPageImagePaths.BikeLight,
+      [ProductPageNames.BoltTShirt]: ProductPageImagePaths.BoltTShirt,
+      [ProductPageNames.FleeceJacket]:
+        ProductPageImagePaths.FleeceJacket,
+      [ProductPageNames.Onesie]: ProductPageImagePaths.Onesie,
+      [ProductPageNames.RedTShirt]:
+        ProductPageImagePaths.RedTShirt,
     };
 
     for (const [productName, expectedSrc] of Object.entries(expectedImages)) {

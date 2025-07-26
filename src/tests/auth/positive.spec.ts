@@ -1,7 +1,6 @@
-import { test } from "../../fixtures";
+import { test } from "@fixtures";
 import { expect } from "@playwright/test";
-import { ProductsPageTexts } from "../../types/productsPage.enums";
-import { LoginPageTexts } from "../../types/loginPage.enums";
+import { SharedTexts } from "@typings/common/common-enums";
 
 test.describe("Positive scenarios – authentication with different users", () => {
   test("should log in - standard user", async ({
@@ -17,7 +16,7 @@ test.describe("Positive scenarios – authentication with different users", () =
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     await expect.soft(productsPage.shoppingCartLink).toBeVisible();
   });
@@ -36,7 +35,7 @@ test.describe("Positive scenarios – authentication with different users", () =
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     await expect.soft(productsPage.shoppingCartLink).toBeVisible();
   });
@@ -57,7 +56,7 @@ test.describe("Positive scenarios – authentication with different users", () =
 
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     await expect.soft(productsPage.shoppingCartLink).toBeVisible();
     const duration = Date.now() - start;

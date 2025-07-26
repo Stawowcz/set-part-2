@@ -1,4 +1,4 @@
-import { BasePage } from "./base.page";
+import { BasePage } from "./base-page";
 
 export class AboutPage extends BasePage {
   public readonly sauceLabHeader = this.page.locator(

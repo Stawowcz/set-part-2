@@ -1,7 +1,7 @@
-import { test } from "../../fixtures";
+import { test } from "@fixtures";
 import { expect } from "@playwright/test";
-import { ProductsPageTexts } from "../../types/productsPage.enums";
-import { ProductsCartIds } from "../../types/productsPage.enums";
+import { SharedTexts } from "@typings/common/common-enums";
+import { ProductPageItemIds } from "@typings/products/products-enums";
 
 test.describe("Navigation - burger menu scenarios for different users", () => {
   test.describe("Burger menu scenarios - standard user", () => {
@@ -14,7 +14,7 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
       await expect.soft(page).toHaveURL(/.*inventory/);
       await expect
         .soft(productsPage.primaryHeader)
-        .toContainText(ProductsPageTexts.PrimaryHeader);
+        .toContainText(SharedTexts.PrimaryHeader);
       await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     });
 
@@ -60,7 +60,7 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
       await expect.soft(page).toHaveURL(/.*inventory/);
       await expect
         .soft(productsPage.primaryHeader)
-        .toContainText(ProductsPageTexts.PrimaryHeader);
+        .toContainText(SharedTexts.PrimaryHeader);
       await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     });
 
@@ -106,7 +106,7 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
       await expect.soft(page).toHaveURL(/.*inventory/);
       await expect
         .soft(productsPage.primaryHeader)
-        .toContainText(ProductsPageTexts.PrimaryHeader);
+        .toContainText(SharedTexts.PrimaryHeader);
       await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     });
 
@@ -152,15 +152,15 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
       await expect.soft(page).toHaveURL(/.*inventory/);
       await expect
         .soft(productsPage.primaryHeader)
-        .toContainText(ProductsPageTexts.PrimaryHeader);
+        .toContainText(SharedTexts.PrimaryHeader);
       await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     });
 
     test("should reset cart, filters and buttons --> BUG: reset does not affect the state", async ({
       productsPage,
     }) => {
-      await productsPage.addProductToCart(ProductsCartIds.SauceLabsBackpack);
-      await productsPage.addProductToCart(ProductsCartIds.SauceLabsBikeLight);
+      await productsPage.addProductToCart(ProductPageItemIds.Backpack);
+      await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
       const badge = await productsPage.waitForCartBadge();
 
       await expect.soft(badge).toHaveText("2");
@@ -172,10 +172,10 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
       await expect.soft(productsPage.sortDropdown).toHaveValue("za");
 
       const removeBtnBp = productsPage.getRemoveFromCartButton(
-        ProductsCartIds.SauceLabsBackpack,
+        ProductPageItemIds.Backpack,
       );
       const removeBtnBl = productsPage.getRemoveFromCartButton(
-        ProductsCartIds.SauceLabsBikeLight,
+        ProductPageItemIds.BikeLight,
       );
       const isRemoveVisibleBp = await removeBtnBp.isVisible();
       const isRemoveVisibleBl = await removeBtnBl.isVisible();
@@ -192,10 +192,10 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
       await expect.soft(badge).not.toBeVisible();
 
       const addToCartBp = productsPage.getAddToCartButton(
-        ProductsCartIds.SauceLabsBackpack,
+        ProductPageItemIds.Backpack,
       );
       const addToCartBl = productsPage.getAddToCartButton(
-        ProductsCartIds.SauceLabsBikeLight,
+        ProductPageItemIds.BikeLight,
       );
       const isAddToCartVisibleBp = await addToCartBp.isVisible();
       const isAddToCartVisibleBl = await addToCartBl.isVisible();
@@ -218,15 +218,15 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
       await expect.soft(page).toHaveURL(/.*inventory/);
       await expect
         .soft(productsPage.primaryHeader)
-        .toContainText(ProductsPageTexts.PrimaryHeader);
+        .toContainText(SharedTexts.PrimaryHeader);
       await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     });
 
     test("sshould reset cart, filters and buttons --> BUG: reset does not affect the state", async ({
       productsPage,
     }) => {
-      await productsPage.addProductToCart(ProductsCartIds.SauceLabsBackpack);
-      await productsPage.addProductToCart(ProductsCartIds.SauceLabsBikeLight);
+      await productsPage.addProductToCart(ProductPageItemIds.Backpack);
+      await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
       const badge = await productsPage.waitForCartBadge();
 
       await expect.soft(badge).toHaveText("2");
@@ -238,10 +238,10 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
       await expect.soft(productsPage.sortDropdown).toHaveValue("za");
 
       const removeBtnBp = productsPage.getRemoveFromCartButton(
-        ProductsCartIds.SauceLabsBackpack,
+        ProductPageItemIds.Backpack,
       );
       const removeBtnBl = productsPage.getRemoveFromCartButton(
-        ProductsCartIds.SauceLabsBikeLight,
+        ProductPageItemIds.BikeLight,
       );
       const isRemoveVisibleBp = await removeBtnBp.isVisible();
       const isRemoveVisibleBl = await removeBtnBl.isVisible();
@@ -258,10 +258,10 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
       await expect.soft(badge).not.toBeVisible();
 
       const addToCartBp = productsPage.getAddToCartButton(
-        ProductsCartIds.SauceLabsBackpack,
+        ProductPageItemIds.Backpack,
       );
       const addToCartBl = productsPage.getAddToCartButton(
-        ProductsCartIds.SauceLabsBikeLight,
+        ProductPageItemIds.BikeLight,
       );
       const isAddToCartVisibleBp = await addToCartBp.isVisible();
       const isAddToCartVisibleBl = await addToCartBl.isVisible();

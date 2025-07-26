@@ -1,7 +1,7 @@
-import { test } from "../../fixtures";
+import { test } from "@fixtures";
 import { expect } from "@playwright/test";
-import { ProductsPageTexts } from "../../types/productsPage.enums";
-import { suspiciousPatterns, forbiddenClasses } from "../../utils/patterns.utils";
+import { suspiciousPatterns, forbiddenCssClasses } from "@utils/patterns-utils";
+import { SharedTexts } from "@typings/common/common-enums";
 
 test.describe("Products - content and style checks - standard user", () => {
   test.beforeEach(async ({ page, loginPage, productsPage }) => {
@@ -13,7 +13,7 @@ test.describe("Products - content and style checks - standard user", () => {
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
   });
 
@@ -53,7 +53,7 @@ test.describe("Products - content and style checks - standard user", () => {
     for (const [index, el] of nameElements.entries()) {
       const classAttr = await el.getAttribute("class");
       if (classAttr) {
-        for (const forbidden of forbiddenClasses) {
+        for (const forbidden of forbiddenCssClasses) {
           if (classAttr.includes(forbidden)) {
             misalignedNames.push(
               `Name ${index} contains forbidden class: ${forbidden}`,
@@ -75,7 +75,7 @@ test.describe("Products - content and style checks - standard user", () => {
     for (const [index, button] of addToCartbuttons.entries()) {
       const classAttr = await button.getAttribute("class");
       if (classAttr) {
-        for (const forbidden of forbiddenClasses) {
+        for (const forbidden of forbiddenCssClasses) {
           if (classAttr.includes(forbidden)) {
             misaligned.push(
               `Add to cart button ${index} contains forbidden class: ${forbidden}`,
@@ -99,7 +99,7 @@ test.describe("Products - content and style checks - visual user", () => {
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect
       .soft(productsPage.primaryHeader)
-      .toContainText(ProductsPageTexts.PrimaryHeader);
+      .toContainText(SharedTexts.PrimaryHeader);
     await expect.soft(productsPage.hamburgerMenu).toBeVisible();
   });
 
@@ -141,7 +141,7 @@ test.describe("Products - content and style checks - visual user", () => {
     for (const [index, el] of nameElements.entries()) {
       const classAttr = await el.getAttribute("class");
       if (classAttr) {
-        for (const forbidden of forbiddenClasses) {
+        for (const forbidden of forbiddenCssClasses) {
           if (classAttr.includes(forbidden)) {
             misalignedNames.push(
               `Name ${index} contains forbidden class: ${forbidden}`,
@@ -163,7 +163,7 @@ test.describe("Products - content and style checks - visual user", () => {
     for (const [index, button] of addToCartbuttons.entries()) {
       const classAttr = await button.getAttribute("class");
       if (classAttr) {
-        for (const forbidden of forbiddenClasses) {
+        for (const forbidden of forbiddenCssClasses) {
           if (classAttr.includes(forbidden)) {
             misaligned.push(
               `Add to cart button ${index} contains forbidden class: ${forbidden}`,

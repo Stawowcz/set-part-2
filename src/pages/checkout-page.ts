@@ -1,6 +1,6 @@
 import { Locator } from "@playwright/test";
-import { BasePage } from "./base.page";
-import { CheckoutFormData } from "../types/userData";
+import { BasePage } from "./base-page";
+import { CheckoutFormData } from "@typings/checkout/checkout-types";
 
 export class CheckoutPage extends BasePage {
   public readonly firstName = this.page.getByTestId("firstName");

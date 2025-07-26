@@ -1,5 +1,5 @@
-import { BasePage } from "./base.page";
-import { ProductsCartIds } from "../types/productsPage.enums";
+import { BasePage } from "./base-page";
+import { ProductPageItemIds } from "@typings/products/products-enums";
 
 export class CartPage extends BasePage {
   public readonly continueShoppingButton =
@@ -22,7 +22,7 @@ export class CartPage extends BasePage {
     await this.safeClick(this.checkoutButton);
   }
 
-  public async removeProductFromCart(productId: ProductsCartIds) {
+  public async removeProductFromCart(productId: ProductPageItemIds) {
     const btn = this.page.getByTestId(`remove-${productId}`);
     await this.safeClick(btn);
   }

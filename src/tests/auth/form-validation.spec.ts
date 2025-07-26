@@ -1,7 +1,6 @@
-import { test } from "../../fixtures";
+import { test } from "@fixtures";
 import { expect } from "@playwright/test";
-import { ProductsPageTexts } from "../../types/productsPage.enums";
-import { LoginPageTexts } from "../../types/loginPage.enums";
+import { LoginPageErrorMessages } from "@typings/auth/login-enums";
 
 test.describe("Negatvie scenarios - authentication with user using wrong credentials", () => {
   test("should show error for incorrect username", async ({ loginPage }) => {
@@ -13,7 +12,7 @@ test.describe("Negatvie scenarios - authentication with user using wrong credent
     await expect.soft(loginPage.errorButton).toBeVisible();
     await expect
       .soft(loginPage.errorMessage)
-      .toHaveText(LoginPageTexts.WrongPasswordOrUser);
+      .toHaveText(LoginPageErrorMessages.InvalidCreds);
   });
 
   test("should show error for incorrect password", async ({ loginPage }) => {
@@ -25,6 +24,6 @@ test.describe("Negatvie scenarios - authentication with user using wrong credent
     await expect.soft(loginPage.errorButton).toBeVisible();
     await expect
       .soft(loginPage.errorMessage)
-      .toHaveText(LoginPageTexts.WrongPasswordOrUser);
+      .toHaveText(LoginPageErrorMessages.InvalidCreds);
   });
 });
