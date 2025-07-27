@@ -139,7 +139,6 @@ SAUCE_DEMO_PASSWORD=secret_sauce
 The framework uses custom Playwright fixtures aggregated in `src/fixtures/index.ts`. These fixtures expose typed page objects and data directly into test callbacks. For example:
 
 ```ts
-// src/fixtures/about-fixture.ts
 import type { Page } from '@playwright/test';
 import { AboutPage } from '@pages/about-page';
 
@@ -151,7 +150,6 @@ export const aboutFixtures = {
 ```
 
 ```ts
-// src/fixtures/index.ts
 import { test as loginTest, expect } from './login-fixture';
 import { productsFixtures } from './products-fixture';
 import { aboutFixtures } from './about-fixture';
@@ -167,7 +165,6 @@ import { AboutPage } from '@pages/about-page';
 import { CartPage } from '@pages/cart-page';
 import { CheckoutPage } from '@pages/checkout-page';
 
-// Define fixture types
 export type MyFixtures = {
   user: UserCredentials;
   loginPage: LoginPage;
@@ -177,7 +174,6 @@ export type MyFixtures = {
   checkoutPage: CheckoutPage;
 };
 
-// Extend loginTest with additional fixtures
 export const test = loginTest.extend<MyFixtures>({
   ...productsFixtures,
   ...aboutFixtures,
@@ -186,7 +182,7 @@ export const test = loginTest.extend<MyFixtures>({
 });
 export { expect };
 
-// Preconfigured user fixtures
+
 export const standardUser = test.extend({ user: async (_, use) => {
   await use({ username: env.SAUCE_DEMO_STANDARD_USER, password: env.SAUCE_DEMO_PASSWORD });
 }});
