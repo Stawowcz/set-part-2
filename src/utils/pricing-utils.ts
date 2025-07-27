@@ -1,4 +1,3 @@
-
 export class PricingUtils {
   private static readonly TAX_RATE = 0.0801;
 
@@ -15,4 +14,3 @@ export class PricingUtils {
     return this.round2(subtotal + tax);
   }
 }
-

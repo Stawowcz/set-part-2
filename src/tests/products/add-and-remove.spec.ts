@@ -1,28 +1,17 @@
-import { test, expect } from "@fixtures";
-import {
-  ProductPageNames,
-  ProductPageItemIds,
-} from "@typings/products";
+import { test, expect, standardUser, problemUser, errorUser, visualUser, performanceGlitchUser } from "@fixtures";
+import { ProductPageNames, ProductPageItemIds, ProductsPageTexts } from "@typings/products";
 import { SharedTexts } from "@typings/common";
-import { env }  from '@utils';
+import { env } from "@utils";
 
 test.describe("Add/Remove from cart - different users", () => {
-  test("should add and remove items from cart - standard user", async ({
+  standardUser("should add and remove items from cart - standard user", async ({
     page,
-    loginPage,
+    loginPage:_,
     productsPage,
   }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_STANDARD_USER,
-      env.SAUCE_DEMO_PASSWORD
-    );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
-    await expect.soft(productsPage.shoppingCartLink).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     await expect
       .soft(productsPage.shopingCartContainer)
       .not.toContainClass("visual_failure");
@@ -54,22 +43,14 @@ test.describe("Add/Remove from cart - different users", () => {
     }
   });
 
-  test("should add and remove items from cart - problem user --> BUG: some items cannot be added or removed", async ({
+  problemUser("should add and remove items from cart - problem user --> BUG: some items cannot be added or removed", async ({
     page,
-    loginPage,
+    loginPage:_,
     productsPage,
   }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_PROBLEM_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
-    await expect.soft(productsPage.shoppingCartLink).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     await expect
       .soft(productsPage.shopingCartContainer)
       .not.toContainClass("visual_failure");
@@ -101,22 +82,14 @@ test.describe("Add/Remove from cart - different users", () => {
     }
   });
 
-  test("should add and remove items from cart - error user --> BUG: some items cannot be added or removed", async ({
+  errorUser("should add and remove items from cart - error user --> BUG: some items cannot be added or removed", async ({
     page,
-    loginPage,
+    loginPage:_,
     productsPage,
   }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_ERROR_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
-    await expect.soft(productsPage.shoppingCartLink).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     await expect
       .soft(productsPage.shopingCartContainer)
       .not.toContainClass("visual_failure");
@@ -148,22 +121,14 @@ test.describe("Add/Remove from cart - different users", () => {
     }
   });
 
-  test("should add and remove items from cart - visual user --> BUG: some items cannot be added or removed", async ({
+  visualUser("should add and remove items from cart - visual user --> BUG: some items cannot be added or removed", async ({
     page,
-    loginPage,
+    loginPage:_,
     productsPage,
   }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_VISUAL_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
-    await expect.soft(productsPage.shoppingCartLink).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     await expect
       .soft(productsPage.shopingCartContainer)
       .not.toContainClass("visual_failure");
@@ -195,29 +160,19 @@ test.describe("Add/Remove from cart - different users", () => {
     }
   });
 
-  test("should remove item from cart on the details page - standard user", async ({
+  standardUser("should remove item from cart on the details page - standard user", async ({
     page,
-    loginPage,
+    loginPage:_,
     productsPage,
   }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_STANDARD_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
-    await expect.soft(productsPage.shoppingCartLink).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     await expect
       .soft(productsPage.shopingCartContainer)
       .not.toContainClass("visual_failure");
 
-    const addBtn = productsPage.getAddToCartButton(
-      ProductPageItemIds.Backpack,
-    );
+    const addBtn = productsPage.getAddToCartButton(ProductPageItemIds.Backpack);
     const addBtnDetails = productsPage.addToCardButton;
     const removeBtn = productsPage.getRemoveFromCartButton(
       ProductPageItemIds.Backpack,
@@ -258,29 +213,19 @@ test.describe("Add/Remove from cart - different users", () => {
     }
   });
 
-  test("should remove item from cart on the details page - glitch user --> BUG: back navigation takes more than 1.5s", async ({
+  performanceGlitchUser("should remove item from cart on the details page - glitch user --> BUG: back navigation takes more than 1.5s", async ({
     page,
-    loginPage,
+    loginPage:_,
     productsPage,
   }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_PERFORMACE_GLITCH_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
-    await expect.soft(productsPage.shoppingCartLink).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     await expect
       .soft(productsPage.shopingCartContainer)
       .not.toContainClass("visual_failure");
 
-    const addBtn = productsPage.getAddToCartButton(
-      ProductPageItemIds.Backpack,
-    );
+    const addBtn = productsPage.getAddToCartButton(ProductPageItemIds.Backpack);
     const addBtnDetails = productsPage.addToCardButton;
     const removeBtn = productsPage.getRemoveFromCartButton(
       ProductPageItemIds.Backpack,

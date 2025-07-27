@@ -7,7 +7,6 @@ export class CartPage extends BasePage {
   private readonly cartItems = this.page.getByTestId("inventory-item");
   public readonly checkoutButton = this.page.getByTestId("checkout");
 
-
   public async clickContinueShopping(): Promise<void> {
     await this.safeClick(this.continueShoppingButton);
   }

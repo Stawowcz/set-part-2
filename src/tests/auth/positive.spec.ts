@@ -1,37 +1,30 @@
-import { test, expect } from "@fixtures";
+import {
+  standardUser,
+  lockedUser,
+  expect,
+  test,
+} from "@fixtures";
 import { SharedTexts } from "@typings/common";
-import { env }  from '@utils';
+import { env } from "@utils";
 
 test.describe("Positive scenarios – authentication with different users", () => {
-  test("should log in - standard user", async ({
-    loginPage,
+  standardUser(
+    "should log in - standard user",
+    async ({ loginPage: _, productsPage, page }) => {
+      await expect.soft(page).toHaveURL(/.*inventory/);
+      await expect
+        .soft(productsPage.primaryHeader)
+        .toContainText(SharedTexts.PrimaryHeader);
+      await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+      await expect.soft(productsPage.shoppingCartLink).toBeVisible();
+    },
+  );
+
+  lockedUser("should log in – locked out user --> BUG: user is locked", async ({
+    loginPage: _,
     productsPage,
     page,
   }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_STANDARD_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
-
-    await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
-    await expect.soft(productsPage.shoppingCartLink).toBeVisible();
-  });
-
-  test("should log in – locked out user --> BUG: user is locked", async ({
-    loginPage,
-    productsPage,
-    page,
-  }) => {
-    //here I show that user does not work, this is how I understand it that I need to show where application does not work properly or user is corrupted
-    await loginPage.login(
-      env.SAUCE_DEMO_LOCKED_OUT_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
-
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect
       .soft(productsPage.primaryHeader)

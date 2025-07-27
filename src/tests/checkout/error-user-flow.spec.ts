@@ -1,31 +1,20 @@
-import { test, expect } from '@fixtures';
-import { ProductPageNames, ProductPageItemIds } from "@typings/products";
+import { test, expect, problemUser, errorUser, performanceGlitchUser, visualUser } from "@fixtures";
+import { ProductPageNames, ProductPageItemIds, ProductsPageTexts } from "@typings/products";
 import { CheckoutFormData } from "@typings/checkout";
 import { CheckoutDataGenerator, PricingUtils, env } from "@utils";
 import { CartPageTexts } from "@typings/cart";
-import {
-  CheckoutPageTexts,
-} from "@typings/checkout/checkout-enums";
-import { SharedTexts } from '@typings/common';
-
+import { CheckoutPageTexts } from "@typings/checkout/checkout-enums";
+import { SharedTexts } from "@typings/common";
 
 // I didn’t repeat all the same tests for the problem user as for the standard user to reduce the amount of code to review.
 // Most of them fail the same way for this user — the bug is that the last name field cannot be typed in.
-test.describe("Checkout flow - problem user", () => {
-  test.beforeEach(async ({ page, loginPage, productsPage }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_PROBLEM_USER,
-      env.SAUCE_DEMO_PASSWORD
-    );
-
+problemUser.describe("Checkout flow - problem user", () => {
+  problemUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
-  test("should add 2 items and complete checkout successfully --> BUG: unable to type in the last name field", async ({
+  problemUser("should add 2 items and complete checkout successfully --> BUG: unable to type in the last name field", async ({
     page,
     productsPage,
     checkoutPage,
@@ -48,9 +37,7 @@ test.describe("Checkout flow - problem user", () => {
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
@@ -81,7 +68,8 @@ test.describe("Checkout flow - problem user", () => {
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
-    const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
+    const formData: CheckoutFormData =
+      CheckoutDataGenerator.generateCheckoutFormData();
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
@@ -129,7 +117,7 @@ test.describe("Checkout flow - problem user", () => {
     await expect.soft(page).toHaveURL(/.*checkout-complete/);
   });
 
-  test("should add 2 items from product details pages, and complete checkout successfully --> BUG: unable to add item from the product details page", async ({
+  problemUser("should add 2 items from product details pages, and complete checkout successfully --> BUG: unable to add item from the product details page", async ({
     page,
     productsPage,
     cartPage,
@@ -150,9 +138,7 @@ test.describe("Checkout flow - problem user", () => {
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
@@ -179,7 +165,8 @@ test.describe("Checkout flow - problem user", () => {
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
-    const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
+    const formData: CheckoutFormData =
+      CheckoutDataGenerator.generateCheckoutFormData();
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
@@ -230,21 +217,14 @@ test.describe("Checkout flow - problem user", () => {
 
 // I didn’t repeat all the same tests for the error user as for the standard user to reduce the amount of code to review.
 // Most of them fail the same way for this user — the bug is that the finish button can not be clicked.
-test.describe("Checkout flow - error user", () => {
-  test.beforeEach(async ({ page, loginPage, productsPage }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_ERROR_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
+errorUser.describe("Checkout flow - error user", () => {
+  errorUser.beforeEach(async ({ page, loginPage:_, productsPage }) => {
 
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
-  test("should add 2 items and complete checkout successfully --> BUG: unable to click the finish button", async ({
+  errorUser("should add 2 items and complete checkout successfully --> BUG: unable to click the finish button", async ({
     page,
     productsPage,
     checkoutPage,
@@ -267,9 +247,7 @@ test.describe("Checkout flow - error user", () => {
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
@@ -300,7 +278,8 @@ test.describe("Checkout flow - error user", () => {
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
-    const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
+    const formData: CheckoutFormData =
+      CheckoutDataGenerator.generateCheckoutFormData();
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
@@ -348,7 +327,7 @@ test.describe("Checkout flow - error user", () => {
     await expect.soft(page).toHaveURL(/.*checkout-complete/);
   });
 
-  test("should remove one item after continuing shopping, then complete checkout --> BUG: unable to click the remove and finish button", async ({
+  errorUser("should remove one item after continuing shopping, then complete checkout --> BUG: unable to click the remove and finish button", async ({
     page,
     productsPage,
     checkoutPage,
@@ -367,9 +346,7 @@ test.describe("Checkout flow - error user", () => {
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
@@ -400,9 +377,7 @@ test.describe("Checkout flow - error user", () => {
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
     const updatedCartQuantities = await checkoutPage.itemQuantity.count();
 
@@ -464,21 +439,13 @@ test.describe("Checkout flow - error user", () => {
 
 // I didn’t repeat all the same tests for the glitch user as for the standard user to reduce the amount of code to review.
 // I only included the cases where the glitch bug actually occurs (see below).
-test.describe("Checkout flow - glitch user", () => {
-  test.beforeEach(async ({ page, loginPage, productsPage }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_PERFORMACE_GLITCH_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
-
+performanceGlitchUser.describe("Checkout flow - glitch user", () => {
+  performanceGlitchUser.beforeEach(async ({ page, loginPage:_, productsPage }) => {
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
-  test("should remove one item after continuing shopping, then complete checkout --> BUG: continue shopping takes more than 1.5s", async ({
+  performanceGlitchUser("should remove one item after continuing shopping, then complete checkout --> BUG: continue shopping takes more than 1.5s", async ({
     page,
     productsPage,
     checkoutPage,
@@ -498,9 +465,7 @@ test.describe("Checkout flow - glitch user", () => {
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
@@ -535,9 +500,7 @@ test.describe("Checkout flow - glitch user", () => {
 
     await expect.soft(page).toHaveURL(/.*cart/);
 
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
     const updatedCartQuantities = await checkoutPage.itemQuantity.count();
 
@@ -597,7 +560,7 @@ test.describe("Checkout flow - glitch user", () => {
     await expect.soft(page).toHaveURL(/.*checkout-complete/);
   });
 
-  test("should cancel on the overview page, return to inventory, and preserve items --> BUG: cancel takes more than 1.5s", async ({
+  performanceGlitchUser("should cancel on the overview page, return to inventory, and preserve items --> BUG: cancel takes more than 1.5s", async ({
     page,
     productsPage,
     checkoutPage,
@@ -619,9 +582,7 @@ test.describe("Checkout flow - glitch user", () => {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
     }
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
     await cartPage.clickCheckout();
     await expect.soft(page).toHaveURL(/.*checkout-step-one/);
@@ -662,21 +623,13 @@ test.describe("Checkout flow - glitch user", () => {
 
 // I didn’t repeat all the same tests for the visual user as for the standard user to reduce the amount of code to review.
 // I only included the cases where the visual bug actually occurs (see below).
-test.describe("Checkout flow - visual user", () => {
-  test.beforeEach(async ({ page, loginPage, productsPage }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_VISUAL_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
-
+visualUser.describe("Checkout flow - visual user", () => {
+  visualUser.beforeEach(async ({ page, loginPage:_, productsPage }) => {
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
-  test("should add 2 items and complete checkout successfully --> BUGS: incorrect price in the inventory, and forbidden class on the checkout button", async ({
+  visualUser("should add 2 items and complete checkout successfully --> BUGS: incorrect price in the inventory, and forbidden class on the checkout button", async ({
     page,
     productsPage,
     checkoutPage,
@@ -698,9 +651,7 @@ test.describe("Checkout flow - visual user", () => {
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
@@ -730,7 +681,8 @@ test.describe("Checkout flow - visual user", () => {
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
-    const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
+    const formData: CheckoutFormData =
+      CheckoutDataGenerator.generateCheckoutFormData();
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 

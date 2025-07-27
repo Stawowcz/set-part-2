@@ -5,12 +5,10 @@ export abstract class BasePage {
   protected readonly page: Page;
   public readonly title: Locator;
 
-
   public constructor(page: Page) {
     this.page = page;
     this.title = this.page.getByTestId("title");
   }
-
 
   public async goto(
     url: string = "/",

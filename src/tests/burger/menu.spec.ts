@@ -1,24 +1,16 @@
-import { test, expect } from "@fixtures";
+import { test, expect, standardUser, problemUser, errorUser } from "@fixtures";
 import { SharedTexts } from "@typings/common";
-import { ProductPageItemIds } from "@typings/products";
-import { env }  from '@utils';
+import { ProductPageItemIds, ProductsPageTexts } from "@typings/products";
+import { env } from "@utils";
 
 test.describe("Navigation - burger menu scenarios for different users", () => {
-  test.describe("Burger menu scenarios - standard user", () => {
-    test.beforeEach(async ({ page, loginPage, productsPage }) => {
-      await loginPage.login(
-        env.SAUCE_DEMO_STANDARD_USER,
-        env.SAUCE_DEMO_PASSWORD,
-      );
-
+  standardUser.describe("Burger menu scenarios - standard user", () => {
+    standardUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
       await expect.soft(page).toHaveURL(/.*inventory/);
-      await expect
-        .soft(productsPage.primaryHeader)
-        .toContainText(SharedTexts.PrimaryHeader);
-      await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    test("should navigate to Saucelabs in the same tab when clicking 'About'", async ({
+    standardUser("should navigate to Saucelabs in the same tab when clicking 'About'", async ({
       page,
       productsPage,
       aboutPage,
@@ -34,7 +26,7 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
       await expect.soft(aboutPage.sauceLabHeader).toBeVisible();
     });
 
-    test("should navigate to login page after clicking 'Logout'", async ({
+    standardUser("should navigate to login page after clicking 'Logout'", async ({
       page,
       productsPage,
     }) => {
@@ -44,27 +36,17 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
 
       await productsPage.clickLogout();
 
-      await expect
-        .soft(page)
-        .toHaveURL(env.SAUCE_DEMO_BASEURL);
+      await expect.soft(page).toHaveURL(env.SAUCE_DEMO_BASEURL);
     });
   });
 
-  test.describe("Burger menu scenarios - problem user", () => {
-    test.beforeEach(async ({ page, loginPage, productsPage }) => {
-      await loginPage.login(
-        env.SAUCE_DEMO_PROBLEM_USER,
-        env.SAUCE_DEMO_PASSWORD,
-      );
-
+  problemUser.describe("Burger menu scenarios - problem user", () => {
+    problemUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
       await expect.soft(page).toHaveURL(/.*inventory/);
-      await expect
-        .soft(productsPage.primaryHeader)
-        .toContainText(SharedTexts.PrimaryHeader);
-      await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    test("should navigate to Saucelabs in the same tab when clicking 'About' --> BUG: 404 page shown", async ({
+    problemUser("should navigate to Saucelabs in the same tab when clicking 'About' --> BUG: 404 page shown", async ({
       page,
       productsPage,
       aboutPage,
@@ -80,7 +62,7 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
       await expect.soft(aboutPage.sauceLabHeader).toBeVisible();
     });
 
-    test("should navigate to login page after clicking 'Logout'", async ({
+    problemUser("should navigate to login page after clicking 'Logout'", async ({
       page,
       productsPage,
     }) => {
@@ -90,27 +72,21 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
 
       await productsPage.clickLogout();
 
-      await expect
-        .soft(page)
-        .toHaveURL(env.SAUCE_DEMO_BASEURL);
+      await expect.soft(page).toHaveURL(env.SAUCE_DEMO_BASEURL);
     });
   });
 
-  test.describe("Burger menu scenarios - error user", () => {
-    test.beforeEach(async ({ page, loginPage, productsPage }) => {
-      await loginPage.login(
-        env.SAUCE_DEMO_ERROR_USER,
-        env.SAUCE_DEMO_PASSWORD,
-      );
-
+  errorUser.describe("Burger menu scenarios - error user", () => {
+    errorUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
       await expect.soft(page).toHaveURL(/.*inventory/);
-      await expect
-        .soft(productsPage.primaryHeader)
-        .toContainText(SharedTexts.PrimaryHeader);
-      await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
+      // await expect
+      //   .soft(productsPage.primaryHeader)
+      //   .toContainText(SharedTexts.PrimaryHeader);
+      // await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     });
 
-    test("should navigate to Saucelabs in the same tab when clicking 'About'", async ({
+    errorUser("should navigate to Saucelabs in the same tab when clicking 'About'", async ({
       page,
       productsPage,
       aboutPage,
@@ -126,7 +102,7 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
       await expect.soft(aboutPage.sauceLabHeader).toBeVisible();
     });
 
-    test("should navigate to login page after clicking 'Logout'", async ({
+    errorUser("should navigate to login page after clicking 'Logout'", async ({
       page,
       productsPage,
     }) => {
@@ -136,27 +112,17 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
 
       await productsPage.clickLogout();
 
-      await expect
-        .soft(page)
-        .toHaveURL(env.SAUCE_DEMO_BASEURL);
+      await expect.soft(page).toHaveURL(env.SAUCE_DEMO_BASEURL);
     });
   });
 
-  test.describe("Reset app state via burger menu – standard user", () => {
-    test.beforeEach(async ({ page, loginPage, productsPage }) => {
-      await loginPage.login(
-        env.SAUCE_DEMO_STANDARD_USER,
-        env.SAUCE_DEMO_PASSWORD,
-      );
-
+  standardUser.describe("Reset app state via burger menu – standard user", () => {
+    standardUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
       await expect.soft(page).toHaveURL(/.*inventory/);
-      await expect
-        .soft(productsPage.primaryHeader)
-        .toContainText(SharedTexts.PrimaryHeader);
-      await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    test("should reset cart, filters and buttons --> BUG: reset does not affect the state", async ({
+    standardUser("should reset cart, filters and buttons --> BUG: reset does not affect the state", async ({
       productsPage,
     }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
@@ -208,21 +174,13 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
     });
   });
 
-  test.describe("Reset app state via burger menu - problem user", () => {
-    test.beforeEach(async ({ page, loginPage, productsPage }) => {
-      await loginPage.login(
-        env.SAUCE_DEMO_PROBLEM_USER,
-        env.SAUCE_DEMO_PASSWORD,
-      );
-
+  problemUser.describe("Reset app state via burger menu - problem user", () => {
+    problemUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
       await expect.soft(page).toHaveURL(/.*inventory/);
-      await expect
-        .soft(productsPage.primaryHeader)
-        .toContainText(SharedTexts.PrimaryHeader);
-      await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    test("sshould reset cart, filters and buttons --> BUG: reset does not affect the state", async ({
+    problemUser("sshould reset cart, filters and buttons --> BUG: reset does not affect the state", async ({
       productsPage,
     }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);

@@ -78,7 +78,9 @@ export class ProductsPage extends BasePage {
     await this.safeClick(this.removeFromCardButton);
   }
 
-  public async removeProductToCart(productId: ProductPageItemIds): Promise<void> {
+  public async removeProductToCart(
+    productId: ProductPageItemIds,
+  ): Promise<void> {
     const btn = this.getRemoveFromCartButton(productId);
     await this.safeClick(btn);
   }

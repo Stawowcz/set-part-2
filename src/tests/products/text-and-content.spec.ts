@@ -1,22 +1,15 @@
-import { test, expect } from "@fixtures";
+import { test, expect, standardUser, visualUser } from "@fixtures";
 import { suspiciousPatterns, forbiddenCssClasses, env } from "@utils";
 import { SharedTexts } from "@typings/common";
+import { ProductsPageTexts } from "@typings/products";
 
-test.describe("Products - content and style checks - standard user", () => {
-  test.beforeEach(async ({ page, loginPage, productsPage }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_STANDARD_USER,
-      env.SAUCE_DEMO_PASSWORD
-    );
-
+standardUser.describe("Products - content and style checks - standard user", () => {
+  standardUser.beforeEach(async ({ page, loginPage:_, productsPage }) => {
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
-  test("should not contain suspicious patterns in product names or descriptions --> BUG: found in some entries", async ({
+  standardUser("should not contain suspicious patterns in product names or descriptions --> BUG: found in some entries", async ({
     productsPage,
   }) => {
     const names = await productsPage.getAllProductTitles.allTextContents();
@@ -45,7 +38,7 @@ test.describe("Products - content and style checks - standard user", () => {
     expect.soft(errors.length, errors.join("\n")).toBe(0);
   });
 
-  test("should align product names correctly", async ({ productsPage }) => {
+  standardUser("should align product names correctly", async ({ productsPage }) => {
     const nameElements = await productsPage.getAllProductTitles.all();
     const misalignedNames: string[] = [];
 
@@ -65,7 +58,7 @@ test.describe("Products - content and style checks - standard user", () => {
     expect.soft(misalignedNames.length, misalignedNames.join("\n")).toBe(0);
   });
 
-  test("should not apply forbidden classes to Add to Cart buttons", async ({
+  standardUser("should not apply forbidden classes to Add to Cart buttons", async ({
     productsPage,
   }) => {
     const addToCartbuttons = await productsPage.getAddToCartButtonByRole.all();
@@ -88,21 +81,13 @@ test.describe("Products - content and style checks - standard user", () => {
   });
 });
 
-test.describe("Products - content and style checks - visual user", () => {
-  test.beforeEach(async ({ page, loginPage, productsPage }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_VISUAL_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
-
+visualUser.describe("Products - content and style checks - visual user", () => {
+  visualUser.beforeEach(async ({ page, loginPage:_, productsPage }) => {
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
-  test("should not contain suspicious patterns in product names or descriptions --> BUG: found in some entries", async ({
+  visualUser("should not contain suspicious patterns in product names or descriptions --> BUG: found in some entries", async ({
     productsPage,
   }) => {
     const names = await productsPage.getAllProductTitles.allTextContents();
@@ -131,7 +116,7 @@ test.describe("Products - content and style checks - visual user", () => {
     expect.soft(errors.length, errors.join("\n")).toBe(0);
   });
 
-  test("should align product names correctly -->  BUG: some names are right-aligned", async ({
+  visualUser("should align product names correctly -->  BUG: some names are right-aligned", async ({
     productsPage,
   }) => {
     const nameElements = await productsPage.getAllProductTitles.all();
@@ -153,7 +138,7 @@ test.describe("Products - content and style checks - visual user", () => {
     expect.soft(misalignedNames.length, misalignedNames.join("\n")).toBe(0);
   });
 
-  test("should not apply forbidden classes to Add to Cart buttons --> BUG: class btn_inventory_misaligned present", async ({
+  visualUser("should not apply forbidden classes to Add to Cart buttons --> BUG: class btn_inventory_misaligned present", async ({
     productsPage,
   }) => {
     const addToCartbuttons = await productsPage.getAddToCartButtonByRole.all();

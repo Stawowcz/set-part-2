@@ -1,33 +1,25 @@
-import { test, expect } from '@fixtures';
-import { ProductPageItemIds } from "@typings/products";
+import { test, expect, standardUser, errorUser, problemUser } from "@fixtures";
+import { ProductPageItemIds, ProductsPageTexts } from "@typings/products";
 import { CheckoutDataGenerator, env } from "@utils";
 import { CartPageTexts } from "@typings/cart";
 import {
   CheckoutFormData,
   CheckoutPageTexts,
   CheckoutPageErrorMessages,
-} from '@typings/checkout/';
+} from "@typings/checkout/";
 
 import { SharedTexts } from "../../types/common/common-enums";
 
 test.describe("Negative scenario – error handling in the checkout personal information form", () => {
-  test("should display an error message in the checkout personal information form - standard user", async ({
+  standardUser("should display an error message in the checkout personal information form - standard user", async ({
     page,
-    loginPage,
+    loginPage:_,
     productsPage,
     checkoutPage,
     cartPage,
   }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_STANDARD_USER,
-      env.SAUCE_DEMO_PASSWORD
-    );
-
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
 
     await productsPage.addProductToCart(ProductPageItemIds.Backpack);
     await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -38,9 +30,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
     await cartPage.clickCheckout();
 
@@ -49,7 +39,8 @@ test.describe("Negative scenario – error handling in the checkout personal inf
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
-    const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
+    const formData: CheckoutFormData =
+      CheckoutDataGenerator.generateCheckoutFormData();
 
     await test.step("should fill in last name and postal code, then attempt to continue without first name", async () => {
       await checkoutPage.fillLastName(formData.lastName);
@@ -84,23 +75,15 @@ test.describe("Negative scenario – error handling in the checkout personal inf
     });
   });
 
-  test("should display an error message in the checkout personal information form - error user --> BUG: unable to type in the last name field", async ({
+  errorUser("should display an error message in the checkout personal information form - error user --> BUG: unable to type in the last name field", async ({
     page,
-    loginPage,
+    loginPage:_,
     productsPage,
     checkoutPage,
     cartPage,
   }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_ERROR_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
-
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
 
     await productsPage.addProductToCart(ProductPageItemIds.Backpack);
     await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -111,9 +94,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
     await cartPage.clickCheckout();
 
@@ -122,7 +103,8 @@ test.describe("Negative scenario – error handling in the checkout personal inf
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
-    const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
+    const formData: CheckoutFormData =
+      CheckoutDataGenerator.generateCheckoutFormData();
 
     await test.step("should fill in last name and postal code, then attempt to continue without first name", async () => {
       await checkoutPage.fillLastName(formData.lastName);
@@ -157,23 +139,15 @@ test.describe("Negative scenario – error handling in the checkout personal inf
     });
   });
 
-  test("should display an error message in the checkout personal information form - problem user --> BUG: unable to type in the last name field – input overwrites first name instead", async ({
+  problemUser("should display an error message in the checkout personal information form - problem user --> BUG: unable to type in the last name field – input overwrites first name instead", async ({
     page,
-    loginPage,
+    loginPage:_,
     productsPage,
     checkoutPage,
     cartPage,
   }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_PROBLEM_USER,
-      env.SAUCE_DEMO_PASSWORD,
-    );
-
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
 
     await productsPage.addProductToCart(ProductPageItemIds.Backpack);
     await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -184,9 +158,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
     await cartPage.clickCheckout();
 
@@ -195,7 +167,8 @@ test.describe("Negative scenario – error handling in the checkout personal inf
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
-    const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
+    const formData: CheckoutFormData =
+      CheckoutDataGenerator.generateCheckoutFormData();
 
     await test.step("should fill in last name and postal code, then attempt to continue without first name", async () => {
       await checkoutPage.fillLastName(formData.lastName);

@@ -1,25 +1,14 @@
 import { test, expect } from "@fixtures";
-import {
-  ProductPageItemIds,
-  ProductPageNames,
-} from "@typings/products";
+import { ProductPageItemIds, ProductPageNames, ProductsPageTexts } from "@typings/products";
 import { CheckoutFormData, CheckoutPageTexts } from "@typings/checkout";
 import { CartPageTexts } from "@typings/cart";
 import { SharedTexts } from "@typings/common";
-import { PricingUtils, env, CheckoutDataGenerator} from "@utils";
+import { PricingUtils, env, CheckoutDataGenerator } from "@utils";
 
 test.describe("Checkout flow - standard user", () => {
-  test.beforeEach(async ({ page, loginPage, productsPage }) => {
-    await loginPage.login(
-      env.SAUCE_DEMO_STANDARD_USER,
-      env.SAUCE_DEMO_PASSWORD
-    );
-
+  test.beforeEach(async ({ page, loginPage:_, productsPage }) => {
     await expect.soft(page).toHaveURL(/.*inventory/);
-    await expect
-      .soft(productsPage.primaryHeader)
-      .toContainText(SharedTexts.PrimaryHeader);
-    await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
   test("should add 2 items and complete checkout successfully", async ({
@@ -44,9 +33,7 @@ test.describe("Checkout flow - standard user", () => {
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
@@ -74,7 +61,8 @@ test.describe("Checkout flow - standard user", () => {
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
-    const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
+    const formData: CheckoutFormData =
+      CheckoutDataGenerator.generateCheckoutFormData();
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
@@ -138,9 +126,7 @@ test.describe("Checkout flow - standard user", () => {
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
@@ -173,9 +159,7 @@ test.describe("Checkout flow - standard user", () => {
 
     await expect.soft(page).toHaveURL(/.*cart/);
 
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
     const updatedCartQuantities = await checkoutPage.itemQuantity.count();
     for (let i = 0; i < updatedCartQuantities; i++) {
@@ -260,9 +244,7 @@ test.describe("Checkout flow - standard user", () => {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
     }
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
     const cartPriceBP = await cartPage.getProductPriceByName(
       ProductPageNames.Backpack,
@@ -284,9 +266,7 @@ test.describe("Checkout flow - standard user", () => {
     await checkoutPage.clickCancel();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
     for (let i = 0; i < cartQuantities; i++) {
       const quantity = checkoutPage.itemQuantity.nth(i);
@@ -367,9 +347,7 @@ test.describe("Checkout flow - standard user", () => {
       await expect.soft(quantity).toHaveText("1");
     }
 
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
     await cartPage.clickCheckout();
 
@@ -434,9 +412,7 @@ test.describe("Checkout flow - standard user", () => {
       await expect.soft(quantity).toHaveText("1");
     }
 
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     await expect.soft(cartPage.getCartItemsCount()).resolves.toBe(2);
 
     await cartPage.removeProductFromCart(ProductPageItemIds.Backpack);
@@ -465,9 +441,7 @@ test.describe("Checkout flow - standard user", () => {
       const quantity = checkoutPage.itemQuantity.nth(i);
       await expect.soft(quantity).toHaveText("1");
     }
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
     await cartPage.clickCheckout();
 
@@ -539,9 +513,7 @@ test.describe("Checkout flow - standard user", () => {
     await productsPage.clickOnCartBasket();
 
     await expect.soft(page).toHaveURL(/.*cart/);
-    await expect
-      .soft(cartPage.title)
-      .toHaveText(CartPageTexts.Header);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
@@ -568,7 +540,8 @@ test.describe("Checkout flow - standard user", () => {
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
-    const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
+    const formData: CheckoutFormData =
+      CheckoutDataGenerator.generateCheckoutFormData();
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
@@ -616,5 +589,3 @@ test.describe("Checkout flow - standard user", () => {
     await expect.soft(page).toHaveURL(/.*checkout-complete/);
   });
 });
-
-

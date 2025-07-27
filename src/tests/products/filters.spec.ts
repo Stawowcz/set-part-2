@@ -1,23 +1,16 @@
-import { test, expect } from "@fixtures";
-import { SharedTexts } from "@typings/common"
-import { env }  from '@utils';
+import { test, expect, standardUser, problemUser, errorUser, visualUser, performanceGlitchUser } from "@fixtures";
+import { SharedTexts } from "@typings/common";
+import { ProductsPageTexts } from "@typings/products";
+import { env } from "@utils";
 
 test.describe("Filters - different users", () => {
-  test.describe("Filters - standard user", () => {
-    test.beforeEach(async ({ page, loginPage, productsPage }) => {
-      await loginPage.login(
-        env.SAUCE_DEMO_STANDARD_USER,
-        env.SAUCE_DEMO_PASSWORD
-      );
-
+  standardUser.describe("Filters - standard user", () => {
+    standardUser.beforeEach(async ({ page, loginPage:_, productsPage }) => {
       await expect.soft(page).toHaveURL(/.*inventory/);
-      await expect
-        .soft(productsPage.primaryHeader)
-        .toContainText(SharedTexts.PrimaryHeader);
-      await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    test("should sort A --> Z", async ({ productsPage }) => {
+    standardUser("should sort A --> Z", async ({ productsPage }) => {
       const start = Date.now();
       await productsPage.sortDropdown.selectOption("az");
       const names = await productsPage.getAllProductTitles.allTextContents();
@@ -27,7 +20,7 @@ test.describe("Filters - different users", () => {
       expect.soft(names).toEqual([...names].sort());
     });
 
-    test("should sort Z --> A", async ({ productsPage }) => {
+    standardUser("should sort Z --> A", async ({ productsPage }) => {
       const start = Date.now();
       await productsPage.sortDropdown.selectOption("za");
       const names = await productsPage.getAllProductTitles.allTextContents();
@@ -37,7 +30,7 @@ test.describe("Filters - different users", () => {
       expect.soft(names).toEqual([...names].sort().reverse());
     });
 
-    test("should sort price low --> high", async ({ productsPage }) => {
+    standardUser("should sort price low --> high", async ({ productsPage }) => {
       const start = Date.now();
       await productsPage.sortDropdown.selectOption("lohi");
       const prices = (
@@ -49,7 +42,7 @@ test.describe("Filters - different users", () => {
       expect.soft(prices).toEqual([...prices].sort((a, b) => a - b));
     });
 
-    test("should sort price high --> low", async ({ productsPage }) => {
+    standardUser("should sort price high --> low", async ({ productsPage }) => {
       const start = Date.now();
       await productsPage.sortDropdown.selectOption("hilo");
       const prices = (
@@ -62,21 +55,13 @@ test.describe("Filters - different users", () => {
     });
   });
 
-  test.describe("Filters - problem user", () => {
-    test.beforeEach(async ({ page, loginPage, productsPage }) => {
-      await loginPage.login(
-        env.SAUCE_DEMO_PROBLEM_USER,
-        env.SAUCE_DEMO_PASSWORD,
-      );
-
+  problemUser.describe("Filters - problem user", () => {
+    problemUser.beforeEach(async ({ page, loginPage:_, productsPage }) => {
       await expect.soft(page).toHaveURL(/.*inventory/);
-      await expect
-        .soft(productsPage.primaryHeader)
-        .toContainText(SharedTexts.PrimaryHeader);
-      await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    test("should sort A --> Z", async ({ productsPage }) => {
+    problemUser("should sort A --> Z", async ({ productsPage }) => {
       const start = Date.now();
       await productsPage.sortDropdown.selectOption("az");
       const names = await productsPage.getAllProductTitles.allTextContents();
@@ -86,7 +71,7 @@ test.describe("Filters - different users", () => {
       expect.soft(names).toEqual([...names].sort());
     });
 
-    test("should sort Z --> A --> BUG: sorting order incorrect", async ({
+    problemUser("should sort Z --> A --> BUG: sorting order incorrect", async ({
       productsPage,
     }) => {
       const start = Date.now();
@@ -98,7 +83,7 @@ test.describe("Filters - different users", () => {
       expect.soft(names).toEqual([...names].sort().reverse());
     });
 
-    test("should sort price low --> high --> BUG: sorting order incorrect", async ({
+    problemUser("should sort price low --> high --> BUG: sorting order incorrect", async ({
       productsPage,
     }) => {
       const start = Date.now();
@@ -112,7 +97,7 @@ test.describe("Filters - different users", () => {
       expect.soft(prices).toEqual([...prices].sort((a, b) => a - b));
     });
 
-    test("should sort price high --> low --> BUG: sorting order incorrect", async ({
+    problemUser("should sort price high --> low --> BUG: sorting order incorrect", async ({
       productsPage,
     }) => {
       const start = Date.now();
@@ -127,21 +112,13 @@ test.describe("Filters - different users", () => {
     });
   });
 
-  test.describe("Filters - error user", () => {
-    test.beforeEach(async ({ page, loginPage, productsPage }) => {
-      await loginPage.login(
-        env.SAUCE_DEMO_ERROR_USER,
-        env.SAUCE_DEMO_PASSWORD,
-      );
-
+  errorUser.describe("Filters - error user", () => {
+    errorUser.beforeEach(async ({ page, loginPage:_, productsPage }) => {
       await expect.soft(page).toHaveURL(/.*inventory/);
-      await expect
-        .soft(productsPage.primaryHeader)
-        .toContainText(SharedTexts.PrimaryHeader);
-      await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    test("should sort A --> Z", async ({ productsPage }) => {
+    errorUser("should sort A --> Z", async ({ productsPage }) => {
       const start = Date.now();
       await productsPage.sortDropdown.selectOption("az");
       const names = await productsPage.getAllProductTitles.allTextContents();
@@ -151,7 +128,7 @@ test.describe("Filters - different users", () => {
       expect.soft(names).toEqual([...names].sort());
     });
 
-    test("should sort Z --> A --> BUG: sorting order incorrect", async ({
+    errorUser("should sort Z --> A --> BUG: sorting order incorrect", async ({
       productsPage,
     }) => {
       const start = Date.now();
@@ -163,7 +140,7 @@ test.describe("Filters - different users", () => {
       expect.soft(names).toEqual([...names].sort().reverse());
     });
 
-    test("should sort price low --> high --> BUG: sorting order incorrect", async ({
+    errorUser("should sort price low --> high --> BUG: sorting order incorrect", async ({
       productsPage,
     }) => {
       const start = Date.now();
@@ -177,7 +154,7 @@ test.describe("Filters - different users", () => {
       expect.soft(prices).toEqual([...prices].sort((a, b) => a - b));
     });
 
-    test("should sort price high --> low --> BUG: sorting order incorrect", async ({
+    errorUser("should sort price high --> low --> BUG: sorting order incorrect", async ({
       productsPage,
     }) => {
       const start = Date.now();
@@ -192,21 +169,13 @@ test.describe("Filters - different users", () => {
     });
   });
 
-  test.describe("Filters - visual user", () => {
-    test.beforeEach(async ({ page, loginPage, productsPage }) => {
-      await loginPage.login(
-        env.SAUCE_DEMO_VISUAL_USER,
-        env.SAUCE_DEMO_PASSWORD,
-      );
-
+  visualUser.describe("Filters - visual user", () => {
+    visualUser.beforeEach(async ({ page, loginPage:_, productsPage }) => {
       await expect.soft(page).toHaveURL(/.*inventory/);
-      await expect
-        .soft(productsPage.primaryHeader)
-        .toContainText(SharedTexts.PrimaryHeader);
-      await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    test("should sort A --> Z", async ({ productsPage }) => {
+    visualUser("should sort A --> Z", async ({ productsPage }) => {
       const start = Date.now();
       await productsPage.sortDropdown.selectOption("az");
       const names = await productsPage.getAllProductTitles.allTextContents();
@@ -216,7 +185,7 @@ test.describe("Filters - different users", () => {
       expect.soft(names).toEqual([...names].sort());
     });
 
-    test("should sort Z --> A", async ({ productsPage }) => {
+    visualUser("should sort Z --> A", async ({ productsPage }) => {
       const start = Date.now();
       await productsPage.sortDropdown.selectOption("za");
       const names = await productsPage.getAllProductTitles.allTextContents();
@@ -226,7 +195,7 @@ test.describe("Filters - different users", () => {
       expect.soft(names).toEqual([...names].sort().reverse());
     });
 
-    test("should sort price low --> high --> BUG: sorting order incorrect", async ({
+    visualUser("should sort price low --> high --> BUG: sorting order incorrect", async ({
       productsPage,
     }) => {
       const start = Date.now();
@@ -240,7 +209,7 @@ test.describe("Filters - different users", () => {
       expect.soft(prices).toEqual([...prices].sort((a, b) => a - b));
     });
 
-    test("should sort price high --> low --> BUG: sorting order incorrect", async ({
+    visualUser("should sort price high --> low --> BUG: sorting order incorrect", async ({
       productsPage,
     }) => {
       const start = Date.now();
@@ -255,21 +224,13 @@ test.describe("Filters - different users", () => {
     });
   });
 
-  test.describe("Filters - glitch user", () => {
-    test.beforeEach(async ({ page, loginPage, productsPage }) => {
-      await loginPage.login(
-        env.SAUCE_DEMO_PERFORMACE_GLITCH_USER,
-        env.SAUCE_DEMO_PASSWORD,
-      );
-
+  performanceGlitchUser.describe("Filters - glitch user", () => {
+    performanceGlitchUser.beforeEach(async ({ page, loginPage:_, productsPage }) => {
       await expect.soft(page).toHaveURL(/.*inventory/);
-      await expect
-        .soft(productsPage.primaryHeader)
-        .toContainText(SharedTexts.PrimaryHeader);
-      await expect.soft(productsPage.hamburgerMenu).toBeVisible();
+      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    test("should sort items A --> Z --> BUG: sorting takes more than 1.5s", async ({
+    performanceGlitchUser("should sort items A --> Z --> BUG: sorting takes more than 1.5s", async ({
       productsPage,
     }) => {
       const start = Date.now();
@@ -281,7 +242,7 @@ test.describe("Filters - different users", () => {
       expect.soft(names).toEqual([...names].sort());
     });
 
-    test("should sort Z --> A  --> BUG: sorting takes more than 1.5s", async ({
+    performanceGlitchUser("should sort Z --> A  --> BUG: sorting takes more than 1.5s", async ({
       productsPage,
     }) => {
       const start = Date.now();
@@ -293,7 +254,7 @@ test.describe("Filters - different users", () => {
       expect.soft(names).toEqual([...names].sort().reverse());
     });
 
-    test("should sort price low --> high --> BUG: sorting takes more than 1.5s", async ({
+    performanceGlitchUser("should sort price low --> high --> BUG: sorting takes more than 1.5s", async ({
       productsPage,
     }) => {
       const start = Date.now();
@@ -307,7 +268,7 @@ test.describe("Filters - different users", () => {
       expect.soft(prices).toEqual([...prices].sort((a, b) => a - b));
     });
 
-    test("should sort price high --> low --> BUG: sorting takes more than 1.5s", async ({
+    performanceGlitchUser("should sort price high --> low --> BUG: sorting takes more than 1.5s", async ({
       productsPage,
     }) => {
       const start = Date.now();
