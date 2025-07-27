@@ -80,10 +80,6 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
     errorUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
       await expect.soft(page).toHaveURL(/.*inventory/);
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
-      // await expect
-      //   .soft(productsPage.primaryHeader)
-      //   .toContainText(SharedTexts.PrimaryHeader);
-      // await expect.soft(productsPage.hamburgerMenu).toBeVisible();
     });
 
     errorUser("should navigate to Saucelabs in the same tab when clicking 'About'", async ({
