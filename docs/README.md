@@ -18,19 +18,28 @@ Create a `.env` file with:
 SAUCE_DEMO_BASEURL=https://www.saucedemo.com
 SAUCE_DEMO_STANDARD_USER=standard_user
 SAUCE_DEMO_LOCKED_OUT_USER=locked_out_user
-SAUCE_DEMO_PROBLEM_USER=problem_user
-SAUCE_DEMO_PERFORMANCE_GLITCH_USER=performance_glitch_user
-SAUCE_DEMO_ERROR_USER=error_user
-SAUCE_DEMO_VISUAL_USER=visual_user
-SAUCE_DEMO_PASSWORD=secret_sauce
 ```
 
 ## Running Tests
 
+To run all tests:
+
 ```bash
 npm run test:all
-npm run test:chromium    # or npm run test:firefox, npm run test:webkit
-npm run test-debug       # launches in headed mode with inspector
+```
+
+To run tests in debug mode (Chromium):
+
+```bash
+npm run test-debug:chrome
+```
+
+To run tests in specific browsers:
+
+```bash
+npm run test:chromium
+npm run test:firefox
+npm run test:safari
 ```
 
 ## Reporting
@@ -53,7 +62,7 @@ Configured in `.github/workflows/playwright.yml` to:
 ## Documentation
 
 - Framework overview, architecture details, patterns and usage examples:\
-  [`docs/documentation.md`](docs/documentation.md)
+  [`docs/documentation.md`](docs/architecture.md)
 - Assumptions & Limitations:\
   [`docs/assumptions-limitations.md`](docs/assumptions-limitations.md)
 
