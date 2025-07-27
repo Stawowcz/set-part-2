@@ -1,12 +1,12 @@
 import { test, expect } from '@fixtures';
-import { ProductPageItemIds } from "@typings/products/products-enums";
-import { CheckoutDataGenerator } from "@utils/data-generator-utils";
-import { CartPageTexts } from "@typings/cart/cart-enums";
+import { ProductPageItemIds } from "@typings/products";
+import { CheckoutDataGenerator, env } from "@utils";
+import { CartPageTexts } from "@typings/cart";
 import {
   CheckoutFormData,
   CheckoutPageTexts,
   CheckoutPageErrorMessages,
-} from '../../types/checkout';
+} from '@typings/checkout/';
 
 import { SharedTexts } from "../../types/common/common-enums";
 
@@ -19,8 +19,8 @@ test.describe("Negative scenario – error handling in the checkout personal inf
     cartPage,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_STANDARD_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_STANDARD_USER,
+      env.SAUCE_DEMO_PASSWORD
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -39,14 +39,14 @@ test.describe("Negative scenario – error handling in the checkout personal inf
 
     await expect.soft(page).toHaveURL(/.*cart/);
     await expect
-      .soft(cartPage.header)
+      .soft(cartPage.title)
       .toHaveText(CartPageTexts.Header);
 
     await cartPage.clickCheckout();
 
     await expect.soft(page).toHaveURL(/.*checkout-step-one/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
     const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
@@ -92,8 +92,8 @@ test.describe("Negative scenario – error handling in the checkout personal inf
     cartPage,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_ERROR_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_ERROR_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -112,14 +112,14 @@ test.describe("Negative scenario – error handling in the checkout personal inf
 
     await expect.soft(page).toHaveURL(/.*cart/);
     await expect
-      .soft(cartPage.header)
+      .soft(cartPage.title)
       .toHaveText(CartPageTexts.Header);
 
     await cartPage.clickCheckout();
 
     await expect.soft(page).toHaveURL(/.*checkout-step-one/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
     const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
@@ -165,8 +165,8 @@ test.describe("Negative scenario – error handling in the checkout personal inf
     cartPage,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_PROBLEM_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_PROBLEM_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -185,14 +185,14 @@ test.describe("Negative scenario – error handling in the checkout personal inf
 
     await expect.soft(page).toHaveURL(/.*cart/);
     await expect
-      .soft(cartPage.header)
+      .soft(cartPage.title)
       .toHaveText(CartPageTexts.Header);
 
     await cartPage.clickCheckout();
 
     await expect.soft(page).toHaveURL(/.*checkout-step-one/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
     const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();

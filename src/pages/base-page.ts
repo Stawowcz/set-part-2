@@ -1,21 +1,16 @@
 import { Locator, Page } from "@playwright/test";
+import { GotoOptions, LocatorWaitOptions } from "@typings/framework";
 
-export type GotoOptions = {
-  timeout?: number;
-  waitUntil?: "load" | "domcontentloaded" | "networkidle" | "commit";
-};
-
-export type LocatorWaitOptions = {
-  timeout?: number;
-  state?: "attached" | "detached" | "visible" | "hidden";
-};
-
-export class BasePage {
+export abstract class BasePage {
   protected readonly page: Page;
+  public readonly title: Locator;
+
 
   public constructor(page: Page) {
     this.page = page;
+    this.title = this.page.getByTestId("title");
   }
+
 
   public async goto(
     url: string = "/",

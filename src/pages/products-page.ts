@@ -1,29 +1,23 @@
 import { Locator } from "@playwright/test";
-import { BasePage } from "./base-page";
-import { ProductPageItemIds, ProductPageNames } from "../types/products/products-enums";
+import { BasePage } from "@pages";
+import { ProductPageItemIds, ProductPageNames } from "@typings/products";
 
 export class ProductsPage extends BasePage {
-  public readonly title: Locator = this.page.getByTestId("title");
   public readonly primaryHeader: Locator =
     this.page.getByTestId("primary-header");
   public readonly hamburgerMenu: Locator = this.page.getByTestId("open-menu");
-  public readonly hamburgerMenuButton: Locator = this.page.locator(
+  private readonly hamburgerMenuButton: Locator = this.page.locator(
     "#react-burger-menu-btn",
   );
   public readonly shoppingCartLink: Locator =
     this.page.getByTestId("shopping-cart-link");
-  public readonly cartBadge: Locator = this.page.getByTestId(
-    "shopping-cart-badge",
-  );
   public readonly addToCardButton: Locator =
     this.page.getByTestId("add-to-cart");
-  public readonly removeFromCardButton: Locator =
+  private readonly removeFromCardButton: Locator =
     this.page.getByTestId("remove");
   public readonly shopingCartContainer: Locator = this.page.locator(
     "#shopping_cart_container",
   );
-  public readonly cartLink: Locator =
-    this.page.getByTestId("shopping-cart-link");
   public getProductImageByAltText(altText: string): Locator {
     return this.page.locator(`img[alt="${altText}"]`);
   }
@@ -37,7 +31,7 @@ export class ProductsPage extends BasePage {
   public readonly sortDropdown: Locator = this.page.getByTestId(
     "product-sort-container",
   );
-  public readonly backToProductsButton =
+  private readonly backToProductsButton =
     this.page.getByTestId("back-to-products");
   public readonly getAllProductDescription: Locator = this.page.getByTestId(
     "inventory-item-desc",
@@ -62,13 +56,13 @@ export class ProductsPage extends BasePage {
   }
 
   public async clickOnCartBasket(): Promise<void> {
-    await this.safeClick(this.cartLink);
+    await this.safeClick(this.shoppingCartLink);
   }
 
   public async waitForCartBadge(): Promise<Locator> {
-    await this.cartBadge.waitFor({ state: "visible" });
-    await this.cartBadge.scrollIntoViewIfNeeded();
-    return this.cartBadge;
+    await this.getCartBadge.waitFor({ state: "visible" });
+    await this.getCartBadge.scrollIntoViewIfNeeded();
+    return this.getCartBadge;
   }
 
   public async addProductToCart(productId: ProductPageItemIds): Promise<void> {

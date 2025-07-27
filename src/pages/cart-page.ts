@@ -1,13 +1,12 @@
-import { BasePage } from "./base-page";
-import { ProductPageItemIds } from "@typings/products/products-enums";
+import { BasePage } from "@pages";
+import { ProductPageItemIds } from "@typings/products";
 
 export class CartPage extends BasePage {
-  public readonly continueShoppingButton =
+  private readonly continueShoppingButton =
     this.page.getByTestId("continue-shopping");
-  public readonly cartItems = this.page.getByTestId("inventory-item");
+  private readonly cartItems = this.page.getByTestId("inventory-item");
   public readonly checkoutButton = this.page.getByTestId("checkout");
-  public readonly header = this.page.getByTestId("title");
-  public readonly itemQuantity = this.page.getByTestId("item-quantity");
+
 
   public async clickContinueShopping(): Promise<void> {
     await this.safeClick(this.continueShoppingButton);

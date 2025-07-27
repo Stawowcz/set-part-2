@@ -1,13 +1,12 @@
-import { test } from "@fixtures";
-import { expect } from "@playwright/test";
-import { suspiciousPatterns, forbiddenCssClasses } from "@utils/patterns-utils";
-import { SharedTexts } from "@typings/common/common-enums";
+import { test, expect } from "@fixtures";
+import { suspiciousPatterns, forbiddenCssClasses, env } from "@utils";
+import { SharedTexts } from "@typings/common";
 
 test.describe("Products - content and style checks - standard user", () => {
   test.beforeEach(async ({ page, loginPage, productsPage }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_STANDARD_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_STANDARD_USER,
+      env.SAUCE_DEMO_PASSWORD
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -92,8 +91,8 @@ test.describe("Products - content and style checks - standard user", () => {
 test.describe("Products - content and style checks - visual user", () => {
   test.beforeEach(async ({ page, loginPage, productsPage }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_VISUAL_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_VISUAL_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);

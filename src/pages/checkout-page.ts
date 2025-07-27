@@ -1,21 +1,19 @@
 import { Locator } from "@playwright/test";
-import { BasePage } from "./base-page";
-import { CheckoutFormData } from "@typings/checkout/checkout-types";
+import { BasePage } from "@pages";
+import { CheckoutFormData } from "@typings/checkout";
 
 export class CheckoutPage extends BasePage {
-  public readonly firstName = this.page.getByTestId("firstName");
-  public readonly lastName = this.page.getByTestId("lastName");
-  public readonly postalCode = this.page.getByTestId("postalCode");
-  public readonly continueButton = this.page.getByTestId("continue");
-  public readonly finishButton = this.page.getByTestId("finish");
+  private readonly firstName = this.page.getByTestId("firstName");
+  private readonly lastName = this.page.getByTestId("lastName");
+  private readonly postalCode = this.page.getByTestId("postalCode");
+  private readonly continueButton = this.page.getByTestId("continue");
+  private readonly finishButton = this.page.getByTestId("finish");
   public readonly completeHeader = this.page.getByTestId("complete-header");
-  public readonly checkoutButton = this.page.getByTestId("checkout");
-  public readonly cancelButton = this.page.getByTestId("cancel");
-  public readonly header = this.page.getByTestId("title");
-  public readonly summarySubtotalLabel: Locator =
+  private readonly cancelButton = this.page.getByTestId("cancel");
+  private readonly summarySubtotalLabel: Locator =
     this.page.getByTestId("subtotal-label");
-  public readonly summaryTaxLabel = this.page.getByTestId("tax-label");
-  public readonly summaryTotalLabel = this.page.getByTestId("total-label");
+  private readonly summaryTaxLabel = this.page.getByTestId("tax-label");
+  private readonly summaryTotalLabel = this.page.getByTestId("total-label");
   public readonly itemQuantity = this.page.getByTestId("item-quantity");
   public readonly error = this.page.getByTestId("error");
   public async getOverviewItemsCount(): Promise<number> {

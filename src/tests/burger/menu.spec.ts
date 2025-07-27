@@ -1,14 +1,14 @@
-import { test } from "@fixtures";
-import { expect } from "@playwright/test";
-import { SharedTexts } from "@typings/common/common-enums";
-import { ProductPageItemIds } from "@typings/products/products-enums";
+import { test, expect } from "@fixtures";
+import { SharedTexts } from "@typings/common";
+import { ProductPageItemIds } from "@typings/products";
+import { env }  from '@utils';
 
 test.describe("Navigation - burger menu scenarios for different users", () => {
   test.describe("Burger menu scenarios - standard user", () => {
     test.beforeEach(async ({ page, loginPage, productsPage }) => {
       await loginPage.login(
-        process.env.SAUCE_DEMO_STANDARD_USER ?? "<unknown>",
-        process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+        env.SAUCE_DEMO_STANDARD_USER,
+        env.SAUCE_DEMO_PASSWORD,
       );
 
       await expect.soft(page).toHaveURL(/.*inventory/);
@@ -46,15 +46,15 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
 
       await expect
         .soft(page)
-        .toHaveURL(process.env.SAUCE_DEMO_BASEURL ?? "<unknown>");
+        .toHaveURL(env.SAUCE_DEMO_BASEURL);
     });
   });
 
   test.describe("Burger menu scenarios - problem user", () => {
     test.beforeEach(async ({ page, loginPage, productsPage }) => {
       await loginPage.login(
-        process.env.SAUCE_DEMO_PROBLEM_USER ?? "<unknown>",
-        process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+        env.SAUCE_DEMO_PROBLEM_USER,
+        env.SAUCE_DEMO_PASSWORD,
       );
 
       await expect.soft(page).toHaveURL(/.*inventory/);
@@ -92,15 +92,15 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
 
       await expect
         .soft(page)
-        .toHaveURL(process.env.SAUCE_DEMO_BASEURL ?? "<unknown>");
+        .toHaveURL(env.SAUCE_DEMO_BASEURL);
     });
   });
 
   test.describe("Burger menu scenarios - error user", () => {
     test.beforeEach(async ({ page, loginPage, productsPage }) => {
       await loginPage.login(
-        process.env.SAUCE_DEMO_ERROR_USER ?? "<unknown>",
-        process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+        env.SAUCE_DEMO_ERROR_USER,
+        env.SAUCE_DEMO_PASSWORD,
       );
 
       await expect.soft(page).toHaveURL(/.*inventory/);
@@ -138,15 +138,15 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
 
       await expect
         .soft(page)
-        .toHaveURL(process.env.SAUCE_DEMO_BASEURL ?? "<unknown>");
+        .toHaveURL(env.SAUCE_DEMO_BASEURL);
     });
   });
 
   test.describe("Reset app state via burger menu – standard user", () => {
     test.beforeEach(async ({ page, loginPage, productsPage }) => {
       await loginPage.login(
-        process.env.SAUCE_DEMO_STANDARD_USER ?? "<unknown>",
-        process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+        env.SAUCE_DEMO_STANDARD_USER,
+        env.SAUCE_DEMO_PASSWORD,
       );
 
       await expect.soft(page).toHaveURL(/.*inventory/);
@@ -211,8 +211,8 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
   test.describe("Reset app state via burger menu - problem user", () => {
     test.beforeEach(async ({ page, loginPage, productsPage }) => {
       await loginPage.login(
-        process.env.SAUCE_DEMO_PROBLEM_USER ?? "<unknown>",
-        process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+        env.SAUCE_DEMO_PROBLEM_USER,
+        env.SAUCE_DEMO_PASSWORD,
       );
 
       await expect.soft(page).toHaveURL(/.*inventory/);

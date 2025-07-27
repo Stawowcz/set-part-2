@@ -1,6 +1,6 @@
-import { test } from "@fixtures";
-import { expect } from "@playwright/test";
-import { SharedTexts } from "@typings/common/common-enums";
+import { test, expect } from "@fixtures";
+import { SharedTexts } from "@typings/common";
+import { env }  from '@utils';
 
 test.describe("Positive scenarios – authentication with different users", () => {
   test("should log in - standard user", async ({
@@ -9,8 +9,8 @@ test.describe("Positive scenarios – authentication with different users", () =
     page,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_STANDARD_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_STANDARD_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -28,8 +28,8 @@ test.describe("Positive scenarios – authentication with different users", () =
   }) => {
     //here I show that user does not work, this is how I understand it that I need to show where application does not work properly or user is corrupted
     await loginPage.login(
-      process.env.SAUCE_DEMO_LOCKED_OUT_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_LOCKED_OUT_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -44,12 +44,12 @@ test.describe("Positive scenarios – authentication with different users", () =
     loginPage,
     productsPage,
   }) => {
-    await loginPage.goto(process.env.SAUCE_DEMO_BASEURL ?? "<unknown>");
+    await loginPage.goto(env.SAUCE_DEMO_BASEURL);
     await loginPage.fillUserNameField(
-      process.env.SAUCE_DEMO_PERFORMACE_GLITCH_USER ?? "<unknown>",
+      env.SAUCE_DEMO_PERFORMACE_GLITCH_USER,
     );
     await loginPage.fillPasswordField(
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_PASSWORD,
     );
     const start = Date.now();
     await loginPage.clickOnLoginButton();

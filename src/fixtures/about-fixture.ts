@@ -1,6 +1,11 @@
-import { AboutPage } from '../pages/about-page';
+import type { Page } from '@playwright/test';
+import { AboutPage } from "@pages";
+
 export const aboutFixtures = {
-  aboutPage: async ({ page }, use) => {
+  aboutPage: async (
+    { page }: { page: Page },
+    use: (aboutPage: AboutPage) => Promise<void>
+  ) => {
     await use(new AboutPage(page));
   },
 };

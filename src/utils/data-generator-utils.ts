@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import type { CheckoutFormData } from "@typings/checkout/checkout-types";
+import type { CheckoutFormData } from "@typings/checkout";
 
 export class CheckoutDataGenerator {
   public static generateCheckoutFormData(): CheckoutFormData {

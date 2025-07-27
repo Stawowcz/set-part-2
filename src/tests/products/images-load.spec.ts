@@ -1,11 +1,11 @@
-import { test } from "@fixtures";
-import { expect } from "@playwright/test";
+import { test, expect } from "@fixtures";
 import {
   ProductsPageTexts,
   ProductPageNames,
   ProductPageImagePaths,
-} from "../../types/products/products-enums";
-import { SharedTexts } from "../../types/common/common-enums";
+} from "@typings/products";
+import { SharedTexts } from "@typings/common";
+import { env }  from '@utils';
 
 test.describe("Images loading - different users", () => {
   test("should load images correctly on the product page - standard user", async ({
@@ -14,8 +14,8 @@ test.describe("Images loading - different users", () => {
     productsPage,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_STANDARD_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_STANDARD_USER,
+      env.SAUCE_DEMO_PASSWORD
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -52,8 +52,8 @@ test.describe("Images loading - different users", () => {
     productsPage,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_PROBLEM_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_PROBLEM_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -90,8 +90,8 @@ test.describe("Images loading - different users", () => {
     productsPage,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_VISUAL_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_VISUAL_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);

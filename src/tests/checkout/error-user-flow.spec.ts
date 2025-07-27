@@ -1,13 +1,12 @@
 import { test, expect } from '@fixtures';
-import { ProductPageNames, ProductPageItemIds } from "@typings/products/products-enums";
-import { CheckoutFormData } from "@typings/checkout/checkout-types";
-import { CheckoutDataGenerator } from "@utils/data-generator-utils";
-import { CartPageTexts } from "@typings/cart/cart-enums";
+import { ProductPageNames, ProductPageItemIds } from "@typings/products";
+import { CheckoutFormData } from "@typings/checkout";
+import { CheckoutDataGenerator, PricingUtils, env } from "@utils";
+import { CartPageTexts } from "@typings/cart";
 import {
   CheckoutPageTexts,
 } from "@typings/checkout/checkout-enums";
-import { PricingUtils } from "@utils/pricing-utils";
-import { SharedTexts } from '@typings/common/common-enums';
+import { SharedTexts } from '@typings/common';
 
 
 // I didn’t repeat all the same tests for the problem user as for the standard user to reduce the amount of code to review.
@@ -15,8 +14,8 @@ import { SharedTexts } from '@typings/common/common-enums';
 test.describe("Checkout flow - problem user", () => {
   test.beforeEach(async ({ page, loginPage, productsPage }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_PROBLEM_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_PROBLEM_USER,
+      env.SAUCE_DEMO_PASSWORD
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -50,7 +49,7 @@ test.describe("Checkout flow - problem user", () => {
 
     await expect.soft(page).toHaveURL(/.*cart/);
     await expect
-      .soft(cartPage.header)
+      .soft(cartPage.title)
       .toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -79,7 +78,7 @@ test.describe("Checkout flow - problem user", () => {
 
     await expect.soft(page).toHaveURL(/.*checkout-step-one/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
     const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
@@ -88,7 +87,7 @@ test.describe("Checkout flow - problem user", () => {
 
     await expect.soft(page).toHaveURL(/.*checkout-step-two/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
 
     const overviewQuantities = await checkoutPage.itemQuantity.count();
@@ -152,7 +151,7 @@ test.describe("Checkout flow - problem user", () => {
 
     await expect.soft(page).toHaveURL(/.*cart/);
     await expect
-      .soft(cartPage.header)
+      .soft(cartPage.title)
       .toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -177,7 +176,7 @@ test.describe("Checkout flow - problem user", () => {
 
     await expect.soft(page).toHaveURL(/.*checkout-step-one/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
     const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
@@ -186,7 +185,7 @@ test.describe("Checkout flow - problem user", () => {
 
     await expect.soft(page).toHaveURL(/.*checkout-step-two/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
 
     const overviewQuantities = await checkoutPage.itemQuantity.count();
@@ -234,8 +233,8 @@ test.describe("Checkout flow - problem user", () => {
 test.describe("Checkout flow - error user", () => {
   test.beforeEach(async ({ page, loginPage, productsPage }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_ERROR_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_ERROR_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -269,7 +268,7 @@ test.describe("Checkout flow - error user", () => {
 
     await expect.soft(page).toHaveURL(/.*cart/);
     await expect
-      .soft(cartPage.header)
+      .soft(cartPage.title)
       .toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -298,7 +297,7 @@ test.describe("Checkout flow - error user", () => {
 
     await expect.soft(page).toHaveURL(/.*checkout-step-one/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
     const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
@@ -307,7 +306,7 @@ test.describe("Checkout flow - error user", () => {
 
     await expect.soft(page).toHaveURL(/.*checkout-step-two/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
 
     const overviewQuantities = await checkoutPage.itemQuantity.count();
@@ -369,7 +368,7 @@ test.describe("Checkout flow - error user", () => {
 
     await expect.soft(page).toHaveURL(/.*cart/);
     await expect
-      .soft(cartPage.header)
+      .soft(cartPage.title)
       .toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -402,7 +401,7 @@ test.describe("Checkout flow - error user", () => {
 
     await expect.soft(page).toHaveURL(/.*cart/);
     await expect
-      .soft(cartPage.header)
+      .soft(cartPage.title)
       .toHaveText(CartPageTexts.Header);
 
     const updatedCartQuantities = await checkoutPage.itemQuantity.count();
@@ -416,7 +415,7 @@ test.describe("Checkout flow - error user", () => {
 
     await expect.soft(page).toHaveURL(/.*checkout-step-one/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
     const formData = CheckoutDataGenerator.generateCheckoutFormData();
@@ -425,7 +424,7 @@ test.describe("Checkout flow - error user", () => {
 
     await expect.soft(page).toHaveURL(/.*checkout-step-two/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
 
     const overviewQuantities = await checkoutPage.itemQuantity.count();
@@ -468,8 +467,8 @@ test.describe("Checkout flow - error user", () => {
 test.describe("Checkout flow - glitch user", () => {
   test.beforeEach(async ({ page, loginPage, productsPage }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_PERFORMACE_GLITCH_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_PERFORMACE_GLITCH_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -500,7 +499,7 @@ test.describe("Checkout flow - glitch user", () => {
 
     await expect.soft(page).toHaveURL(/.*cart/);
     await expect
-      .soft(cartPage.header)
+      .soft(cartPage.title)
       .toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -537,7 +536,7 @@ test.describe("Checkout flow - glitch user", () => {
     await expect.soft(page).toHaveURL(/.*cart/);
 
     await expect
-      .soft(cartPage.header)
+      .soft(cartPage.title)
       .toHaveText(CartPageTexts.Header);
 
     const updatedCartQuantities = await checkoutPage.itemQuantity.count();
@@ -551,7 +550,7 @@ test.describe("Checkout flow - glitch user", () => {
 
     await expect.soft(page).toHaveURL(/.*checkout-step-one/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
     const formData = CheckoutDataGenerator.generateCheckoutFormData();
@@ -560,7 +559,7 @@ test.describe("Checkout flow - glitch user", () => {
 
     await expect.soft(page).toHaveURL(/.*checkout-step-two/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
 
     const overviewQuantities = await checkoutPage.itemQuantity.count();
@@ -621,13 +620,13 @@ test.describe("Checkout flow - glitch user", () => {
       await expect.soft(quantity).toHaveText("1");
     }
     await expect
-      .soft(cartPage.header)
+      .soft(cartPage.title)
       .toHaveText(CartPageTexts.Header);
 
     await cartPage.clickCheckout();
     await expect.soft(page).toHaveURL(/.*checkout-step-one/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
     const formData = CheckoutDataGenerator.generateCheckoutFormData();
@@ -644,7 +643,7 @@ test.describe("Checkout flow - glitch user", () => {
     }
 
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
     expect.soft(await checkoutPage.getOverviewItemsCount()).toBe(2);
 
@@ -666,8 +665,8 @@ test.describe("Checkout flow - glitch user", () => {
 test.describe("Checkout flow - visual user", () => {
   test.beforeEach(async ({ page, loginPage, productsPage }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_VISUAL_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_VISUAL_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -700,7 +699,7 @@ test.describe("Checkout flow - visual user", () => {
 
     await expect.soft(page).toHaveURL(/.*cart/);
     await expect
-      .soft(cartPage.header)
+      .soft(cartPage.title)
       .toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -728,7 +727,7 @@ test.describe("Checkout flow - visual user", () => {
 
     await expect.soft(page).toHaveURL(/.*checkout-step-one/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
     const formData: CheckoutFormData = CheckoutDataGenerator.generateCheckoutFormData();
@@ -737,7 +736,7 @@ test.describe("Checkout flow - visual user", () => {
 
     await expect.soft(page).toHaveURL(/.*checkout-step-two/);
     await expect
-      .soft(checkoutPage.header)
+      .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
 
     const overviewQuantities = await checkoutPage.itemQuantity.count();

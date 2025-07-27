@@ -1,10 +1,10 @@
 import { Locator } from "@playwright/test";
-import { BasePage } from "./base-page";
+import { BasePage } from "@pages";
 
 export class LoginPage extends BasePage {
-  public readonly userNameField: Locator = this.page.getByTestId("username");
-  public readonly passwordField: Locator = this.page.getByTestId("password");
-  public readonly loginButton: Locator = this.page.getByTestId("login-button");
+  private readonly userNameField: Locator = this.page.getByTestId("username");
+  private readonly passwordField: Locator = this.page.getByTestId("password");
+  private readonly loginButton: Locator = this.page.getByTestId("login-button");
   public readonly errorButton: Locator = this.page.getByTestId("error-button");
   public readonly errorMessage: Locator = this.page.getByTestId("error");
 

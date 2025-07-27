@@ -8,7 +8,7 @@ import { cartFixtures }     from './cart-fixture';
 import { checkoutFixtures } from './checkout-fixture';
 
 import { LoginPage }     from '../pages/login-page';
-import { ProductsPage }  from '../pages/product-page';   // <- tutaj
+import { ProductsPage }  from '../pages/products-page';   // <- tutaj
 import { AboutPage }     from '../pages/about-page';
 import { CartPage }      from '../pages/cart-page';
 import { CheckoutPage }  from '../pages/checkout-page';

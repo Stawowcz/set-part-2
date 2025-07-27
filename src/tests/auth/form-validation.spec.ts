@@ -1,12 +1,12 @@
-import { test } from "@fixtures";
-import { expect } from "@playwright/test";
-import { LoginPageErrorMessages } from "@typings/auth/login-enums";
+import { test, expect } from "@fixtures";
+import { LoginPageErrorMessages } from "@typings/auth";
+import { env }  from '@utils';
 
 test.describe("Negatvie scenarios - authentication with user using wrong credentials", () => {
   test("should show error for incorrect username", async ({ loginPage }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_INCORRECT_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_INCORRECT_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(loginPage.errorButton).toBeVisible();
@@ -17,8 +17,8 @@ test.describe("Negatvie scenarios - authentication with user using wrong credent
 
   test("should show error for incorrect password", async ({ loginPage }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_STANDARD_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_INCORRECT_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_STANDARD_USER,
+      env.SAUCE_DEMO_INCORRECT_PASSWORD,
     );
 
     await expect.soft(loginPage.errorButton).toBeVisible();

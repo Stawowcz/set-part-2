@@ -1,13 +1,13 @@
-import { test } from "@fixtures";
-import { expect } from "@playwright/test";
-import { SharedTexts } from "@typings/common/common-enums"
+import { test, expect } from "@fixtures";
+import { SharedTexts } from "@typings/common"
+import { env }  from '@utils';
 
 test.describe("Filters - different users", () => {
   test.describe("Filters - standard user", () => {
     test.beforeEach(async ({ page, loginPage, productsPage }) => {
       await loginPage.login(
-        process.env.SAUCE_DEMO_STANDARD_USER ?? "<unknown>",
-        process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+        env.SAUCE_DEMO_STANDARD_USER,
+        env.SAUCE_DEMO_PASSWORD
       );
 
       await expect.soft(page).toHaveURL(/.*inventory/);
@@ -65,8 +65,8 @@ test.describe("Filters - different users", () => {
   test.describe("Filters - problem user", () => {
     test.beforeEach(async ({ page, loginPage, productsPage }) => {
       await loginPage.login(
-        process.env.SAUCE_DEMO_PROBLEM_USER ?? "<unknown>",
-        process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+        env.SAUCE_DEMO_PROBLEM_USER,
+        env.SAUCE_DEMO_PASSWORD,
       );
 
       await expect.soft(page).toHaveURL(/.*inventory/);
@@ -130,8 +130,8 @@ test.describe("Filters - different users", () => {
   test.describe("Filters - error user", () => {
     test.beforeEach(async ({ page, loginPage, productsPage }) => {
       await loginPage.login(
-        process.env.SAUCE_DEMO_ERROR_USER ?? "<unknown>",
-        process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+        env.SAUCE_DEMO_ERROR_USER,
+        env.SAUCE_DEMO_PASSWORD,
       );
 
       await expect.soft(page).toHaveURL(/.*inventory/);
@@ -195,8 +195,8 @@ test.describe("Filters - different users", () => {
   test.describe("Filters - visual user", () => {
     test.beforeEach(async ({ page, loginPage, productsPage }) => {
       await loginPage.login(
-        process.env.SAUCE_DEMO_VISUAL_USER ?? "<unknown>",
-        process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+        env.SAUCE_DEMO_VISUAL_USER,
+        env.SAUCE_DEMO_PASSWORD,
       );
 
       await expect.soft(page).toHaveURL(/.*inventory/);
@@ -258,8 +258,8 @@ test.describe("Filters - different users", () => {
   test.describe("Filters - glitch user", () => {
     test.beforeEach(async ({ page, loginPage, productsPage }) => {
       await loginPage.login(
-        process.env.SAUCE_DEMO_PERFORMACE_GLITCH_USER ?? "<unknown>",
-        process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+        env.SAUCE_DEMO_PERFORMACE_GLITCH_USER,
+        env.SAUCE_DEMO_PASSWORD,
       );
 
       await expect.soft(page).toHaveURL(/.*inventory/);

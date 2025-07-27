@@ -11,6 +11,9 @@ export const suspiciousPatterns = [
   "\\(\\);",
 ] as const;
 
+export type SuspiciousPattern = typeof suspiciousPatterns[number];
+
+
 export const forbiddenCssClasses = [
   "btn_inventory_misaligned",
   "btn_hidden",
@@ -20,3 +23,5 @@ export const forbiddenCssClasses = [
   "align_right",
   "align_left",
 ] as const;
+
+export type ForbiddenCssClass = typeof forbiddenCssClasses[number];

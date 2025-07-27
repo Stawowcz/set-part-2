@@ -1,10 +1,10 @@
-import { test } from "@fixtures";
-import { expect } from "@playwright/test";
+import { test, expect } from "@fixtures";
 import {
   ProductPageNames,
   ProductPageItemIds,
-} from "@typings/products/products-enums";
-import { SharedTexts } from "@typings/common/common-enums";
+} from "@typings/products";
+import { SharedTexts } from "@typings/common";
+import { env }  from '@utils';
 
 test.describe("Add/Remove from cart - different users", () => {
   test("should add and remove items from cart - standard user", async ({
@@ -13,8 +13,8 @@ test.describe("Add/Remove from cart - different users", () => {
     productsPage,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_STANDARD_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_STANDARD_USER,
+      env.SAUCE_DEMO_PASSWORD
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -60,8 +60,8 @@ test.describe("Add/Remove from cart - different users", () => {
     productsPage,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_PROBLEM_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_PROBLEM_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -107,8 +107,8 @@ test.describe("Add/Remove from cart - different users", () => {
     productsPage,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_ERROR_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_ERROR_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -154,8 +154,8 @@ test.describe("Add/Remove from cart - different users", () => {
     productsPage,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_VISUAL_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_VISUAL_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -201,8 +201,8 @@ test.describe("Add/Remove from cart - different users", () => {
     productsPage,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_STANDARD_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_STANDARD_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
@@ -264,8 +264,8 @@ test.describe("Add/Remove from cart - different users", () => {
     productsPage,
   }) => {
     await loginPage.login(
-      process.env.SAUCE_DEMO_PERFORMACE_GLITCH_USER ?? "<unknown>",
-      process.env.SAUCE_DEMO_PASSWORD ?? "<unknown>",
+      env.SAUCE_DEMO_PERFORMACE_GLITCH_USER,
+      env.SAUCE_DEMO_PASSWORD,
     );
 
     await expect.soft(page).toHaveURL(/.*inventory/);
