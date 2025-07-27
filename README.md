@@ -61,7 +61,6 @@ Configured in `.github/workflows/playwright.yml` to:
 
 ## Documentation
 
-
 - Assumptions & Limitations:\
   [`docs/assumptions-limitations.md`](docs/assumptions-limitations.md)
 
