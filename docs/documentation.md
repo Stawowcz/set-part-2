@@ -34,11 +34,13 @@ Tests are executed with the Playwright Test Runner and custom fixtures:
 ```ts
 import { test, expect } from './fixtures/user-fixture';
 
-test('error user cannot log in and sees error message', async ({ loginPage }) => {
-  await loginPage.open();
-  await loginPage.login(process.env.SAUCE_DEMO_ERROR_USER!, process.env.SAUCE_DEMO_PASSWORD!);
-  await expect(loginPage.errorMessage).toHaveText('Epic sadface: Sorry, this user has been locked out.');
-});
+test.describe("Negatvie scenarios - authentication with user using wrong credentials", () => {
+  incorrectUser("should show error for incorrect username", async ({ loginPage }) => {
+    await expect.soft(loginPage.errorButton).toBeVisible();
+    await expect
+      .soft(loginPage.errorMessage)
+      .toHaveText(LoginPageErrorMessages.InvalidCreds);
+  });
 ```
 
 ## 3. Page Object Model (POM). Page Object Model (POM)
@@ -46,41 +48,71 @@ test('error user cannot log in and sees error message', async ({ loginPage }) =>
 Each UI screen is represented by a class under `src/pages`, encapsulating locators and actions:
 
 ```ts
-export class ProductsPage extends BasePage {
-  readonly cartBadge = this.page.locator('.shopping_cart_badge');
-  readonly menuAboutLink = this.page.getByText('About');
+export class LoginPage extends BasePage {
+  private readonly userNameField: Locator = this.page.getByTestId("username");
+  private readonly passwordField: Locator = this.page.getByTestId("password");
+  private readonly loginButton: Locator = this.page.getByTestId("login-button");
+  public readonly errorButton: Locator = this.page.getByTestId("error-button");
+  public readonly errorMessage: Locator = this.page.getByTestId("error");
 
-  async openMenu() {
-    await this.page.click('#react-burger-menu-btn');
+  public async clickOnLoginButton(): Promise<void> {
+    await this.safeClick(this.loginButton);
   }
 
-  async clickAbout() {
-    await this.menuAboutLink.click();
+  public async fillUserNameField(userName: string): Promise<void> {
+    await this.safeFill(this.userNameField, userName);
+  }
+
+  public async fillPasswordField(password: string): Promise<void> {
+    await this.safeFill(this.passwordField, password);
+  }
+
+  public async login(userName: string, password: string): Promise<void> {
+    await this.goto(process.env.SAUCE_DEMO_BASEURL!);
+    await this.fillUserNameField(userName);
+    await this.fillPasswordField(password);
+    await this.clickOnLoginButton();
   }
 }
 ```
 
 All page classes extend a shared `BasePage`, which provides common utilities (e.g., waiting, navigation). No constructors are redefined in each class.
 
-## 4. Custom Types and Interfaces (if any)
+## 4. Custom Types and Enums
 
 While most configuration relies on fixtures and plain objects, you can optionally define:
 
-- **Interfaces** in `src/types/` for shared data shapes (e.g., `CheckoutFormData`).
+- **Types** in `src/types/` for shared data shapes (e.g., `CheckoutFormData`).
 - **Enums** or constant maps only if you find recurring literal values in multiple places.
 
-If your current project doesn't include a `src/types` folder or enums, you can omit this section and rely on direct inline types in fixtures and test definitions.
+5. Utilities and Data Generators (src/utils)
 
-## 5. Utilities and Data Generators (`src/utils`)
-
-. Utilities and Data Generators (`src/utils`)
-
-Helpers include:
-
-- `` – parses and validates `.env` via Zod
-- `` – generates realistic form data using Faker:
+env-utils.ts: Exports typed environment variables via a manual cast to EnvVars:
 
 ```ts
+// src/types/env-types.ts
+export type EnvVars = {
+  SAUCE_DEMO_BASEURL: string;
+  SAUCE_DEMO_PASSWORD: string;
+  SAUCE_DEMO_INCORRECT_PASSWORD: string;
+  SAUCE_DEMO_STANDARD_USER: string;
+  SAUCE_DEMO_INCORRECT_USER: string;
+  SAUCE_DEMO_LOCKED_OUT_USER: string;
+  SAUCE_DEMO_PROBLEM_USER: string;
+  SAUCE_DEMO_PERFORMACE_GLITCH_USER: string;
+  SAUCE_DEMO_ERROR_USER: string;
+  SAUCE_DEMO_VISUAL_USER: string;
+};
+
+// src/utils/env-utils.ts
+import type { EnvVars } from '@types/env-types';
+export const env = process.env as unknown as EnvVars;
+
+checkout-data.ts: Generates realistic form data using Faker:
+
+import { faker } from '@faker-js/faker';
+import type { CheckoutFormData } from '../types';
+
 export function generateCheckoutData(): CheckoutFormData {
   return {
     firstName: faker.person.firstName(),
@@ -96,12 +128,12 @@ Configured in `playwright.config.ts`:
 
 - **HTML reporter** for human-readable output
 - **JUnit reporter** for CI integration
-- **Artifacts:** screenshots (on failure), videos (on retry), traces (on first retry)
+- **Artifacts:** screenshots (only on failure), videos (retain on failure), traces (on first retry)
 
 View reports with:
 
 ```bash
-npx playwright show-report
+npm run report
 ```
 
 ## 7. NPM Scripts
@@ -111,14 +143,15 @@ Defined in `package.json`:
 ```json
 {
   "scripts": {
-    "test": "npx playwright test",
-    "test:all": "npx playwright test --project=""",
-    "test:chromium": "npx playwright test --project=chromium",
-    "test:firefox": "npx playwright test --project=firefox",
-    "test:webkit": "npx playwright test --project=webkit",
-    "test-debug": "npx playwright test --debug",
-    "report": "npx playwright show-report"
-  }
+    "test-debug:chrome": "playwright test --debug --project=Chromium",
+    "report": "npx playwright show-report",
+    "test:safari": "npx playwright test --project=Safari",
+    "test:firefox": "npx playwright test --project=Firefox",
+    "test:chromium": "npx playwright test --project=Chromium",
+    "test:chromium:debug": "npx playwright test --project=Chromium --debug",
+    "test:all": "npx playwright test",
+    "prettier": "npx prettier --write ."
+  },
 }
 ```
 
@@ -130,8 +163,6 @@ Store environment-specific settings in `.env` (not committed). Example:
 SAUCE_DEMO_BASEURL=https://www.saucedemo.com
 # user scenarios
 SAUCE_DEMO_STANDARD_USER=standard_user
-…
-SAUCE_DEMO_PASSWORD=secret_sauce
 ```
 
 ## 9. Custom Fixtures
@@ -139,31 +170,34 @@ SAUCE_DEMO_PASSWORD=secret_sauce
 The framework uses custom Playwright fixtures aggregated in `src/fixtures/index.ts`. These fixtures expose typed page objects and data directly into test callbacks. For example:
 
 ```ts
-import type { Page } from '@playwright/test';
-import { AboutPage } from '@pages/about-page';
+import type { Page } from "@playwright/test";
+import { AboutPage } from "@pages";
 
 export const aboutFixtures = {
-  aboutPage: async ({ page }: { page: Page }, use: (aboutPage: AboutPage) => Promise<void>) => {
+  aboutPage: async (
+    { page }: { page: Page },
+    use: (aboutPage: AboutPage) => Promise<void>,
+  ) => {
     await use(new AboutPage(page));
   },
 };
 ```
 
 ```ts
-import { test as loginTest, expect } from './login-fixture';
-import { productsFixtures } from './products-fixture';
-import { aboutFixtures } from './about-fixture';
-import { cartFixtures } from './cart-fixture';
-import { checkoutFixtures } from './checkout-fixture';
+import { test as loginTest, expect } from "./login-fixture";
+import { productsFixtures } from "./products-fixture";
+import { aboutFixtures } from "./about-fixture";
+import { cartFixtures } from "./cart-fixture";
+import { checkoutFixtures } from "./checkout-fixture";
 
-import type { UserCredentials } from './login-fixture';
-import { env } from '@utils/env-utils';
+import type { UserCredentials } from "./login-fixture";
+import { env } from "@utils/env-utils";
 
-import { LoginPage } from '@pages/login-page';
-import { ProductsPage } from '@pages/products-page';
-import { AboutPage } from '@pages/about-page';
-import { CartPage } from '@pages/cart-page';
-import { CheckoutPage } from '@pages/checkout-page';
+import { LoginPage } from "@pages/login-page";
+import { ProductsPage } from "@pages/products-page";
+import { AboutPage } from "@pages/about-page";
+import { CartPage } from "@pages/cart-page";
+import { CheckoutPage } from "@pages/checkout-page";
 
 export type MyFixtures = {
   user: UserCredentials;
@@ -180,24 +214,26 @@ export const test = loginTest.extend<MyFixtures>({
   ...cartFixtures,
   ...checkoutFixtures,
 });
+
 export { expect };
 
-
-export const standardUser = test.extend({ user: async (_, use) => {
-  await use({ username: env.SAUCE_DEMO_STANDARD_USER, password: env.SAUCE_DEMO_PASSWORD });
-}});
+export const standardUser = test.extend<{
+  user: UserCredentials;
+}>({
+  user: async (
+    {}: {},
+    use: (user: UserCredentials) => Promise<void>,
+  ): Promise<void> => {
+    await use({
+      username: env.SAUCE_DEMO_STANDARD_USER,
+      password: env.SAUCE_DEMO_PASSWORD,
+    });
+  },
+});
 // ... other user fixtures: lockedUser, incorrectUser, problemUser, performanceGlitchUser, errorUser, visualUser
 ```
 
 ## 10. Summary
-
-This framework provides a scalable, maintainable foundation for E2E testing:
-
-- Playwright Test Runner with fixtures and soft assertions
-- Modular POM classes for UI interactions
-- Typed enums and Zod-validated environment variables
-- Dynamic test data via Faker
-- Comprehensive reporting and CI/CD integration
 
 This framework provides a scalable, maintainable foundation for E2E testing:
 
