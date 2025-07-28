@@ -7,21 +7,8 @@ import { checkoutFixtures } from "./checkout-fixture";
 
 import type { UserCredentials } from "./login-fixture";
 import { env } from "@utils/env-utils";
+import type { MyFixtures } from "@typings/fixtures";
 
-import { LoginPage } from "@pages/login-page";
-import { ProductsPage } from "@pages/products-page";
-import { AboutPage } from "@pages/about-page";
-import { CartPage } from "@pages/cart-page";
-import { CheckoutPage } from "@pages/checkout-page";
-
-export type MyFixtures = {
-  user: UserCredentials;
-  loginPage: LoginPage;
-  productsPage: ProductsPage;
-  aboutPage: AboutPage;
-  cartPage: CartPage;
-  checkoutPage: CheckoutPage;
-};
 
 export const test = loginTest.extend<MyFixtures>({
   ...productsFixtures,

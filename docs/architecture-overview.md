@@ -24,9 +24,9 @@ project-root/
 
 Tests are executed with the Playwright Test Runner and custom fixtures:
 
-- \`\` for per-test setup via fixtures (e.g., logging in with different user types).
-- \`\` to group related scenarios.
-- \`\` allows continuing after soft assertion failures to collect multiple errors.
+-  for per-test setup via fixtures (e.g., logging in with different user types).
+-  to group related scenarios.
+-  allows continuing after soft assertion failures to collect multiple errors.
 - **Custom fixtures** (`login-fixture.ts`, `products-fixture.ts`, `about-fixture.ts`, `cart-fixture.ts`, `checkout-fixture.ts`) expose page objects and utilities directly into test callbacks.
 
 **Example test for an "incorrect user":**
@@ -325,7 +325,7 @@ This framework provides a scalable, maintainable foundation for E2E testing:
 
 - Playwright Test Runner with fixtures and soft assertions
 - Modular POM classes for UI interactions
-- Typed enums and Zod-validated environment variables
+- Typed enums environment variables
 - Dynamic test data via Faker
 - Comprehensive reporting and CI/CD integration
 

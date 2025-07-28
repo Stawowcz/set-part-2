@@ -1,0 +1,1 @@
+export { MyFixtures } from './fixtures-types';
