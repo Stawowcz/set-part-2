@@ -1,4 +1,5 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page, expect } from "@playwright/test";
+import { ProductNames } from "@typings/common";
 import { GotoOptions, LocatorWaitOptions } from "@typings/framework";
 
 export abstract class BasePage {
@@ -59,5 +60,31 @@ export abstract class BasePage {
     }
     const price = parseFloat(raw?.replace("$", "").trim());
     return price;
+  }
+
+  public getProductNameLocatorByName(productName: ProductNames): Locator {
+    return this.page
+      .getByTestId("inventory-item-name")
+      .filter({ hasText: productName });
+  }
+
+  public async clickProductByName(productName: ProductNames): Promise<void> {
+    await this.safeClick(this.getProductNameLocatorByName(productName));
+  }
+
+  async goBack() {
+    await this.page.goBack();
+  }
+
+  async goForward() {
+    await this.page.goForward();
+  }
+
+  async reloadPage() {
+    await this.page.reload();
+  }
+
+  async expectUrlContains(path: string) {
+    await expect.soft(this.page).toHaveURL(new RegExp(`.*${path}`));
   }
 }

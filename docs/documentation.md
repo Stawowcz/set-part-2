@@ -151,7 +151,7 @@ Defined in `package.json`:
     "test:chromium:debug": "npx playwright test --project=Chromium --debug",
     "test:all": "npx playwright test",
     "prettier": "npx prettier --write ."
-  },
+  }
 }
 ```
 
@@ -242,4 +242,3 @@ This framework provides a scalable, maintainable foundation for E2E testing:
 - Typed enums and Zod-validated environment variables
 - Dynamic test data via Faker
 - Comprehensive reporting and CI/CD integration
-

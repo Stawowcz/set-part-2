@@ -1,6 +1,7 @@
 import { Locator } from "@playwright/test";
 import { BasePage } from "@pages";
-import { ProductPageItemIds, ProductPageNames } from "@typings/products";
+import { ProductPageItemIds } from "@typings/products";
+import { ProductNames } from "@typings/common";
 
 export class ProductsPage extends BasePage {
   public readonly primaryHeader: Locator =
@@ -99,17 +100,6 @@ export class ProductsPage extends BasePage {
 
   public async clickResetApp(): Promise<void> {
     await this.safeClick(this.resetAppButton);
-  }
-
-  public getProductNameLocatorByName(productName: ProductPageNames): Locator {
-    return this.page
-      .getByTestId("inventory-item-name")
-      .filter({ hasText: productName });
-  }
-
-  public async openProductByName(productName: ProductPageNames): Promise<void> {
-    const productNameLocator = this.getProductNameLocatorByName(productName);
-    await this.safeClick(productNameLocator);
   }
 
   public async clickBackToProducts(): Promise<void> {

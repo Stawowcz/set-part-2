@@ -19,12 +19,3 @@ export enum ProductPageItemIds {
   Onesie = "sauce-labs-onesie",
   RedTShirt = "test.allthethings()-t-shirt-(red)",
 }
-
-export enum ProductPageNames {
-  Backpack = "Sauce Labs Backpack",
-  BikeLight = "Sauce Labs Bike Light",
-  BoltTShirt = "Sauce Labs Bolt T-Shirt",
-  FleeceJacket = "Sauce Labs Fleece Jacket",
-  Onesie = "Sauce Labs Onesie",
-  RedTShirt = "Test.allTheThings() T-Shirt (Red)",
-}

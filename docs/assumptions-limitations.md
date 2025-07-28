@@ -1,4 +1,3 @@
-
 ## I. Assumptions
 
 1. **Environment Setup**  
@@ -46,4 +45,3 @@
 
 4. **Manual Execution**  
    You can run the tests manually at any time using the "Run workflow" button in the GitHub Actions tab.
-

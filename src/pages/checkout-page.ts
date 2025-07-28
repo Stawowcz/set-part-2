@@ -1,6 +1,7 @@
 import { Locator } from "@playwright/test";
 import { BasePage } from "@pages";
 import { CheckoutFormData } from "@typings/checkout";
+import { ProductNames } from "@typings/common";
 
 export class CheckoutPage extends BasePage {
   private readonly firstName = this.page.getByTestId("firstName");
@@ -19,6 +20,7 @@ export class CheckoutPage extends BasePage {
   public async getOverviewItemsCount(): Promise<number> {
     return this.page.getByTestId("inventory-item").count();
   }
+  public readonly backToProducts = this.page.getByTestId("back-to-products");
 
   public async fillFirstName(value: string): Promise<void> {
     await this.safeFill(this.firstName, value);
@@ -60,6 +62,10 @@ export class CheckoutPage extends BasePage {
 
   public async clickCancel(): Promise<void> {
     await this.safeClick(this.cancelButton);
+  }
+
+  public async clickBackToProduct(): Promise<void> {
+    await this.safeClick(this.backToProducts);
   }
 
   // These three methods: getSubtotalPrice, getTax, and getTotalPrice are very similar

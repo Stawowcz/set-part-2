@@ -1,12 +1,12 @@
 import { test, expect } from "@fixtures";
-import { ProductPageItemIds, ProductPageNames, ProductsPageTexts } from "@typings/products";
+import { ProductPageItemIds, ProductsPageTexts } from "@typings/products";
 import { CheckoutFormData, CheckoutPageTexts } from "@typings/checkout";
 import { CartPageTexts } from "@typings/cart";
-import { SharedTexts } from "@typings/common";
-import { PricingUtils, env, CheckoutDataGenerator } from "@utils";
+import { ProductNames } from "@typings/common";
+import { PricingUtils, CheckoutDataGenerator } from "@utils";
 
 test.describe("Checkout flow - standard user", () => {
-  test.beforeEach(async ({ page, loginPage:_, productsPage }) => {
+  test.beforeEach(async ({ page, loginPage: _, productsPage }) => {
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
@@ -24,10 +24,10 @@ test.describe("Checkout flow - standard user", () => {
     await expect.soft(badge).toHaveText("2");
 
     const inventoryPriceBP = await productsPage.getProductPriceByName(
-      ProductPageNames.Backpack,
+      ProductNames.Backpack,
     );
     const inventoryPriceBL = await productsPage.getProductPriceByName(
-      ProductPageNames.BikeLight,
+      ProductNames.BikeLight,
     );
     const expectedTotal = inventoryPriceBP + inventoryPriceBL;
     await productsPage.clickOnCartBasket();
@@ -42,10 +42,10 @@ test.describe("Checkout flow - standard user", () => {
       await expect.soft(quantity).toHaveText("1");
     }
     const cartPriceBP = await cartPage.getProductPriceByName(
-      ProductPageNames.Backpack,
+      ProductNames.Backpack,
     );
     const cartPriceBL = await cartPage.getProductPriceByName(
-      ProductPageNames.BikeLight,
+      ProductNames.BikeLight,
     );
 
     expect.soft(cartPriceBP).toBeCloseTo(inventoryPriceBP, 2);
@@ -77,10 +77,10 @@ test.describe("Checkout flow - standard user", () => {
       await expect.soft(quantity).toHaveText("1");
     }
     const overviewPriceBP = await checkoutPage.getProductPriceByName(
-      ProductPageNames.Backpack,
+      ProductNames.Backpack,
     );
     const overviewPriceBL = await checkoutPage.getProductPriceByName(
-      ProductPageNames.BikeLight,
+      ProductNames.BikeLight,
     );
 
     expect.soft(overviewPriceBP).toBeCloseTo(inventoryPriceBP, 2);
@@ -120,7 +120,7 @@ test.describe("Checkout flow - standard user", () => {
     await expect.soft(badge).toHaveText("2");
 
     const inventoryPriceBP = await productsPage.getProductPriceByName(
-      ProductPageNames.Backpack,
+      ProductNames.Backpack,
     );
     const expectedTotal = inventoryPriceBP;
     await productsPage.clickOnCartBasket();
@@ -135,7 +135,7 @@ test.describe("Checkout flow - standard user", () => {
       await expect.soft(quantity).toHaveText("1");
     }
     const cartPriceBP = await cartPage.getProductPriceByName(
-      ProductPageNames.Backpack,
+      ProductNames.Backpack,
     );
 
     expect.soft(cartPriceBP).toBeCloseTo(inventoryPriceBP, 2);
@@ -188,7 +188,7 @@ test.describe("Checkout flow - standard user", () => {
       await expect.soft(quantity).toHaveText("1");
     }
     const overviewPriceBP = await checkoutPage.getProductPriceByName(
-      ProductPageNames.Backpack,
+      ProductNames.Backpack,
     );
 
     expect.soft(overviewPriceBP).toBeCloseTo(inventoryPriceBP, 2);
@@ -227,10 +227,10 @@ test.describe("Checkout flow - standard user", () => {
     await expect.soft(badge).toHaveText("2");
 
     const inventoryPriceBP = await productsPage.getProductPriceByName(
-      ProductPageNames.Backpack,
+      ProductNames.Backpack,
     );
     const inventoryPriceBL = await productsPage.getProductPriceByName(
-      ProductPageNames.BikeLight,
+      ProductNames.BikeLight,
     );
     const expectedTotal = inventoryPriceBP + inventoryPriceBL;
     await productsPage.clickOnCartBasket();
@@ -247,10 +247,10 @@ test.describe("Checkout flow - standard user", () => {
     await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
     const cartPriceBP = await cartPage.getProductPriceByName(
-      ProductPageNames.Backpack,
+      ProductNames.Backpack,
     );
     const cartPriceBL = await cartPage.getProductPriceByName(
-      ProductPageNames.BikeLight,
+      ProductNames.BikeLight,
     );
 
     expect.soft(cartPriceBP).toBeCloseTo(inventoryPriceBP, 2);
@@ -295,10 +295,10 @@ test.describe("Checkout flow - standard user", () => {
       await expect.soft(quantity).toHaveText("1");
     }
     const overviewPriceBP = await checkoutPage.getProductPriceByName(
-      ProductPageNames.Backpack,
+      ProductNames.Backpack,
     );
     const overviewPriceBL = await checkoutPage.getProductPriceByName(
-      ProductPageNames.BikeLight,
+      ProductNames.BikeLight,
     );
 
     expect.soft(overviewPriceBP).toBeCloseTo(inventoryPriceBP, 2);
@@ -398,7 +398,7 @@ test.describe("Checkout flow - standard user", () => {
     await expect.soft(badge1).toHaveText("2");
 
     const inventoryPriceBL = await productsPage.getProductPriceByName(
-      ProductPageNames.BikeLight,
+      ProductNames.BikeLight,
     );
     const expectedTotal = inventoryPriceBL;
     await productsPage.clickOnCartBasket();
@@ -420,7 +420,7 @@ test.describe("Checkout flow - standard user", () => {
     await expect.soft(cartPage.getCartItemsCount()).resolves.toBe(1);
 
     const cartPriceBL = await cartPage.getProductPriceByName(
-      ProductPageNames.BikeLight,
+      ProductNames.BikeLight,
     );
 
     expect.soft(cartPriceBL).toBeCloseTo(inventoryPriceBL, 2);
@@ -467,7 +467,7 @@ test.describe("Checkout flow - standard user", () => {
     }
 
     const overviewPriceBL = await checkoutPage.getProductPriceByName(
-      ProductPageNames.BikeLight,
+      ProductNames.BikeLight,
     );
 
     expect.soft(overviewPriceBL).toBeCloseTo(inventoryPriceBL, 2);
@@ -498,16 +498,16 @@ test.describe("Checkout flow - standard user", () => {
     cartPage,
     checkoutPage,
   }) => {
-    await productsPage.openProductByName(ProductPageNames.Backpack);
+    await productsPage.clickProductByName(ProductNames.Backpack);
     await productsPage.addToCartFromProjectDetails();
     const inventoryPriceBP = await productsPage.getProductPriceByName(
-      ProductPageNames.Backpack,
+      ProductNames.Backpack,
     );
     await productsPage.clickBackToProducts();
-    await productsPage.openProductByName(ProductPageNames.BikeLight);
+    await productsPage.clickProductByName(ProductNames.BikeLight);
     await productsPage.addToCartFromProjectDetails();
     const inventoryPriceBL = await productsPage.getProductPriceByName(
-      ProductPageNames.BikeLight,
+      ProductNames.BikeLight,
     );
     const expectedTotal = inventoryPriceBP + inventoryPriceBL;
     await productsPage.clickOnCartBasket();
@@ -524,10 +524,10 @@ test.describe("Checkout flow - standard user", () => {
     }
 
     const cartPriceBP = await cartPage.getProductPriceByName(
-      ProductPageNames.Backpack,
+      ProductNames.Backpack,
     );
     const cartPriceBL = await cartPage.getProductPriceByName(
-      ProductPageNames.BikeLight,
+      ProductNames.BikeLight,
     );
 
     expect.soft(cartPriceBP).toBeCloseTo(inventoryPriceBP, 2);
@@ -558,10 +558,10 @@ test.describe("Checkout flow - standard user", () => {
     }
 
     const overviewPriceBP = await checkoutPage.getProductPriceByName(
-      ProductPageNames.Backpack,
+      ProductNames.Backpack,
     );
     const overviewPriceBL = await checkoutPage.getProductPriceByName(
-      ProductPageNames.BikeLight,
+      ProductNames.BikeLight,
     );
 
     expect.soft(overviewPriceBP).toBeCloseTo(inventoryPriceBP, 2);

@@ -62,7 +62,6 @@ Configured in `.github/workflows/playwright.yml` to:
 ## Documentation
 
 - Framework overview, architecture details, patterns and usage examples:\
-  [`docs/documentation.md`](docs/documentation.md) 
+  [`docs/documentation.md`](docs/documentation.md)
 - Assumptions & Limitations:\
   [`docs/assumptions-limitations.md`](docs/assumptions-limitations.md)
-
