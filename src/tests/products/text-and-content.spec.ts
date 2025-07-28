@@ -1,6 +1,7 @@
 import { test, expect, standardUser, visualUser } from "@fixtures";
 import { suspiciousPatterns, forbiddenCssClasses, env } from "@utils";
-import { ProductsPageTexts } from "@typings/products";
+import { ProductPageItemIds, ProductsPageTexts } from "@typings/products";
+import { ProductNames } from "@typings/common";
 
 standardUser.describe(
   "Products - content and style checks - standard user",
@@ -173,4 +174,62 @@ visualUser.describe("Products - content and style checks - visual user", () => {
       expect.soft(misaligned.length, misaligned.join("\n")).toBe(0);
     },
   );
+});
+
+standardUser.describe("Price consistency between users on inventory page", () => {
+  standardUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
+    await expect.soft(page).toHaveURL(/.*inventory/);
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
+  });
+
+  standardUser("should compare product prices for standard, problem, and error users", async ({
+    loginPage,
+    productsPage,
+  }) => {
+    const productNames = [
+      ProductNames.Backpack,
+      ProductNames.BikeLight,
+      ProductNames.BoltTShirt,
+      ProductNames.FleeceJacket,
+      ProductNames.Onesie,
+      ProductNames.RedTShirt,
+    ];
+
+    const standardPrices: number[] = [];
+    const problemPrices: number[] = [];
+    const errorPrices: number[] = [];
+
+    for (const name of productNames) {
+      const price = await productsPage.getProductPriceByName(name);
+      standardPrices.push(price);
+    }
+
+    await productsPage.openMenu();
+    await productsPage.clickLogout();
+
+    await loginPage.login(env.SAUCE_DEMO_PROBLEM_USER, env.SAUCE_DEMO_PASSWORD);
+
+    for (const name of productNames) {
+      const price = await productsPage.getProductPriceByName(name);
+      problemPrices.push(price);
+    }
+
+    await productsPage.openMenu();
+    await productsPage.clickLogout();
+
+    await loginPage.login(env.SAUCE_DEMO_ERROR_USER, env.SAUCE_DEMO_PASSWORD);
+
+    for (const name of productNames) {
+      const price = await productsPage.getProductPriceByName(name);
+      errorPrices.push(price);
+    }
+
+    for (let i = 0; i < productNames.length; i++) {
+      expect.soft(problemPrices[i]).toBeCloseTo(standardPrices[i], 2);
+    }
+
+    for (let i = 0; i < productNames.length; i++) {
+      expect.soft(errorPrices[i]).toBeCloseTo(standardPrices[i], 2);
+    }
+  });
 });

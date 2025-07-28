@@ -263,3 +263,64 @@ test.describe("Add/Remove from cart - different users", () => {
     },
   );
 });
+
+test.describe("Increment items - different users", () => {
+  test.beforeEach(async ({ page, loginPage: _, productsPage }) => {
+    await expect.soft(page).toHaveURL(/.*inventory/);
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
+  });
+  standardUser(
+    "should increment cart count when adding items and complete checkout - standard user",
+    async ({ productsPage }) => {
+      await productsPage.addProductToCart(ProductPageItemIds.Backpack);
+      const badge = await productsPage.waitForCartBadge();
+      await expect.soft(badge).toHaveText("1");
+      await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
+      await expect.soft(badge).toHaveText("2");
+      await productsPage.addProductToCart(ProductPageItemIds.BoltTShirt);
+      await expect.soft(badge).toHaveText("3");
+      await productsPage.addProductToCart(ProductPageItemIds.FleeceJacket);
+      await expect.soft(badge).toHaveText("4");
+      await productsPage.addProductToCart(ProductPageItemIds.Onesie);
+      await expect.soft(badge).toHaveText("5");
+      await productsPage.addProductToCart(ProductPageItemIds.RedTShirt);
+      await expect.soft(badge).toHaveText("6");
+    },
+  );
+  errorUser(
+    "should increment cart count when adding items and complete checkout - error user --> BUG: some items cannot be added or removed",
+    async ({ productsPage }) => {
+      await productsPage.addProductToCart(ProductPageItemIds.Backpack);
+      const badge = await productsPage.waitForCartBadge();
+      await expect.soft(badge).toHaveText("1");
+      await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
+      await expect.soft(badge).toHaveText("2");
+      await productsPage.addProductToCart(ProductPageItemIds.BoltTShirt);
+      await expect.soft(badge).toHaveText("3");
+      await productsPage.addProductToCart(ProductPageItemIds.FleeceJacket);
+      await expect.soft(badge).toHaveText("4");
+      await productsPage.addProductToCart(ProductPageItemIds.Onesie);
+      await expect.soft(badge).toHaveText("5");
+      await productsPage.addProductToCart(ProductPageItemIds.RedTShirt);
+      await expect.soft(badge).toHaveText("6");
+    },
+  );
+  visualUser(
+    "should increment cart count when adding items and complete checkout - visual user",
+    async ({ productsPage }) => {
+      await productsPage.addProductToCart(ProductPageItemIds.Backpack);
+      const badge = await productsPage.waitForCartBadge();
+      await expect.soft(badge).toHaveText("1");
+      await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
+      await expect.soft(badge).toHaveText("2");
+      await productsPage.addProductToCart(ProductPageItemIds.BoltTShirt);
+      await expect.soft(badge).toHaveText("3");
+      await productsPage.addProductToCart(ProductPageItemIds.FleeceJacket);
+      await expect.soft(badge).toHaveText("4");
+      await productsPage.addProductToCart(ProductPageItemIds.Onesie);
+      await expect.soft(badge).toHaveText("5");
+      await productsPage.addProductToCart(ProductPageItemIds.RedTShirt);
+      await expect.soft(badge).toHaveText("6");
+    },
+  );
+});

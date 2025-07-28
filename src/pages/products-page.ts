@@ -48,6 +48,12 @@ export class ProductsPage extends BasePage {
     "inventory-item-price",
   );
 
+  public readonly burgerMenuCloseButton: Locator = this.page.locator(
+    "#react-burger-cross-btn",
+  );
+
+  public readonly burgerMenu: Locator = this.page.locator(".bm-menu-wrap");
+
   public getAddToCartButton(productId: ProductPageItemIds): Locator {
     return this.page.getByTestId(`add-to-cart-${productId}`);
   }
@@ -104,5 +110,9 @@ export class ProductsPage extends BasePage {
 
   public async clickBackToProducts(): Promise<void> {
     await this.safeClick(this.backToProductsButton);
+  }
+
+  public async clickBurgerMenuCLoseButton(): Promise<void> {
+    await this.safeClick(this.burgerMenuCloseButton);
   }
 }

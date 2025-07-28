@@ -3,7 +3,6 @@ import { ProductPageItemIds, ProductsPageTexts } from "@typings/products";
 import { CheckoutFormData, CheckoutPageTexts } from "@typings/checkout";
 import { CartPageTexts } from "@typings/cart";
 import { CheckoutDataGenerator } from "@utils";
-import { ProductNames } from "@typings/common";
 
 test.describe("Checkout flow - standard user", () => {
   test.beforeEach(async ({ page, loginPage: _, productsPage }) => {
@@ -11,7 +10,7 @@ test.describe("Checkout flow - standard user", () => {
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
-  test("Should navigate back to products page after order completion", async ({
+  test("should show “Basket is empty” popup when trying to proceed with empty cart --> BUG: popup not exits", async ({
     page,
     productsPage,
     cartPage,
@@ -75,7 +74,7 @@ test.describe("Checkout flow - standard user", () => {
       .toHaveText(CheckoutPageTexts.Step2Header);
   });
 
-  test.only("should support reload in checkout", async ({
+  test("should support reload in checkout", async ({
     productsPage,
     checkoutPage,
     cartPage,

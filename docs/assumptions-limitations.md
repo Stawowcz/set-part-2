@@ -35,10 +35,10 @@
    For all tests where the framework detected a bug in the application, annotations have been added in the test titles. These tests are not failing due to issues in the test framework—they fail because of actual bugs in the application.
 
 2. **Test Results Summary**
-   - **Single browser (e.g. Chrome):** 28 out of 64 tests should pass
-   - **Single browser (e.g. Chrome):** 36 out of 64 tests should fail
-   - **All browsers (Chrome + Firefox + Safari):** 84 out of 192 tests should pass
-   - **All browsers (Chrome + Firefox + Safari):** 108 out of 192 tests should fail
+   - **Single browser (e.g. Chrome):** 41 out of 79 tests should pass
+   - **Single browser (e.g. Chrome):** 38 out of 79 tests should fail
+   - **All browsers (Chrome + Firefox + Safari):** 123 out of 237 tests should pass
+   - **All browsers (Chrome + Firefox + Safari):** 114 out of 237 tests should fail
 
 3. **Code Comments**  
    In some places, comments have been added suggesting that certain things could be done differently, but the current approach has been intentionally preserved.

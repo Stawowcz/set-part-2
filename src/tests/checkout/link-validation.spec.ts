@@ -1,17 +1,17 @@
-import { test, expect } from "@fixtures";
+import { test, expect, standardUser } from "@fixtures";
 import { ProductPageItemIds, ProductsPageTexts } from "@typings/products";
 import { CheckoutFormData, CheckoutPageTexts } from "@typings/checkout";
 import { CartPageTexts } from "@typings/cart";
 import { CheckoutDataGenerator } from "@utils";
 import { ProductNames } from "@typings/common";
 
-test.describe("Checkout flow - standard user", () => {
+standardUser.describe("Checkout flow - standard user", () => {
   test.beforeEach(async ({ page, loginPage: _, productsPage }) => {
     await expect.soft(page).toHaveURL(/.*inventory/);
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
-  test("Should navigate back to products page after order completion", async ({
+  standardUser("Should navigate back to products page after order completion", async ({
     page,
     productsPage,
     checkoutPage,
@@ -59,7 +59,7 @@ test.describe("Checkout flow - standard user", () => {
       .toContainText(ProductsPageTexts.Title);
   });
 
-  test("Should navigate to product detail page when clicking product link in checkout", async ({
+  standardUser("Should navigate to product detail page when clicking product link in checkout", async ({
     page,
     productsPage,
     checkoutPage,
@@ -99,7 +99,7 @@ test.describe("Checkout flow - standard user", () => {
     await expect.soft(page).toHaveURL(/.*inventory-item\.html/);
   });
 
-  test("Should navigate to product detail page when clicking product link in cart", async ({
+  standardUser("Should navigate to product detail page when clicking product link in cart", async ({
     page,
     productsPage,
     cartPage,

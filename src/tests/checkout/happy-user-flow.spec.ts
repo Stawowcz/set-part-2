@@ -588,4 +588,233 @@ test.describe("Checkout flow - standard user", () => {
       .toContainText(CheckoutPageTexts.SuccessHeader);
     await expect.soft(page).toHaveURL(/.*checkout-complete/);
   });
+
+  test("should add all products, complete checkout, and verify app is reset", async ({
+    page,
+    productsPage,
+    checkoutPage,
+    cartPage,
+  }) => {
+    const productIds = [
+      ProductPageItemIds.Backpack,
+      ProductPageItemIds.BikeLight,
+      ProductPageItemIds.BoltTShirt,
+      ProductPageItemIds.FleeceJacket,
+      ProductPageItemIds.Onesie,
+      ProductPageItemIds.RedTShirt,
+    ];
+
+    const productNames = [
+      ProductNames.Backpack,
+      ProductNames.BikeLight,
+      ProductNames.BoltTShirt,
+      ProductNames.FleeceJacket,
+      ProductNames.Onesie,
+      ProductNames.RedTShirt,
+    ];
+
+    for (const id of productIds) {
+      await productsPage.addProductToCart(id);
+    }
+
+    const badge = await productsPage.waitForCartBadge();
+    await expect.soft(badge).toHaveText("6");
+
+    const inventoryPrices: number[] = [];
+    for (const name of productNames) {
+      const price = await productsPage.getProductPriceByName(name);
+      inventoryPrices.push(price);
+    }
+
+    const expectedTotal = inventoryPrices.reduce(
+      (sum, price) => sum + price,
+      0,
+    );
+
+    await productsPage.clickOnCartBasket();
+
+    await expect.soft(page).toHaveURL(/.*cart/);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
+
+    expect.soft(await cartPage.getCartItemsCount()).toBe(6);
+
+    for (let i = 0; i < productNames.length; i++) {
+      const name = productNames[i];
+      const expectedPrice = inventoryPrices[i];
+      const cartPrice = await cartPage.getProductPriceByName(name);
+      expect.soft(cartPrice).toBeCloseTo(expectedPrice, 2);
+    }
+
+    await cartPage.clickCheckout();
+
+    await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+    await expect
+      .soft(checkoutPage.title)
+      .toHaveText(CheckoutPageTexts.Step1Header);
+
+    const formData: CheckoutFormData =
+      CheckoutDataGenerator.generateCheckoutFormData();
+    await checkoutPage.fillInfo(formData);
+    await checkoutPage.clickContinue();
+
+    await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+    await expect
+      .soft(checkoutPage.title)
+      .toHaveText(CheckoutPageTexts.Step2Header);
+
+    for (let i = 0; i < productNames.length; i++) {
+      const name = productNames[i];
+      const expectedPrice = inventoryPrices[i];
+      const overviewPrice = await checkoutPage.getProductPriceByName(name);
+      expect.soft(overviewPrice).toBeCloseTo(expectedPrice, 2);
+    }
+
+    const subtotalPrice = await checkoutPage.getSubtotalPrice();
+    const displayedTax = await checkoutPage.getTax();
+    const displayedTotal = await checkoutPage.getTotalPrice();
+    const expectedTax = PricingUtils.calculateTax(expectedTotal);
+    const expectedTotalWithTax =
+      PricingUtils.calculateTotalWithTax(expectedTotal);
+
+    expect.soft(subtotalPrice).toBeCloseTo(expectedTotal, 1);
+    expect.soft(displayedTax).toBeCloseTo(expectedTax, 1);
+    expect.soft(displayedTotal).toBeCloseTo(expectedTotalWithTax, 1);
+    expect.soft(await checkoutPage.getOverviewItemsCount()).toBe(6);
+
+    await checkoutPage.clickFinish();
+    await checkoutPage.completeHeader.waitFor({ state: "visible" });
+
+    await expect
+      .soft(checkoutPage.completeHeader)
+      .toContainText(CheckoutPageTexts.SuccessHeader);
+    await expect.soft(page).toHaveURL(/.*checkout-complete/);
+
+    await checkoutPage.clickBackToProduct();
+    await expect.soft(page).toHaveURL(/.*inventory/);
+    await expect
+      .soft(productsPage.title)
+      .toContainText(ProductsPageTexts.Title);
+
+    for (const id of productIds) {
+      const addButton = productsPage.getAddToCartButton(id);
+      const isVisible = await addButton.isVisible();
+      expect.soft(isVisible).toBe(true);
+    }
+  });
+
+  test("should add all products from detail page, complete checkout, and verify app is reset", async ({
+    page,
+    productsPage,
+    checkoutPage,
+    cartPage,
+  }) => {
+    const productIds = [
+      ProductPageItemIds.Backpack,
+      ProductPageItemIds.BikeLight,
+      ProductPageItemIds.BoltTShirt,
+      ProductPageItemIds.FleeceJacket,
+      ProductPageItemIds.Onesie,
+      ProductPageItemIds.RedTShirt,
+    ];
+
+    const productNames = [
+      ProductNames.Backpack,
+      ProductNames.BikeLight,
+      ProductNames.BoltTShirt,
+      ProductNames.FleeceJacket,
+      ProductNames.Onesie,
+      ProductNames.RedTShirt,
+    ];
+
+    const inventoryPrices: number[] = [];
+
+    for (const name of productNames) {
+      await productsPage.clickProductByName(name);
+
+      const price = await productsPage.getProductPriceByName(name);
+      inventoryPrices.push(price);
+
+      await productsPage.addToCartFromProjectDetails();
+      await productsPage.clickBackToProducts();
+    }
+
+    const badge = await productsPage.waitForCartBadge();
+    await expect.soft(badge).toHaveText("6");
+
+    const expectedTotal = inventoryPrices.reduce(
+      (sum, price) => sum + price,
+      0,
+    );
+
+    await productsPage.clickOnCartBasket();
+    await expect.soft(page).toHaveURL(/.*cart/);
+    await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
+    expect.soft(await cartPage.getCartItemsCount()).toBe(6);
+
+    for (let i = 0; i < productNames.length; i++) {
+      const name = productNames[i];
+      const expectedPrice = inventoryPrices[i];
+      const cartPrice = await cartPage.getProductPriceByName(name);
+      expect.soft(cartPrice).toBeCloseTo(expectedPrice, 2);
+    }
+
+    const classAttr = await cartPage.checkoutButton.getAttribute("class");
+    expect.soft(classAttr).not.toContain("btn_visual_failure");
+
+    await cartPage.clickCheckout();
+    await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+    await expect
+      .soft(checkoutPage.title)
+      .toHaveText(CheckoutPageTexts.Step1Header);
+
+    const formData: CheckoutFormData =
+      CheckoutDataGenerator.generateCheckoutFormData();
+    await checkoutPage.fillInfo(formData);
+    await checkoutPage.clickContinue();
+
+    await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+    await expect
+      .soft(checkoutPage.title)
+      .toHaveText(CheckoutPageTexts.Step2Header);
+
+    for (let i = 0; i < productNames.length; i++) {
+      const name = productNames[i];
+      const expectedPrice = inventoryPrices[i];
+      const overviewPrice = await checkoutPage.getProductPriceByName(name);
+      expect.soft(overviewPrice).toBeCloseTo(expectedPrice, 2);
+    }
+
+    const subtotalPrice = await checkoutPage.getSubtotalPrice();
+    const displayedTax = await checkoutPage.getTax();
+    const displayedTotal = await checkoutPage.getTotalPrice();
+
+    const expectedTax = PricingUtils.calculateTax(expectedTotal);
+    const expectedTotalWithTax =
+      PricingUtils.calculateTotalWithTax(expectedTotal);
+
+    expect.soft(subtotalPrice).toBeCloseTo(expectedTotal, 1);
+    expect.soft(displayedTax).toBeCloseTo(expectedTax, 1);
+    expect.soft(displayedTotal).toBeCloseTo(expectedTotalWithTax, 1);
+    expect.soft(await checkoutPage.getOverviewItemsCount()).toBe(6);
+
+    await checkoutPage.clickFinish();
+    await checkoutPage.completeHeader.waitFor({ state: "visible" });
+
+    await expect
+      .soft(checkoutPage.completeHeader)
+      .toContainText(CheckoutPageTexts.SuccessHeader);
+    await expect.soft(page).toHaveURL(/.*checkout-complete/);
+
+    await checkoutPage.clickBackToProduct();
+    await expect.soft(page).toHaveURL(/.*inventory/);
+    await expect
+      .soft(productsPage.title)
+      .toContainText(ProductsPageTexts.Title);
+
+    for (const id of productIds) {
+      const addButton = productsPage.getAddToCartButton(id);
+      const isVisible = await addButton.isVisible();
+      expect.soft(isVisible).toBe(true);
+    }
+  });
 });

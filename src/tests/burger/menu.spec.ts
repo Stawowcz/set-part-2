@@ -36,6 +36,25 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
         await expect.soft(page).toHaveURL(env.SAUCE_DEMO_BASEURL);
       },
     );
+
+    standardUser("should close burger menu", async ({ productsPage }) => {
+      await productsPage.openMenu();
+
+      await expect.soft(productsPage.menuLogoutLink).toBeVisible();
+      await expect(productsPage.burgerMenu).toHaveAttribute(
+        "aria-hidden",
+        "false",
+      );
+
+      await productsPage.clickBurgerMenuCLoseButton();
+
+      await expect(productsPage.burgerMenu).toHaveAttribute(
+        "aria-hidden",
+        "true",
+      );
+
+      await expect.soft(productsPage.menuLogoutLink).not.toBeVisible();
+    });
   });
 
   problemUser.describe("Burger menu scenarios - problem user", () => {
@@ -71,6 +90,25 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
         await expect.soft(page).toHaveURL(env.SAUCE_DEMO_BASEURL);
       },
     );
+
+    problemUser("should close burger menu", async ({ productsPage }) => {
+      await productsPage.openMenu();
+
+      await expect.soft(productsPage.menuLogoutLink).toBeVisible();
+      await expect(productsPage.burgerMenu).toHaveAttribute(
+        "aria-hidden",
+        "false",
+      );
+
+      await productsPage.clickBurgerMenuCLoseButton();
+
+      await expect(productsPage.burgerMenu).toHaveAttribute(
+        "aria-hidden",
+        "true",
+      );
+
+      await expect.soft(productsPage.menuLogoutLink).not.toBeVisible();
+    });
   });
 
   errorUser.describe("Burger menu scenarios - error user", () => {
@@ -106,6 +144,25 @@ test.describe("Navigation - burger menu scenarios for different users", () => {
         await expect.soft(page).toHaveURL(env.SAUCE_DEMO_BASEURL);
       },
     );
+
+    errorUser("should close burger menu", async ({ productsPage }) => {
+      await productsPage.openMenu();
+
+      await expect.soft(productsPage.menuLogoutLink).toBeVisible();
+      await expect(productsPage.burgerMenu).toHaveAttribute(
+        "aria-hidden",
+        "false",
+      );
+
+      await productsPage.clickBurgerMenuCLoseButton();
+
+      await expect(productsPage.burgerMenu).toHaveAttribute(
+        "aria-hidden",
+        "true",
+      );
+
+      await expect.soft(productsPage.menuLogoutLink).not.toBeVisible();
+    });
   });
 
   standardUser.describe(

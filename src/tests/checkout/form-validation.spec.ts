@@ -8,7 +8,6 @@ import {
   CheckoutPageErrorMessages,
 } from "@typings/checkout/";
 
-import { SharedTexts } from "../../types/common/common-enums";
 
 test.describe("Negative scenario – error handling in the checkout personal information form", () => {
   standardUser(
