@@ -233,6 +233,7 @@ export const standardUser = test.extend<{
   },
 });
 // ... other user fixtures: lockedUser, incorrectUser, problemUser, performanceGlitchUser, errorUser, visualUser
+````
 
 ## 10. Playwright Configuration (`playwright.config.ts`)
 
@@ -268,8 +269,8 @@ export default defineConfig({
 
   projects: [
     { name: "Chromium", use: { ...devices["Desktop Chrome"] } },
-    // { name: "Firefox",  use: { ...devices["Desktop Firefox"] } },
-    // { name: "WebKit",   use: { ...devices["Desktop Safari"] } },
+    { name: "Firefox",  use: { ...devices["Desktop Firefox"] } },
+    { name: "WebKit",   use: { ...devices["Desktop Safari"] } },
   ],
 
   fullyParallel: true,
@@ -279,7 +280,7 @@ export default defineConfig({
 
   outputDir: "test-results/",
 });
-````
+```
 
 ## 11. TypeScript Configuration (`tsconfig.json`)
 
