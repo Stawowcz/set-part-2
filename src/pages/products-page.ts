@@ -1,7 +1,6 @@
 import { Locator } from "@playwright/test";
 import { BasePage } from "@pages";
 import { ProductPageItemIds } from "@typings/products";
-import { ProductNames } from "@typings/common";
 
 export class ProductsPage extends BasePage {
   public readonly primaryHeader: Locator =

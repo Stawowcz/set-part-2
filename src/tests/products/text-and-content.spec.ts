@@ -1,6 +1,6 @@
-import { test, expect, standardUser, visualUser } from "@fixtures";
+import { expect, standardUser, visualUser } from "@fixtures";
 import { suspiciousPatterns, forbiddenCssClasses, env } from "@utils";
-import { ProductPageItemIds, ProductsPageTexts } from "@typings/products";
+import { ProductsPageTexts } from "@typings/products";
 import { ProductNames } from "@typings/common";
 
 standardUser.describe(

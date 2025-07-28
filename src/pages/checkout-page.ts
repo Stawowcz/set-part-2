@@ -1,7 +1,6 @@
 import { Locator } from "@playwright/test";
 import { BasePage } from "@pages";
 import { CheckoutFormData } from "@typings/checkout";
-import { ProductNames } from "@typings/common";
 
 export class CheckoutPage extends BasePage {
   private readonly firstName = this.page.getByTestId("firstName");

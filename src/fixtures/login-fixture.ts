@@ -1,4 +1,4 @@
-// src/fixtures/login-page.fixture.ts
+
 import {
   test as baseTest,
   type Page,
@@ -12,12 +12,10 @@ export type UserCredentials = {
   password: string;
 };
 
-// Rozszerzony `test` z fixture'ami `user` i `loginPage`
 export const test = baseTest.extend<{
   user: UserCredentials;
   loginPage: LoginPage;
 }>({
-  // 1) dane użytkownika, do nadpisania przez test.use()
   user: async ({}, use) => {
     await use({
       username: env.SAUCE_DEMO_STANDARD_USER,
@@ -25,7 +23,6 @@ export const test = baseTest.extend<{
     });
   },
 
-  // 2) fixture `loginPage` wykonuje logowanie
   loginPage: async (
     { page, user }: { page: Page; user: UserCredentials },
     use: (loginPage: LoginPage) => Promise<void>,
@@ -37,5 +34,4 @@ export const test = baseTest.extend<{
   },
 });
 
-// Eksport `expect` powiązany z rozszerzonym `test`
 export const expect = baseExpect;

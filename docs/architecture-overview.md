@@ -24,12 +24,12 @@ project-root/
 
 Tests are executed with the Playwright Test Runner and custom fixtures:
 
-- `` for per-test setup via fixtures (e.g., logging in with different user types).
-- `` to group related scenarios.
-- `` allows continuing after soft assertion failures to collect multiple errors.
+- \`\` for per-test setup via fixtures (e.g., logging in with different user types).
+- \`\` to group related scenarios.
+- \`\` allows continuing after soft assertion failures to collect multiple errors.
 - **Custom fixtures** (`login-fixture.ts`, `products-fixture.ts`, `about-fixture.ts`, `cart-fixture.ts`, `checkout-fixture.ts`) expose page objects and utilities directly into test callbacks.
 
-**Example test for an "error user":**
+**Example test for an "incorrect user":**
 
 ```ts
 import { test, expect } from './fixtures/user-fixture';
@@ -43,7 +43,7 @@ test.describe("Negatvie scenarios - authentication with user using wrong credent
   });
 ```
 
-## 3. Page Object Model (POM). Page Object Model (POM)
+## 3. Page Object Model (POM)
 
 Each UI screen is represented by a class under `src/pages`, encapsulating locators and actions:
 
@@ -85,9 +85,9 @@ While most configuration relies on fixtures and plain objects, you can optionall
 - **Types** in `src/types/` for shared data shapes (e.g., `CheckoutFormData`).
 - **Enums** or constant maps only if you find recurring literal values in multiple places.
 
-5. Utilities and Data Generators (src/utils)
+## 5. Utilities and Data Generators (src/utils)
 
-env-utils.ts: Exports typed environment variables via a manual cast to EnvVars:
+`env-utils.ts`: Exports typed environment variables via a manual cast to EnvVars:
 
 ```ts
 // src/types/env-types.ts
@@ -107,9 +107,11 @@ export type EnvVars = {
 // src/utils/env-utils.ts
 import type { EnvVars } from '@types/env-types';
 export const env = process.env as unknown as EnvVars;
+```
 
-checkout-data.ts: Generates realistic form data using Faker:
+`checkout-data.ts`: Generates realistic form data using Faker:
 
+```ts
 import { faker } from '@faker-js/faker';
 import type { CheckoutFormData } from '../types';
 
@@ -183,7 +185,7 @@ export const aboutFixtures = {
 };
 ```
 
-```ts
+````ts
 import { test as loginTest, expect } from "./login-fixture";
 import { productsFixtures } from "./products-fixture";
 import { aboutFixtures } from "./about-fixture";
@@ -231,9 +233,93 @@ export const standardUser = test.extend<{
   },
 });
 // ... other user fixtures: lockedUser, incorrectUser, problemUser, performanceGlitchUser, errorUser, visualUser
+
+## 10. Playwright Configuration (`playwright.config.ts`)
+
+This file defines the core Playwright test runner setup, loading environment variables, configuring test behavior, and managing retries, reporters, and execution logic.
+
+```ts
+import { defineConfig, devices } from "@playwright/test";
+import { env } from "@utils";
+import * as dotenv from "dotenv";
+dotenv.config();
+
+export default defineConfig({
+  testDir: "./src/tests/",
+  timeout: 30 * 1_000,
+  expect: {
+    timeout: 20 * 1_000,
+  },
+
+  reporter: [
+    ["list"],
+    ["junit", { outputFile: "test-results/junit-results.xml" }],
+    ["html", { outputFolder: "playwright-report", open: "never" }],
+  ],
+
+  use: {
+    headless: true,
+    baseURL: env.SAUCE_DEMO_BASEURL,
+    testIdAttribute: "data-test",
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
+    trace: "on-first-retry",
+  },
+
+  projects: [
+    { name: "Chromium", use: { ...devices["Desktop Chrome"] } },
+    // { name: "Firefox",  use: { ...devices["Desktop Firefox"] } },
+    // { name: "WebKit",   use: { ...devices["Desktop Safari"] } },
+  ],
+
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 1 : 0,
+  workers: process.env.CI ? "100%" : "50%",
+
+  outputDir: "test-results/",
+});
+````
+
+## 11. TypeScript Configuration (`tsconfig.json`)
+
+Defines TypeScript compilation settings, strictness rules, and module resolution paths for cleaner imports.
+
+```json
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "lib": ["ESNext", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@fixtures": ["src/fixtures/index.ts"],
+      "@fixtures/*": ["src/fixtures/*"],
+      "@pages": ["src/pages/index.ts"],
+      "@pages/*": ["src/pages/*"],
+      "@utils": ["src/utils/index.ts"],
+      "@utils/*": ["src/utils/*"],
+      "@typings/*": ["src/types/*"],
+      "@data/*": ["src/data/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "playwright.config.ts"]
+}
 ```
 
-## 10. Summary
+**Highlights:**
+
+- `strict`: enables full type safety
+- `baseUrl` and `paths`: support alias imports like `@pages/LoginPage`
+- Allows importing `.json` files
+- Simplifies refactoring and improves code readability
+
+## 12. Summary
 
 This framework provides a scalable, maintainable foundation for E2E testing:
 
@@ -242,3 +328,4 @@ This framework provides a scalable, maintainable foundation for E2E testing:
 - Typed enums and Zod-validated environment variables
 - Dynamic test data via Faker
 - Comprehensive reporting and CI/CD integration
+
