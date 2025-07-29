@@ -1,18 +1,17 @@
-import { test, expect } from "@fixtures";
+import {  expect, standardUser } from "@fixtures";
 import { ProductPageItemIds, ProductsPageTexts } from "@typings/products";
 import { CheckoutFormData, CheckoutPageTexts } from "@typings/checkout";
 import { CartPageTexts } from "@typings/cart";
 import { ProductNames } from "@typings/common";
 import { PricingUtils, CheckoutDataGenerator } from "@utils";
 
-test.describe("Checkout flow - standard user", () => {
-  test.beforeEach(async ({ page, loginPage: _, productsPage }) => {
-    await expect.soft(page).toHaveURL(/.*inventory/);
+standardUser.describe("Checkout flow - standard user", () => {
+  standardUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+    await productsPage.expectUrlContains("inventory");
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
-  test("should add 2 items and complete checkout successfully", async ({
-    page,
+  standardUser("should add 2 items and complete checkout successfully", async ({
     productsPage,
     checkoutPage,
     cartPage,
@@ -32,7 +31,7 @@ test.describe("Checkout flow - standard user", () => {
     const expectedTotal = inventoryPriceBP + inventoryPriceBL;
     await productsPage.clickOnCartBasket();
 
-    await expect.soft(page).toHaveURL(/.*cart/);
+    await productsPage.expectUrlContains("cart");
     await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -56,7 +55,7 @@ test.describe("Checkout flow - standard user", () => {
 
     await cartPage.clickCheckout();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+    await productsPage.expectUrlContains("checkout-step-one");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
@@ -66,7 +65,7 @@ test.describe("Checkout flow - standard user", () => {
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+    await productsPage.expectUrlContains("checkout-step-two");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
@@ -104,11 +103,10 @@ test.describe("Checkout flow - standard user", () => {
     await expect
       .soft(checkoutPage.completeHeader)
       .toContainText(CheckoutPageTexts.SuccessHeader);
-    await expect.soft(page).toHaveURL(/.*checkout-complete/);
+    await productsPage.expectUrlContains("checkout-complete");
   });
 
-  test("should remove one item after continuing shopping, then complete checkout", async ({
-    page,
+  standardUser("should remove one item after continuing shopping, then complete checkout", async ({
     productsPage,
     checkoutPage,
     cartPage,
@@ -125,7 +123,7 @@ test.describe("Checkout flow - standard user", () => {
     const expectedTotal = inventoryPriceBP;
     await productsPage.clickOnCartBasket();
 
-    await expect.soft(page).toHaveURL(/.*cart/);
+    await productsPage.expectUrlContains("cart");
     await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -145,7 +143,7 @@ test.describe("Checkout flow - standard user", () => {
     const continueShoppingDuration = Date.now() - start;
 
     expect.soft(continueShoppingDuration).toBeLessThanOrEqual(1500);
-    await expect.soft(page).toHaveURL(/.*inventory/);
+    await productsPage.expectUrlContains("inventory");
 
     await productsPage.removeProductToCart(ProductPageItemIds.BikeLight);
 
@@ -157,7 +155,7 @@ test.describe("Checkout flow - standard user", () => {
 
     await productsPage.clickOnCartBasket();
 
-    await expect.soft(page).toHaveURL(/.*cart/);
+    await productsPage.expectUrlContains("cart");
 
     await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
@@ -168,7 +166,7 @@ test.describe("Checkout flow - standard user", () => {
     }
     await cartPage.clickCheckout();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+    await productsPage.expectUrlContains("checkout-step-one");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
@@ -177,7 +175,7 @@ test.describe("Checkout flow - standard user", () => {
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+    await productsPage.expectUrlContains("checkout-step-two");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
@@ -211,11 +209,10 @@ test.describe("Checkout flow - standard user", () => {
     await expect
       .soft(checkoutPage.completeHeader)
       .toContainText(CheckoutPageTexts.SuccessHeader);
-    await expect.soft(page).toHaveURL(/.*checkout-complete/);
+    await productsPage.expectUrlContains("checkout-complete");
   });
 
-  test("should add 2 items, start checkout, cancel, return to cart, verify item count, then complete checkout", async ({
-    page,
+  standardUser("should add 2 items, start checkout, cancel, return to cart, verify item count, then complete checkout", async ({
     productsPage,
     checkoutPage,
     cartPage,
@@ -235,7 +232,7 @@ test.describe("Checkout flow - standard user", () => {
     const expectedTotal = inventoryPriceBP + inventoryPriceBL;
     await productsPage.clickOnCartBasket();
 
-    await expect.soft(page).toHaveURL(/.*cart/);
+    await productsPage.expectUrlContains("cart");
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
@@ -258,14 +255,14 @@ test.describe("Checkout flow - standard user", () => {
 
     await cartPage.clickCheckout();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+    await productsPage.expectUrlContains("checkout-step-one");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
 
     await checkoutPage.clickCancel();
 
-    await expect.soft(page).toHaveURL(/.*cart/);
+    await productsPage.expectUrlContains("cart");
     await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
     for (let i = 0; i < cartQuantities; i++) {
@@ -275,7 +272,7 @@ test.describe("Checkout flow - standard user", () => {
 
     await cartPage.clickCheckout();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+    await productsPage.expectUrlContains("checkout-step-one");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
@@ -284,7 +281,7 @@ test.describe("Checkout flow - standard user", () => {
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+    await productsPage.expectUrlContains("checkout-step-two");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
@@ -322,11 +319,10 @@ test.describe("Checkout flow - standard user", () => {
     await expect
       .soft(checkoutPage.completeHeader)
       .toContainText(CheckoutPageTexts.SuccessHeader);
-    await expect.soft(page).toHaveURL(/.*checkout-complete/);
+    await productsPage.expectUrlContains("checkout-complete");
   });
 
-  test("should cancel on the overview page, return to inventory, and preserve items", async ({
-    page,
+  standardUser("should cancel on the overview page, return to inventory, and preserve items", async ({
     productsPage,
     checkoutPage,
     cartPage,
@@ -339,7 +335,7 @@ test.describe("Checkout flow - standard user", () => {
 
     await productsPage.clickOnCartBasket();
 
-    await expect.soft(page).toHaveURL(/.*cart/);
+    await productsPage.expectUrlContains("cart");
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
     for (let i = 0; i < cartQuantities; i++) {
@@ -351,7 +347,7 @@ test.describe("Checkout flow - standard user", () => {
 
     await cartPage.clickCheckout();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+    await productsPage.expectUrlContains("checkout-step-one");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
@@ -360,7 +356,7 @@ test.describe("Checkout flow - standard user", () => {
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+    await productsPage.expectUrlContains("checkout-step-two");
 
     const overviewQuantities = await checkoutPage.itemQuantity.count();
 
@@ -378,15 +374,14 @@ test.describe("Checkout flow - standard user", () => {
     const cancelDuration = Date.now() - start;
 
     expect.soft(cancelDuration).toBeLessThanOrEqual(1500);
-    await expect.soft(page).toHaveURL(/.*inventory/);
+    await productsPage.expectUrlContains("inventory");
 
     const badgeAfterCancel = await productsPage.waitForCartBadge();
 
     await expect.soft(badgeAfterCancel).toHaveText("2");
   });
 
-  test("should add 2 items, delete 1 from cart, verify count, and complete checkout", async ({
-    page,
+  standardUser("should add 2 items, delete 1 from cart, verify count, and complete checkout", async ({
     productsPage,
     checkoutPage,
     cartPage,
@@ -403,7 +398,7 @@ test.describe("Checkout flow - standard user", () => {
     const expectedTotal = inventoryPriceBL;
     await productsPage.clickOnCartBasket();
 
-    await expect.soft(page).toHaveURL(/.*cart/);
+    await productsPage.expectUrlContains("cart");
 
     const cartQuantities = await checkoutPage.itemQuantity.count();
 
@@ -433,7 +428,7 @@ test.describe("Checkout flow - standard user", () => {
 
     await productsPage.clickOnCartBasket();
 
-    await expect.soft(page).toHaveURL(/.*cart/);
+    await productsPage.expectUrlContains("cart");
 
     const updatedCartQuantities = await checkoutPage.itemQuantity.count();
 
@@ -445,7 +440,7 @@ test.describe("Checkout flow - standard user", () => {
 
     await cartPage.clickCheckout();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+    await productsPage.expectUrlContains("checkout-step-one");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
@@ -454,7 +449,7 @@ test.describe("Checkout flow - standard user", () => {
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+    await productsPage.expectUrlContains("checkout-step-two");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
@@ -489,11 +484,10 @@ test.describe("Checkout flow - standard user", () => {
     await expect
       .soft(checkoutPage.completeHeader)
       .toContainText(CheckoutPageTexts.SuccessHeader);
-    await expect.soft(page).toHaveURL(/.*checkout-complete/);
+    await productsPage.expectUrlContains("checkout-complete");
   });
 
-  test("should add 2 items from product details pages, and complete checkout successfully", async ({
-    page,
+  standardUser("should add 2 items from product details pages, and complete checkout successfully", async ({
     productsPage,
     cartPage,
     checkoutPage,
@@ -512,7 +506,7 @@ test.describe("Checkout flow - standard user", () => {
     const expectedTotal = inventoryPriceBP + inventoryPriceBL;
     await productsPage.clickOnCartBasket();
 
-    await expect.soft(page).toHaveURL(/.*cart/);
+    await productsPage.expectUrlContains("cart");
     await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -535,7 +529,7 @@ test.describe("Checkout flow - standard user", () => {
 
     await cartPage.clickCheckout();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+    await productsPage.expectUrlContains("checkout-step-one");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
@@ -545,7 +539,7 @@ test.describe("Checkout flow - standard user", () => {
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+    await productsPage.expectUrlContains("checkout-step-two");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
@@ -586,11 +580,10 @@ test.describe("Checkout flow - standard user", () => {
     await expect
       .soft(checkoutPage.completeHeader)
       .toContainText(CheckoutPageTexts.SuccessHeader);
-    await expect.soft(page).toHaveURL(/.*checkout-complete/);
+    await productsPage.expectUrlContains("checkout-complete");
   });
 
-  test("should add all products, complete checkout, and verify app is reset", async ({
-    page,
+  standardUser("should add all products, complete checkout, and verify app is reset", async ({
     productsPage,
     checkoutPage,
     cartPage,
@@ -633,7 +626,7 @@ test.describe("Checkout flow - standard user", () => {
 
     await productsPage.clickOnCartBasket();
 
-    await expect.soft(page).toHaveURL(/.*cart/);
+    await productsPage.expectUrlContains("cart");
     await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
     expect.soft(await cartPage.getCartItemsCount()).toBe(6);
@@ -647,7 +640,7 @@ test.describe("Checkout flow - standard user", () => {
 
     await cartPage.clickCheckout();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+    await productsPage.expectUrlContains("checkout-step-one");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
@@ -657,7 +650,7 @@ test.describe("Checkout flow - standard user", () => {
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+    await productsPage.expectUrlContains("checkout-step-two");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
@@ -687,10 +680,10 @@ test.describe("Checkout flow - standard user", () => {
     await expect
       .soft(checkoutPage.completeHeader)
       .toContainText(CheckoutPageTexts.SuccessHeader);
-    await expect.soft(page).toHaveURL(/.*checkout-complete/);
+    await productsPage.expectUrlContains("checkout-complete");
 
     await checkoutPage.clickBackToProduct();
-    await expect.soft(page).toHaveURL(/.*inventory/);
+    await productsPage.expectUrlContains("inventory");
     await expect
       .soft(productsPage.title)
       .toContainText(ProductsPageTexts.Title);
@@ -702,8 +695,7 @@ test.describe("Checkout flow - standard user", () => {
     }
   });
 
-  test("should add all products from detail page, complete checkout, and verify app is reset", async ({
-    page,
+  standardUser("should add all products from detail page, complete checkout, and verify app is reset", async ({
     productsPage,
     checkoutPage,
     cartPage,
@@ -747,7 +739,7 @@ test.describe("Checkout flow - standard user", () => {
     );
 
     await productsPage.clickOnCartBasket();
-    await expect.soft(page).toHaveURL(/.*cart/);
+    await productsPage.expectUrlContains("cart");
     await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
     expect.soft(await cartPage.getCartItemsCount()).toBe(6);
 
@@ -762,7 +754,7 @@ test.describe("Checkout flow - standard user", () => {
     expect.soft(classAttr).not.toContain("btn_visual_failure");
 
     await cartPage.clickCheckout();
-    await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+    await productsPage.expectUrlContains("checkout-step-one");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step1Header);
@@ -772,7 +764,7 @@ test.describe("Checkout flow - standard user", () => {
     await checkoutPage.fillInfo(formData);
     await checkoutPage.clickContinue();
 
-    await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+    await productsPage.expectUrlContains("checkout-step-two");
     await expect
       .soft(checkoutPage.title)
       .toHaveText(CheckoutPageTexts.Step2Header);
@@ -803,10 +795,10 @@ test.describe("Checkout flow - standard user", () => {
     await expect
       .soft(checkoutPage.completeHeader)
       .toContainText(CheckoutPageTexts.SuccessHeader);
-    await expect.soft(page).toHaveURL(/.*checkout-complete/);
+    await productsPage.expectUrlContains("checkout-complete");
 
     await checkoutPage.clickBackToProduct();
-    await expect.soft(page).toHaveURL(/.*inventory/);
+    await productsPage.expectUrlContains("inventory");
     await expect
       .soft(productsPage.title)
       .toContainText(ProductsPageTexts.Title);

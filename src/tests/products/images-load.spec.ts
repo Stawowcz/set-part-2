@@ -5,8 +5,8 @@ import { ProductNames } from "@typings/common";
 test.describe("Images loading - different users", () => {
   standardUser(
     "should load images correctly on the product page - standard user",
-    async ({ page, loginPage: _, productsPage }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    async ({  loginPage: _, productsPage }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
 
       const expectedImages = {
@@ -30,8 +30,8 @@ test.describe("Images loading - different users", () => {
 
   problemUser(
     "should load images correctly on the product page - problem user --> BUG: dogs everywhere",
-    async ({ page, loginPage: _, productsPage }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    async ({  loginPage: _, productsPage }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
 
       const expectedImages = {
@@ -55,8 +55,8 @@ test.describe("Images loading - different users", () => {
 
   visualUser(
     "should load images correctly on the product page - visual user --> BUG: dogs in one place",
-    async ({ page, loginPage: _, productsPage }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    async ({  loginPage: _, productsPage }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
 
       const expectedImages = {

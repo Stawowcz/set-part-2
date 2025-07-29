@@ -12,8 +12,8 @@ import {
 test.describe("Negative scenario – error handling in the checkout personal information form", () => {
   standardUser(
     "should display an error message in the checkout personal information form - standard user",
-    async ({ page, loginPage: _, productsPage, checkoutPage, cartPage }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    async ({  loginPage: _, productsPage, checkoutPage, cartPage }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
 
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
@@ -24,12 +24,12 @@ test.describe("Negative scenario – error handling in the checkout personal inf
 
       await productsPage.clickOnCartBasket();
 
-      await expect.soft(page).toHaveURL(/.*cart/);
+      await productsPage.expectUrlContains("cart");
       await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
       await cartPage.clickCheckout();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+      await productsPage.expectUrlContains("checkout-step-one");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step1Header);
@@ -73,8 +73,8 @@ test.describe("Negative scenario – error handling in the checkout personal inf
 
   errorUser(
     "should display an error message in the checkout personal information form - error user --> BUG: unable to type in the last name field",
-    async ({ page, loginPage: _, productsPage, checkoutPage, cartPage }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    async ({  loginPage: _, productsPage, checkoutPage, cartPage }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
 
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
@@ -85,12 +85,12 @@ test.describe("Negative scenario – error handling in the checkout personal inf
 
       await productsPage.clickOnCartBasket();
 
-      await expect.soft(page).toHaveURL(/.*cart/);
+      await productsPage.expectUrlContains("cart");
       await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
       await cartPage.clickCheckout();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+      await productsPage.expectUrlContains("checkout-step-one");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step1Header);
@@ -134,8 +134,8 @@ test.describe("Negative scenario – error handling in the checkout personal inf
 
   problemUser(
     "should display an error message in the checkout personal information form - problem user --> BUG: unable to type in the last name field – input overwrites first name instead",
-    async ({ page, loginPage: _, productsPage, checkoutPage, cartPage }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    async ({  loginPage: _, productsPage, checkoutPage, cartPage }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
 
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
@@ -146,12 +146,12 @@ test.describe("Negative scenario – error handling in the checkout personal inf
 
       await productsPage.clickOnCartBasket();
 
-      await expect.soft(page).toHaveURL(/.*cart/);
+      await productsPage.expectUrlContains("cart");
       await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
       await cartPage.clickCheckout();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+      await productsPage.expectUrlContains("checkout-step-one");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step1Header);

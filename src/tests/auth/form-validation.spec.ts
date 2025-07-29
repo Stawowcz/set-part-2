@@ -1,7 +1,7 @@
 import { test, expect, incorrectUser, incorrectPassword } from "@fixtures";
 import { LoginPageErrorMessages } from "@typings/auth";
 
-test.describe("Negatvie scenarios - authentication with user using wrong credentials", () => {
+incorrectUser.describe("Negatvie scenarios - authentication with user using wrong credentials", () => {
   incorrectUser(
     "should show error for incorrect username",
     async ({ loginPage }) => {

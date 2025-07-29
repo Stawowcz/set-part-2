@@ -6,8 +6,8 @@ import { ProductNames } from "@typings/common";
 standardUser.describe(
   "Products - content and style checks - standard user",
   () => {
-    standardUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    standardUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
@@ -93,8 +93,8 @@ standardUser.describe(
 );
 
 visualUser.describe("Products - content and style checks - visual user", () => {
-  visualUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
-    await expect.soft(page).toHaveURL(/.*inventory/);
+  visualUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+    await productsPage.expectUrlContains("inventory");
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
@@ -177,8 +177,8 @@ visualUser.describe("Products - content and style checks - visual user", () => {
 });
 
 standardUser.describe("Price consistency between users on inventory page", () => {
-  standardUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
-    await expect.soft(page).toHaveURL(/.*inventory/);
+  standardUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+    await productsPage.expectUrlContains("inventory");
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 

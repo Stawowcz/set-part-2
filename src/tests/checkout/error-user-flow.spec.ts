@@ -15,14 +15,14 @@ import { ProductNames } from "@typings/common";
 // I didn’t repeat all the same tests for the problem user as for the standard user to reduce the amount of code to review.
 // Most of them fail the same way for this user — the bug is that the last name field cannot be typed in.
 problemUser.describe("Checkout flow - problem user", () => {
-  problemUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
-    await expect.soft(page).toHaveURL(/.*inventory/);
+  problemUser.beforeEach(async ({ loginPage: _, productsPage }) => {
+    await productsPage.expectUrlContains("inventory");
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
   problemUser(
     "should add 2 items and complete checkout successfully --> BUG: unable to type in the last name field",
-    async ({ page, productsPage, checkoutPage, cartPage }) => {
+    async ({  productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
       const badge = await productsPage.waitForCartBadge();
@@ -39,7 +39,7 @@ problemUser.describe("Checkout flow - problem user", () => {
 
       await productsPage.clickOnCartBasket();
 
-      await expect.soft(page).toHaveURL(/.*cart/);
+      await productsPage.expectUrlContains("cart");
       await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
       expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -66,7 +66,7 @@ problemUser.describe("Checkout flow - problem user", () => {
 
       await cartPage.clickCheckout();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+      await productsPage.expectUrlContains("checkout-step-one");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step1Header);
@@ -76,7 +76,7 @@ problemUser.describe("Checkout flow - problem user", () => {
       await checkoutPage.fillInfo(formData);
       await checkoutPage.clickContinue();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+      await productsPage.expectUrlContains("checkout-step-two");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step2Header);
@@ -117,13 +117,13 @@ problemUser.describe("Checkout flow - problem user", () => {
       await expect
         .soft(checkoutPage.completeHeader)
         .toContainText(CheckoutPageTexts.SuccessHeader);
-      await expect.soft(page).toHaveURL(/.*checkout-complete/);
+      await productsPage.expectUrlContains("checkout-complete");
     },
   );
 
   problemUser(
     "should add 2 items from product details pages, and complete checkout successfully --> BUG: unable to add item from the product details page",
-    async ({ page, productsPage, cartPage, checkoutPage }) => {
+    async ({  productsPage, cartPage, checkoutPage }) => {
       await productsPage.clickProductByName(ProductNames.Backpack);
       await productsPage.addToCartFromProjectDetails();
       const inventoryPriceBP = await productsPage.getProductPriceByName(
@@ -138,7 +138,7 @@ problemUser.describe("Checkout flow - problem user", () => {
       const expectedTotal = inventoryPriceBP + inventoryPriceBL;
       await productsPage.clickOnCartBasket();
 
-      await expect.soft(page).toHaveURL(/.*cart/);
+      await productsPage.expectUrlContains("cart");
       await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
       expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -161,7 +161,7 @@ problemUser.describe("Checkout flow - problem user", () => {
 
       await cartPage.clickCheckout();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+      await productsPage.expectUrlContains("checkout-step-one");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step1Header);
@@ -171,7 +171,7 @@ problemUser.describe("Checkout flow - problem user", () => {
       await checkoutPage.fillInfo(formData);
       await checkoutPage.clickContinue();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+      await productsPage.expectUrlContains("checkout-step-two");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step2Header);
@@ -212,7 +212,7 @@ problemUser.describe("Checkout flow - problem user", () => {
       await expect
         .soft(checkoutPage.completeHeader)
         .toContainText(CheckoutPageTexts.SuccessHeader);
-      await expect.soft(page).toHaveURL(/.*checkout-complete/);
+      await productsPage.expectUrlContains("checkout-complete");
     },
   );
 });
@@ -220,14 +220,14 @@ problemUser.describe("Checkout flow - problem user", () => {
 // I didn’t repeat all the same tests for the error user as for the standard user to reduce the amount of code to review.
 // Most of them fail the same way for this user — the bug is that the finish button can not be clicked.
 errorUser.describe("Checkout flow - error user", () => {
-  errorUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
-    await expect.soft(page).toHaveURL(/.*inventory/);
+  errorUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+    await productsPage.expectUrlContains("inventory");
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
   errorUser(
     "should add 2 items and complete checkout successfully --> BUG: unable to click the finish button",
-    async ({ page, productsPage, checkoutPage, cartPage }) => {
+    async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
       const badge = await productsPage.waitForCartBadge();
@@ -244,7 +244,7 @@ errorUser.describe("Checkout flow - error user", () => {
 
       await productsPage.clickOnCartBasket();
 
-      await expect.soft(page).toHaveURL(/.*cart/);
+      await productsPage.expectUrlContains("cart");
       await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
       expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -271,7 +271,7 @@ errorUser.describe("Checkout flow - error user", () => {
 
       await cartPage.clickCheckout();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+      await productsPage.expectUrlContains("checkout-step-one");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step1Header);
@@ -281,7 +281,7 @@ errorUser.describe("Checkout flow - error user", () => {
       await checkoutPage.fillInfo(formData);
       await checkoutPage.clickContinue();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+      await productsPage.expectUrlContains("checkout-step-two");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step2Header);
@@ -322,13 +322,13 @@ errorUser.describe("Checkout flow - error user", () => {
       await expect
         .soft(checkoutPage.completeHeader)
         .toContainText(CheckoutPageTexts.SuccessHeader);
-      await expect.soft(page).toHaveURL(/.*checkout-complete/);
+      await productsPage.expectUrlContains("checkout-complete");
     },
   );
 
   errorUser(
     "should remove one item after continuing shopping, then complete checkout --> BUG: unable to click the remove and finish button",
-    async ({ page, productsPage, checkoutPage, cartPage }) => {
+    async ({  productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
       const badge = await productsPage.waitForCartBadge();
@@ -341,7 +341,7 @@ errorUser.describe("Checkout flow - error user", () => {
       const expectedTotal = inventoryPriceBP;
       await productsPage.clickOnCartBasket();
 
-      await expect.soft(page).toHaveURL(/.*cart/);
+      await productsPage.expectUrlContains("cart");
       await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
       expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -363,7 +363,7 @@ errorUser.describe("Checkout flow - error user", () => {
       const continueShoppingDuration = Date.now() - start;
 
       expect.soft(continueShoppingDuration).toBeLessThanOrEqual(1500);
-      await expect.soft(page).toHaveURL(/.*inventory/);
+      await productsPage.expectUrlContains("inventory");
 
       await productsPage.removeProductToCart(ProductPageItemIds.BikeLight);
       await badge.waitFor({ state: "visible" });
@@ -372,7 +372,7 @@ errorUser.describe("Checkout flow - error user", () => {
 
       await productsPage.clickOnCartBasket();
 
-      await expect.soft(page).toHaveURL(/.*cart/);
+      await productsPage.expectUrlContains("cart");
       await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
       const updatedCartQuantities = await checkoutPage.itemQuantity.count();
@@ -384,7 +384,7 @@ errorUser.describe("Checkout flow - error user", () => {
 
       await cartPage.clickCheckout();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+      await productsPage.expectUrlContains("checkout-step-one");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step1Header);
@@ -393,7 +393,7 @@ errorUser.describe("Checkout flow - error user", () => {
       await checkoutPage.fillInfo(formData);
       await checkoutPage.clickContinue();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+      await productsPage.expectUrlContains("checkout-step-two");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step2Header);
@@ -429,7 +429,7 @@ errorUser.describe("Checkout flow - error user", () => {
       await expect
         .soft(checkoutPage.completeHeader)
         .toContainText(CheckoutPageTexts.SuccessHeader);
-      await expect.soft(page).toHaveURL(/.*checkout-complete/);
+      await productsPage.expectUrlContains("checkout-complete");
     },
   );
 });
@@ -438,15 +438,15 @@ errorUser.describe("Checkout flow - error user", () => {
 // I only included the cases where the glitch bug actually occurs (see below).
 performanceGlitchUser.describe("Checkout flow - glitch user", () => {
   performanceGlitchUser.beforeEach(
-    async ({ page, loginPage: _, productsPage }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    async ({ loginPage: _, productsPage }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     },
   );
 
   performanceGlitchUser(
     "should remove one item after continuing shopping, then complete checkout --> BUG: continue shopping takes more than 1.5s",
-    async ({ page, productsPage, checkoutPage, cartPage }) => {
+    async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
       const badge = await productsPage.waitForCartBadge();
@@ -460,7 +460,7 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
 
       await productsPage.clickOnCartBasket();
 
-      await expect.soft(page).toHaveURL(/.*cart/);
+      await productsPage.expectUrlContains("cart");
       await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
       expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -482,7 +482,7 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
       const continueShoppingDuration = Date.now() - start;
 
       expect.soft(continueShoppingDuration).toBeLessThanOrEqual(1500);
-      await expect.soft(page).toHaveURL(/.*inventory/);
+      await productsPage.expectUrlContains("inventory");
 
       await productsPage.removeProductToCart(ProductPageItemIds.BikeLight);
 
@@ -494,7 +494,7 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
 
       await productsPage.clickOnCartBasket();
 
-      await expect.soft(page).toHaveURL(/.*cart/);
+      await productsPage.expectUrlContains("cart");
 
       await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
@@ -507,7 +507,7 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
 
       await cartPage.clickCheckout();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+      await productsPage.expectUrlContains("checkout-step-one");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step1Header);
@@ -516,7 +516,7 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
       await checkoutPage.fillInfo(formData);
       await checkoutPage.clickContinue();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+      await productsPage.expectUrlContains("checkout-step-two");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step2Header);
@@ -553,13 +553,13 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
       await expect
         .soft(checkoutPage.completeHeader)
         .toContainText(CheckoutPageTexts.SuccessHeader);
-      await expect.soft(page).toHaveURL(/.*checkout-complete/);
+      await productsPage.expectUrlContains("checkout-complete");
     },
   );
 
   performanceGlitchUser(
     "should cancel on the overview page, return to inventory, and preserve items --> BUG: cancel takes more than 1.5s",
-    async ({ page, productsPage, checkoutPage, cartPage }) => {
+    async ({  productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
       const badge = await productsPage.waitForCartBadge();
@@ -568,7 +568,7 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
 
       await productsPage.clickOnCartBasket();
 
-      await expect.soft(page).toHaveURL(/.*cart/);
+      await productsPage.expectUrlContains("cart");
 
       const cartQuantities = await checkoutPage.itemQuantity.count();
 
@@ -579,7 +579,7 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
       await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
 
       await cartPage.clickCheckout();
-      await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+      await productsPage.expectUrlContains("checkout-step-one");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step1Header);
@@ -588,7 +588,7 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
       await checkoutPage.fillInfo(formData);
       await checkoutPage.clickContinue();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+      await productsPage.expectUrlContains("checkout-step-two");
 
       const overviewQuantities = await checkoutPage.itemQuantity.count();
 
@@ -607,7 +607,7 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
       const cancelDuration = Date.now() - start;
 
       expect.soft(cancelDuration).toBeLessThanOrEqual(1500);
-      await expect.soft(page).toHaveURL(/.*inventory/);
+      await productsPage.expectUrlContains("inventory");
 
       const badgeAfterCancel = await productsPage.waitForCartBadge();
 
@@ -619,14 +619,14 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
 // I didn’t repeat all the same tests for the visual user as for the standard user to reduce the amount of code to review.
 // I only included the cases where the visual bug actually occurs (see below).
 visualUser.describe("Checkout flow - visual user", () => {
-  visualUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
-    await expect.soft(page).toHaveURL(/.*inventory/);
+  visualUser.beforeEach(async ({ loginPage: _, productsPage }) => {
+    await productsPage.expectUrlContains("inventory");
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
   visualUser(
     "should add 2 items and complete checkout successfully --> BUGS: incorrect price in the inventory, and forbidden class on the checkout button",
-    async ({ page, productsPage, checkoutPage, cartPage }) => {
+    async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
       const badge = await productsPage.waitForCartBadge();
@@ -642,7 +642,7 @@ visualUser.describe("Checkout flow - visual user", () => {
       const expectedTotal = inventoryPriceBP + inventoryPriceBL;
       await productsPage.clickOnCartBasket();
 
-      await expect.soft(page).toHaveURL(/.*cart/);
+      await productsPage.expectUrlContains("cart");
       await expect.soft(cartPage.title).toHaveText(CartPageTexts.Header);
       expect.soft(await cartPage.getCartItemsCount()).toBe(2);
 
@@ -668,7 +668,7 @@ visualUser.describe("Checkout flow - visual user", () => {
 
       await cartPage.clickCheckout();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-one/);
+      await productsPage.expectUrlContains("checkout-step-one");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step1Header);
@@ -678,7 +678,7 @@ visualUser.describe("Checkout flow - visual user", () => {
       await checkoutPage.fillInfo(formData);
       await checkoutPage.clickContinue();
 
-      await expect.soft(page).toHaveURL(/.*checkout-step-two/);
+      await productsPage.expectUrlContains("checkout-step-two");
       await expect
         .soft(checkoutPage.title)
         .toHaveText(CheckoutPageTexts.Step2Header);
@@ -717,7 +717,7 @@ visualUser.describe("Checkout flow - visual user", () => {
       await expect
         .soft(checkoutPage.completeHeader)
         .toContainText(CheckoutPageTexts.SuccessHeader);
-      await expect.soft(page).toHaveURL(/.*checkout-complete/);
+      await productsPage.expectUrlContains("checkout-complete");
     },
   );
 });

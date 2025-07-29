@@ -1,5 +1,4 @@
 import {
-  test,
   expect,
   standardUser,
   problemUser,
@@ -9,10 +8,10 @@ import {
 } from "@fixtures";
 import { ProductsPageTexts } from "@typings/products";
 
-test.describe("Filters - different users", () => {
+standardUser.describe("Filters - different users", () => {
   standardUser.describe("Filters - standard user", () => {
-    standardUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    standardUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
@@ -62,8 +61,8 @@ test.describe("Filters - different users", () => {
   });
 
   problemUser.describe("Filters - problem user", () => {
-    problemUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    problemUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
@@ -122,8 +121,8 @@ test.describe("Filters - different users", () => {
   });
 
   errorUser.describe("Filters - error user", () => {
-    errorUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    errorUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
@@ -182,8 +181,8 @@ test.describe("Filters - different users", () => {
   });
 
   visualUser.describe("Filters - visual user", () => {
-    visualUser.beforeEach(async ({ page, loginPage: _, productsPage }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    visualUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
@@ -240,8 +239,8 @@ test.describe("Filters - different users", () => {
 
   performanceGlitchUser.describe("Filters - glitch user", () => {
     performanceGlitchUser.beforeEach(
-      async ({ page, loginPage: _, productsPage }) => {
-        await expect.soft(page).toHaveURL(/.*inventory/);
+      async ({  loginPage: _, productsPage }) => {
+        await productsPage.expectUrlContains("inventory");
         await expect
           .soft(productsPage.title)
           .toHaveText(ProductsPageTexts.Title);

@@ -5,8 +5,8 @@ import { env } from "@utils";
 test.describe("Positive scenarios – authentication with different users", () => {
   standardUser(
     "should log in - standard user",
-    async ({ loginPage: _, productsPage, page }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    async ({ loginPage: _, productsPage,  }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect
         .soft(productsPage.primaryHeader)
         .toContainText(SharedTexts.PrimaryHeader);
@@ -17,8 +17,8 @@ test.describe("Positive scenarios – authentication with different users", () =
 
   lockedUser(
     "should log in – locked out user --> BUG: user is locked",
-    async ({ loginPage: _, productsPage, page }) => {
-      await expect.soft(page).toHaveURL(/.*inventory/);
+    async ({ loginPage: _, productsPage  }) => {
+      await productsPage.expectUrlContains("inventory");
       await expect
         .soft(productsPage.primaryHeader)
         .toContainText(SharedTexts.PrimaryHeader);

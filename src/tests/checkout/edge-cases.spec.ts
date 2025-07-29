@@ -1,16 +1,16 @@
-import { test, expect } from "@fixtures";
+import { expect, standardUser } from "@fixtures";
 import { ProductPageItemIds, ProductsPageTexts } from "@typings/products";
 import { CheckoutFormData, CheckoutPageTexts } from "@typings/checkout";
 import { CartPageTexts } from "@typings/cart";
 import { CheckoutDataGenerator } from "@utils";
 
-test.describe("Checkout flow - standard user", () => {
-  test.beforeEach(async ({ page, loginPage: _, productsPage }) => {
-    await expect.soft(page).toHaveURL(/.*inventory/);
+standardUser.describe("Checkout flow - standard user", () => {
+  standardUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+    await productsPage.expectUrlContains("inventory");
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
 
-  test("should show “Basket is empty” popup when trying to proceed with empty cart --> BUG: popup not exits", async ({
+  standardUser("should show “Basket is empty” popup when trying to proceed with empty cart --> BUG: popup not exits", async ({
     page,
     productsPage,
     cartPage,
@@ -27,7 +27,7 @@ test.describe("Checkout flow - standard user", () => {
     });
   });
 
-  test("should support navigation between checkout steps using goBack and goForward", async ({
+  standardUser("should support navigation between checkout steps using goBack and goForward", async ({
     productsPage,
     checkoutPage,
     cartPage,
@@ -74,7 +74,7 @@ test.describe("Checkout flow - standard user", () => {
       .toHaveText(CheckoutPageTexts.Step2Header);
   });
 
-  test("should support reload in checkout", async ({
+  standardUser("should support reload in checkout", async ({
     productsPage,
     checkoutPage,
     cartPage,
