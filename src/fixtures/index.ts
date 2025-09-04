@@ -1,9 +1,9 @@
 
 import { test as loginTest, expect } from "./login-fixture";
-import { productsFixtures } from "./products-fixture";
-import { aboutFixtures } from "./about-fixture";
-import { cartFixtures } from "./cart-fixture";
-import { checkoutFixtures } from "./checkout-fixture";
+import { productsFixtures } from "./pages-fixtures";
+import { aboutFixtures } from "./pages-fixtures";
+import { cartFixtures } from "./pages-fixtures";
+import { checkoutFixtures } from "./pages-fixtures";
 
 import type { UserCredentials } from "./login-fixture";
 import { env } from "@utils/env-utils";

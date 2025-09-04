@@ -10,18 +10,22 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fixtures": ["src/fixtures/index.ts"],
+      "@fixtures": ["src/fixtures"],
       "@fixtures/*": ["src/fixtures/*"],
 
-      "@pages": ["src/pages/index.ts"],
+      "@pages": ["src/pages"],
       "@pages/*": ["src/pages/*"],
 
-      "@utils": ["src/utils/index.ts"],
+      "@utils": ["src/utils"],
       "@utils/*": ["src/utils/*"],
 
       "@typings/*": ["src/types/*"],
       "@data/*": ["src/data/*"]
     }
   },
-  "include": ["src/**/*.ts", "playwright.config.ts"]
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts",
+    "playwright.config.ts"
+  ]
 }
