@@ -21,7 +21,7 @@ problemUser.describe("Checkout flow - problem user", () => {
   });
 
   problemUser(
-    "should add 2 items and complete checkout successfully --> BUG: unable to type in the last name field",
+    "should add 2 items and complete checkout successfully --> BUG: unable to type in the last name field @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -122,7 +122,7 @@ problemUser.describe("Checkout flow - problem user", () => {
   );
 
   problemUser(
-    "should add 2 items from product details pages, and complete checkout successfully --> BUG: unable to add item from the product details page",
+    "should add 2 items from product details pages, and complete checkout successfully --> BUG: unable to add item from the product details page @regression",
     async ({ productsPage, cartPage, checkoutPage }) => {
       await productsPage.clickProductByName(ProductNames.Backpack);
       await productsPage.addToCartFromProjectDetails();
@@ -226,7 +226,7 @@ errorUser.describe("Checkout flow - error user", () => {
   });
 
   errorUser(
-    "should add 2 items and complete checkout successfully --> BUG: unable to click the finish button",
+    "should add 2 items and complete checkout successfully --> BUG: unable to click the finish button @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -327,7 +327,7 @@ errorUser.describe("Checkout flow - error user", () => {
   );
 
   errorUser(
-    "should remove one item after continuing shopping, then complete checkout --> BUG: unable to click the remove and finish button",
+    "should remove one item after continuing shopping, then complete checkout --> BUG: unable to click the remove and finish button @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -443,7 +443,7 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
   });
 
   performanceGlitchUser(
-    "should remove one item after continuing shopping, then complete checkout --> BUG: continue shopping takes more than 1.5s",
+    "should remove one item after continuing shopping, then complete checkout --> BUG: continue shopping takes more than 1.5s @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -556,7 +556,7 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
   );
 
   performanceGlitchUser(
-    "should cancel on the overview page, return to inventory, and preserve items --> BUG: cancel takes more than 1.5s",
+    "should cancel on the overview page, return to inventory, and preserve items --> BUG: cancel takes more than 1.5s @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -623,7 +623,7 @@ visualUser.describe("Checkout flow - visual user", () => {
   });
 
   visualUser(
-    "should add 2 items and complete checkout successfully --> BUGS: incorrect price in the inventory, and forbidden class on the checkout button",
+    "should add 2 items and complete checkout successfully --> BUGS: incorrect price in the inventory, and forbidden class on the checkout button @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);

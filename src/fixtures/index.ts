@@ -1,4 +1,3 @@
-
 import { test as loginTest, expect } from "./login-fixture";
 import { productsFixtures } from "./pages-fixtures";
 import { aboutFixtures } from "./pages-fixtures";
@@ -8,7 +7,6 @@ import { checkoutFixtures } from "./pages-fixtures";
 import type { UserCredentials } from "./login-fixture";
 import { env } from "@utils/env-utils";
 import type { MyFixtures } from "@typings/fixtures";
-
 
 export const test = loginTest.extend<MyFixtures>({
   ...productsFixtures,

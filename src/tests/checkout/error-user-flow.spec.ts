@@ -22,7 +22,7 @@ problemUser.describe("Checkout flow - problem user", () => {
 
   problemUser(
     "should add 2 items and complete checkout successfully --> BUG: unable to type in the last name field",
-    async ({  productsPage, checkoutPage, cartPage }) => {
+    async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
       const badge = await productsPage.waitForCartBadge();
@@ -123,7 +123,7 @@ problemUser.describe("Checkout flow - problem user", () => {
 
   problemUser(
     "should add 2 items from product details pages, and complete checkout successfully --> BUG: unable to add item from the product details page",
-    async ({  productsPage, cartPage, checkoutPage }) => {
+    async ({ productsPage, cartPage, checkoutPage }) => {
       await productsPage.clickProductByName(ProductNames.Backpack);
       await productsPage.addToCartFromProjectDetails();
       const inventoryPriceBP = await productsPage.getProductPriceByName(
@@ -220,7 +220,7 @@ problemUser.describe("Checkout flow - problem user", () => {
 // I didn’t repeat all the same tests for the error user as for the standard user to reduce the amount of code to review.
 // Most of them fail the same way for this user — the bug is that the finish button can not be clicked.
 errorUser.describe("Checkout flow - error user", () => {
-  errorUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+  errorUser.beforeEach(async ({ loginPage: _, productsPage }) => {
     await productsPage.expectUrlContains("inventory");
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
@@ -328,7 +328,7 @@ errorUser.describe("Checkout flow - error user", () => {
 
   errorUser(
     "should remove one item after continuing shopping, then complete checkout --> BUG: unable to click the remove and finish button",
-    async ({  productsPage, checkoutPage, cartPage }) => {
+    async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
       const badge = await productsPage.waitForCartBadge();
@@ -437,12 +437,10 @@ errorUser.describe("Checkout flow - error user", () => {
 // I didn’t repeat all the same tests for the glitch user as for the standard user to reduce the amount of code to review.
 // I only included the cases where the glitch bug actually occurs (see below).
 performanceGlitchUser.describe("Checkout flow - glitch user", () => {
-  performanceGlitchUser.beforeEach(
-    async ({ loginPage: _, productsPage }) => {
-      await productsPage.expectUrlContains("inventory");
-      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
-    },
-  );
+  performanceGlitchUser.beforeEach(async ({ loginPage: _, productsPage }) => {
+    await productsPage.expectUrlContains("inventory");
+    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
+  });
 
   performanceGlitchUser(
     "should remove one item after continuing shopping, then complete checkout --> BUG: continue shopping takes more than 1.5s",
@@ -559,7 +557,7 @@ performanceGlitchUser.describe("Checkout flow - glitch user", () => {
 
   performanceGlitchUser(
     "should cancel on the overview page, return to inventory, and preserve items --> BUG: cancel takes more than 1.5s",
-    async ({  productsPage, checkoutPage, cartPage }) => {
+    async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
       const badge = await productsPage.waitForCartBadge();

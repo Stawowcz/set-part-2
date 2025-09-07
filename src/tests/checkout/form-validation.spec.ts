@@ -8,11 +8,10 @@ import {
   CheckoutPageErrorMessages,
 } from "@typings/checkout/";
 
-
 test.describe("Negative scenario – error handling in the checkout personal information form", () => {
   standardUser(
     "should display an error message in the checkout personal information form - standard user",
-    async ({  loginPage: _, productsPage, checkoutPage, cartPage }) => {
+    async ({ loginPage: _, productsPage, checkoutPage, cartPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
 
@@ -73,7 +72,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
 
   errorUser(
     "should display an error message in the checkout personal information form - error user --> BUG: unable to type in the last name field",
-    async ({  loginPage: _, productsPage, checkoutPage, cartPage }) => {
+    async ({ loginPage: _, productsPage, checkoutPage, cartPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
 
@@ -134,7 +133,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
 
   problemUser(
     "should display an error message in the checkout personal information form - problem user --> BUG: unable to type in the last name field – input overwrites first name instead",
-    async ({  loginPage: _, productsPage, checkoutPage, cartPage }) => {
+    async ({ loginPage: _, productsPage, checkoutPage, cartPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
 

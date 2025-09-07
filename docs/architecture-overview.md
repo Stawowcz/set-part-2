@@ -24,9 +24,9 @@ project-root/
 
 Tests are executed with the Playwright Test Runner and custom fixtures:
 
--  for per-test setup via fixtures (e.g., logging in with different user types).
--  to group related scenarios.
--  allows continuing after soft assertion failures to collect multiple errors.
+- for per-test setup via fixtures (e.g., logging in with different user types).
+- to group related scenarios.
+- allows continuing after soft assertion failures to collect multiple errors.
 - **Custom fixtures** (`login-fixture.ts`, `products-fixture.ts`, `about-fixture.ts`, `cart-fixture.ts`, `checkout-fixture.ts`) expose page objects and utilities directly into test callbacks.
 
 **Example test for an "incorrect user":**
@@ -105,15 +105,15 @@ export type EnvVars = {
 };
 
 // src/utils/env-utils.ts
-import type { EnvVars } from '@types/env-types';
+import type { EnvVars } from "@types/env-types";
 export const env = process.env as unknown as EnvVars;
 ```
 
 `checkout-data.ts`: Generates realistic form data using Faker:
 
 ```ts
-import { faker } from '@faker-js/faker';
-import type { CheckoutFormData } from '../types';
+import { faker } from "@faker-js/faker";
+import type { CheckoutFormData } from "../types";
 
 export function generateCheckoutData(): CheckoutFormData {
   return {
@@ -185,7 +185,7 @@ export const aboutFixtures = {
 };
 ```
 
-````ts
+```ts
 import { test as loginTest, expect } from "./login-fixture";
 import { productsFixtures } from "./products-fixture";
 import { aboutFixtures } from "./about-fixture";
@@ -233,7 +233,7 @@ export const standardUser = test.extend<{
   },
 });
 // ... other user fixtures: lockedUser, incorrectUser, problemUser, performanceGlitchUser, errorUser, visualUser
-````
+```
 
 ## 10. Playwright Configuration (`playwright.config.ts`)
 
@@ -269,8 +269,8 @@ export default defineConfig({
 
   projects: [
     { name: "Chromium", use: { ...devices["Desktop Chrome"] } },
-    { name: "Firefox",  use: { ...devices["Desktop Firefox"] } },
-    { name: "WebKit",   use: { ...devices["Desktop Safari"] } },
+    { name: "Firefox", use: { ...devices["Desktop Firefox"] } },
+    { name: "WebKit", use: { ...devices["Desktop Safari"] } },
   ],
 
   fullyParallel: true,
@@ -329,4 +329,3 @@ This framework provides a scalable, maintainable foundation for E2E testing:
 - Typed enums environment variables
 - Dynamic test data via Faker
 - Comprehensive reporting and CI/CD integration
-

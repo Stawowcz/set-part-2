@@ -13,7 +13,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   });
 
   standardUser(
-    "Should navigate back to products page after order completion",
+    "Should navigate back to products page after order completion @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       const badge = await productsPage.waitForCartBadge();
@@ -59,7 +59,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   );
 
   standardUser(
-    "Should navigate to product detail page when clicking product link in checkout",
+    "Should navigate to product detail page when clicking product link in checkout @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       const badge = await productsPage.waitForCartBadge();
@@ -97,7 +97,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   );
 
   standardUser(
-    "Should navigate to product detail page when clicking product link in cart",
+    "Should navigate to product detail page when clicking product link in cart @regression",
     async ({ productsPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       const badge = await productsPage.waitForCartBadge();

@@ -15,49 +15,61 @@ standardUser.describe("Filters - different users", () => {
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    standardUser("should sort A --> Z", async ({ productsPage }) => {
-      const start = Date.now();
-      await productsPage.sortDropdown.selectOption("az");
-      const names = await productsPage.getAllProductTitles.allTextContents();
-      const filterDuration = Date.now() - start;
+    standardUser(
+      "should sort A --> Z @regression",
+      async ({ productsPage }) => {
+        const start = Date.now();
+        await productsPage.sortDropdown.selectOption("az");
+        const names = await productsPage.getAllProductTitles.allTextContents();
+        const filterDuration = Date.now() - start;
 
-      expect.soft(filterDuration).toBeLessThanOrEqual(1500);
-      expect.soft(names).toEqual([...names].sort());
-    });
+        expect.soft(filterDuration).toBeLessThanOrEqual(1500);
+        expect.soft(names).toEqual([...names].sort());
+      },
+    );
 
-    standardUser("should sort Z --> A", async ({ productsPage }) => {
-      const start = Date.now();
-      await productsPage.sortDropdown.selectOption("za");
-      const names = await productsPage.getAllProductTitles.allTextContents();
-      const filterDuration = Date.now() - start;
+    standardUser(
+      "should sort Z --> A @regression",
+      async ({ productsPage }) => {
+        const start = Date.now();
+        await productsPage.sortDropdown.selectOption("za");
+        const names = await productsPage.getAllProductTitles.allTextContents();
+        const filterDuration = Date.now() - start;
 
-      expect.soft(filterDuration).toBeLessThanOrEqual(1500);
-      expect.soft(names).toEqual([...names].sort().reverse());
-    });
+        expect.soft(filterDuration).toBeLessThanOrEqual(1500);
+        expect.soft(names).toEqual([...names].sort().reverse());
+      },
+    );
 
-    standardUser("should sort price low --> high", async ({ productsPage }) => {
-      const start = Date.now();
-      await productsPage.sortDropdown.selectOption("lohi");
-      const prices = (
-        await productsPage.getAllProductPrices.allTextContents()
-      ).map((p) => parseFloat(p.replace("$", "")));
-      const filterDuration = Date.now() - start;
+    standardUser(
+      "should sort price low --> high @regression",
+      async ({ productsPage }) => {
+        const start = Date.now();
+        await productsPage.sortDropdown.selectOption("lohi");
+        const prices = (
+          await productsPage.getAllProductPrices.allTextContents()
+        ).map((p) => parseFloat(p.replace("$", "")));
+        const filterDuration = Date.now() - start;
 
-      expect.soft(filterDuration).toBeLessThanOrEqual(1500);
-      expect.soft(prices).toEqual([...prices].sort((a, b) => a - b));
-    });
+        expect.soft(filterDuration).toBeLessThanOrEqual(1500);
+        expect.soft(prices).toEqual([...prices].sort((a, b) => a - b));
+      },
+    );
 
-    standardUser("should sort price high --> low", async ({ productsPage }) => {
-      const start = Date.now();
-      await productsPage.sortDropdown.selectOption("hilo");
-      const prices = (
-        await productsPage.getAllProductPrices.allTextContents()
-      ).map((p) => parseFloat(p.replace("$", "")));
-      const filterDuration = Date.now() - start;
+    standardUser(
+      "should sort price high --> low @regression",
+      async ({ productsPage }) => {
+        const start = Date.now();
+        await productsPage.sortDropdown.selectOption("hilo");
+        const prices = (
+          await productsPage.getAllProductPrices.allTextContents()
+        ).map((p) => parseFloat(p.replace("$", "")));
+        const filterDuration = Date.now() - start;
 
-      expect.soft(filterDuration).toBeLessThanOrEqual(1500);
-      expect.soft(prices).toEqual([...prices].sort((a, b) => b - a));
-    });
+        expect.soft(filterDuration).toBeLessThanOrEqual(1500);
+        expect.soft(prices).toEqual([...prices].sort((a, b) => b - a));
+      },
+    );
   });
 
   problemUser.describe("Filters - problem user", () => {
@@ -66,7 +78,7 @@ standardUser.describe("Filters - different users", () => {
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    problemUser("should sort A --> Z", async ({ productsPage }) => {
+    problemUser("should sort A --> Z @regression", async ({ productsPage }) => {
       const start = Date.now();
       await productsPage.sortDropdown.selectOption("az");
       const names = await productsPage.getAllProductTitles.allTextContents();
@@ -77,7 +89,7 @@ standardUser.describe("Filters - different users", () => {
     });
 
     problemUser(
-      "should sort Z --> A --> BUG: sorting order incorrect",
+      "should sort Z --> A --> BUG: sorting order incorrect @regression",
       async ({ productsPage }) => {
         const start = Date.now();
         await productsPage.sortDropdown.selectOption("za");
@@ -90,7 +102,7 @@ standardUser.describe("Filters - different users", () => {
     );
 
     problemUser(
-      "should sort price low --> high --> BUG: sorting order incorrect",
+      "should sort price low --> high --> BUG: sorting order incorrect @regression",
       async ({ productsPage }) => {
         const start = Date.now();
         await productsPage.sortDropdown.selectOption("lohi");
@@ -105,7 +117,7 @@ standardUser.describe("Filters - different users", () => {
     );
 
     problemUser(
-      "should sort price high --> low --> BUG: sorting order incorrect",
+      "should sort price high --> low --> BUG: sorting order incorrect @regression",
       async ({ productsPage }) => {
         const start = Date.now();
         await productsPage.sortDropdown.selectOption("hilo");
@@ -126,7 +138,7 @@ standardUser.describe("Filters - different users", () => {
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    errorUser("should sort A --> Z", async ({ productsPage }) => {
+    errorUser("should sort A --> Z @regression", async ({ productsPage }) => {
       const start = Date.now();
       await productsPage.sortDropdown.selectOption("az");
       const names = await productsPage.getAllProductTitles.allTextContents();
@@ -137,7 +149,7 @@ standardUser.describe("Filters - different users", () => {
     });
 
     errorUser(
-      "should sort Z --> A --> BUG: sorting order incorrect",
+      "should sort Z --> A --> BUG: sorting order incorrect @regression",
       async ({ productsPage }) => {
         const start = Date.now();
         await productsPage.sortDropdown.selectOption("za");
@@ -150,7 +162,7 @@ standardUser.describe("Filters - different users", () => {
     );
 
     errorUser(
-      "should sort price low --> high --> BUG: sorting order incorrect",
+      "should sort price low --> high --> BUG: sorting order incorrect @regression",
       async ({ productsPage }) => {
         const start = Date.now();
         await productsPage.sortDropdown.selectOption("lohi");
@@ -165,7 +177,7 @@ standardUser.describe("Filters - different users", () => {
     );
 
     errorUser(
-      "should sort price high --> low --> BUG: sorting order incorrect",
+      "should sort price high --> low --> BUG: sorting order incorrect @regression",
       async ({ productsPage }) => {
         const start = Date.now();
         await productsPage.sortDropdown.selectOption("hilo");
@@ -186,7 +198,7 @@ standardUser.describe("Filters - different users", () => {
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
 
-    visualUser("should sort A --> Z", async ({ productsPage }) => {
+    visualUser("should sort A --> Z @regression", async ({ productsPage }) => {
       const start = Date.now();
       await productsPage.sortDropdown.selectOption("az");
       const names = await productsPage.getAllProductTitles.allTextContents();
@@ -196,7 +208,7 @@ standardUser.describe("Filters - different users", () => {
       expect.soft(names).toEqual([...names].sort());
     });
 
-    visualUser("should sort Z --> A", async ({ productsPage }) => {
+    visualUser("should sort Z --> A @regression", async ({ productsPage }) => {
       const start = Date.now();
       await productsPage.sortDropdown.selectOption("za");
       const names = await productsPage.getAllProductTitles.allTextContents();
@@ -207,7 +219,7 @@ standardUser.describe("Filters - different users", () => {
     });
 
     visualUser(
-      "should sort price low --> high --> BUG: sorting order incorrect",
+      "should sort price low --> high --> BUG: sorting order incorrect @regression",
       async ({ productsPage }) => {
         const start = Date.now();
         await productsPage.sortDropdown.selectOption("lohi");
@@ -222,7 +234,7 @@ standardUser.describe("Filters - different users", () => {
     );
 
     visualUser(
-      "should sort price high --> low --> BUG: sorting order incorrect",
+      "should sort price high --> low --> BUG: sorting order incorrect @regression",
       async ({ productsPage }) => {
         const start = Date.now();
         await productsPage.sortDropdown.selectOption("hilo");
@@ -244,7 +256,7 @@ standardUser.describe("Filters - different users", () => {
     });
 
     performanceGlitchUser(
-      "should sort items A --> Z --> BUG: sorting takes more than 1.5s",
+      "should sort items A --> Z --> BUG: sorting takes more than 1.5s @regression",
       async ({ productsPage }) => {
         const start = Date.now();
         await productsPage.sortDropdown.selectOption("az");
@@ -257,7 +269,7 @@ standardUser.describe("Filters - different users", () => {
     );
 
     performanceGlitchUser(
-      "should sort Z --> A  --> BUG: sorting takes more than 1.5s",
+      "should sort Z --> A  --> BUG: sorting takes more than 1.5s @regression",
       async ({ productsPage }) => {
         const start = Date.now();
         await productsPage.sortDropdown.selectOption("za");
@@ -270,7 +282,7 @@ standardUser.describe("Filters - different users", () => {
     );
 
     performanceGlitchUser(
-      "should sort price low --> high --> BUG: sorting takes more than 1.5s",
+      "should sort price low --> high --> BUG: sorting takes more than 1.5s @regression",
       async ({ productsPage }) => {
         const start = Date.now();
         await productsPage.sortDropdown.selectOption("lohi");
@@ -285,7 +297,7 @@ standardUser.describe("Filters - different users", () => {
     );
 
     performanceGlitchUser(
-      "should sort price high --> low --> BUG: sorting takes more than 1.5s",
+      "should sort price high --> low --> BUG: sorting takes more than 1.5s @regression",
       async ({ productsPage }) => {
         const start = Date.now();
         await productsPage.sortDropdown.selectOption("hilo");

@@ -1,1 +1,1 @@
-export { MyFixtures } from './fixtures-types';
+export { MyFixtures } from "./fixtures-types";

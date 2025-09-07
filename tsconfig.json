@@ -23,9 +23,5 @@
       "@data/*": ["src/data/*"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "tests/**/*.ts",
-    "playwright.config.ts"
-  ]
+  "include": ["src/**/*.ts", "tests/**/*.ts", "playwright.config.ts"]
 }

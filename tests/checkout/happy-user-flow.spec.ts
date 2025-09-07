@@ -13,7 +13,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   });
 
   standardUser(
-    "should add 2 items and complete checkout successfully",
+    "should add 2 items and complete checkout successfully @smoke @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -107,7 +107,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   );
 
   standardUser(
-    "should remove one item after continuing shopping, then complete checkout",
+    "should remove one item after continuing shopping, then complete checkout @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -212,7 +212,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   );
 
   standardUser(
-    "should add 2 items, start checkout, cancel, return to cart, verify item count, then complete checkout",
+    "should add 2 items, start checkout, cancel, return to cart, verify item count, then complete checkout @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -321,7 +321,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   );
 
   standardUser(
-    "should cancel on the overview page, return to inventory, and preserve items",
+    "should cancel on the overview page, return to inventory, and preserve items @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -379,7 +379,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   );
 
   standardUser(
-    "should add 2 items, delete 1 from cart, verify count, and complete checkout",
+    "should add 2 items, delete 1 from cart, verify count, and complete checkout @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -484,7 +484,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   );
 
   standardUser(
-    "should add 2 items from product details pages, and complete checkout successfully",
+    "should add 2 items from product details pages, and complete checkout successfully @regression",
     async ({ productsPage, cartPage, checkoutPage }) => {
       await productsPage.clickProductByName(ProductNames.Backpack);
       await productsPage.addToCartFromProjectDetails();
@@ -579,7 +579,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   );
 
   standardUser(
-    "should add all products, complete checkout, and verify app is reset",
+    "should add all products, complete checkout, and verify app is reset @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       const productIds = [
         ProductPageItemIds.Backpack,
@@ -690,7 +690,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   );
 
   standardUser(
-    "should add all products from detail page, complete checkout, and verify app is reset",
+    "should add all products from detail page, complete checkout, and verify app is reset @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       const productIds = [
         ProductPageItemIds.Backpack,

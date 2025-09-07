@@ -10,7 +10,7 @@ import { ProductsPageTexts } from "@typings/products";
 
 standardUser.describe("Filters - different users", () => {
   standardUser.describe("Filters - standard user", () => {
-    standardUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+    standardUser.beforeEach(async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
@@ -61,7 +61,7 @@ standardUser.describe("Filters - different users", () => {
   });
 
   problemUser.describe("Filters - problem user", () => {
-    problemUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+    problemUser.beforeEach(async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
@@ -121,7 +121,7 @@ standardUser.describe("Filters - different users", () => {
   });
 
   errorUser.describe("Filters - error user", () => {
-    errorUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+    errorUser.beforeEach(async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
@@ -181,7 +181,7 @@ standardUser.describe("Filters - different users", () => {
   });
 
   visualUser.describe("Filters - visual user", () => {
-    visualUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+    visualUser.beforeEach(async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
@@ -238,14 +238,10 @@ standardUser.describe("Filters - different users", () => {
   });
 
   performanceGlitchUser.describe("Filters - glitch user", () => {
-    performanceGlitchUser.beforeEach(
-      async ({  loginPage: _, productsPage }) => {
-        await productsPage.expectUrlContains("inventory");
-        await expect
-          .soft(productsPage.title)
-          .toHaveText(ProductsPageTexts.Title);
-      },
-    );
+    performanceGlitchUser.beforeEach(async ({ loginPage: _, productsPage }) => {
+      await productsPage.expectUrlContains("inventory");
+      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
+    });
 
     performanceGlitchUser(
       "should sort items A --> Z --> BUG: sorting takes more than 1.5s",

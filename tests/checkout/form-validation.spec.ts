@@ -11,7 +11,7 @@ import { expect, test } from "@fixtures";
 
 test.describe("Negative scenario – error handling in the checkout personal information form", () => {
   standardUser(
-    "should display an error message in the checkout personal information form - standard user",
+    "should display an error message in the checkout personal information form - standard user @regression",
     async ({ loginPage: _, productsPage, checkoutPage, cartPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
@@ -72,7 +72,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
   );
 
   errorUser(
-    "should display an error message in the checkout personal information form - error user --> BUG: unable to type in the last name field",
+    "should display an error message in the checkout personal information form - error user --> BUG: unable to type in the last name field @regression",
     async ({ loginPage: _, productsPage, checkoutPage, cartPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
@@ -133,7 +133,7 @@ test.describe("Negative scenario – error handling in the checkout personal inf
   );
 
   problemUser(
-    "should display an error message in the checkout personal information form - problem user --> BUG: unable to type in the last name field – input overwrites first name instead",
+    "should display an error message in the checkout personal information form - problem user --> BUG: unable to type in the last name field – input overwrites first name instead @regression",
     async ({ loginPage: _, productsPage, checkoutPage, cartPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);

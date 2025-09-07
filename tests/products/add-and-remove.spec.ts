@@ -11,7 +11,7 @@ import { expect, test } from "@fixtures";
 
 test.describe("Add/Remove from cart - different users", () => {
   standardUser(
-    "should add and remove items from cart - standard user",
+    "should add and remove items from cart - standard user @smoke @regression",
     async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
@@ -48,7 +48,7 @@ test.describe("Add/Remove from cart - different users", () => {
   );
 
   problemUser(
-    "should add and remove items from cart - problem user --> BUG: some items cannot be added or removed",
+    "should add and remove items from cart - problem user --> BUG: some items cannot be added or removed @regression",
     async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
@@ -85,7 +85,7 @@ test.describe("Add/Remove from cart - different users", () => {
   );
 
   errorUser(
-    "should add and remove items from cart - error user --> BUG: some items cannot be added or removed",
+    "should add and remove items from cart - error user --> BUG: some items cannot be added or removed @regression",
     async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
@@ -122,7 +122,7 @@ test.describe("Add/Remove from cart - different users", () => {
   );
 
   visualUser(
-    "should add and remove items from cart - visual user --> BUG: some items cannot be added or removed",
+    "should add and remove items from cart - visual user --> BUG: some items cannot be added or removed @regression",
     async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
@@ -159,7 +159,7 @@ test.describe("Add/Remove from cart - different users", () => {
   );
 
   standardUser(
-    "should remove item from cart on the details page - standard user",
+    "should remove item from cart on the details page - standard user @regression",
     async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
@@ -212,7 +212,7 @@ test.describe("Add/Remove from cart - different users", () => {
   );
 
   performanceGlitchUser(
-    "should remove item from cart on the details page - glitch user --> BUG: back navigation takes more than 1.5s",
+    "should remove item from cart on the details page - glitch user --> BUG: back navigation takes more than 1.5s @regression",
     async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
@@ -269,7 +269,7 @@ test.describe("Increment items - different users", () => {
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
   standardUser(
-    "should increment cart count when adding items and complete checkout - standard user",
+    "should increment cart count when adding items and complete checkout - standard user @regression",
     async ({ productsPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       const badge = await productsPage.waitForCartBadge();
@@ -287,7 +287,7 @@ test.describe("Increment items - different users", () => {
     },
   );
   errorUser(
-    "should increment cart count when adding items and complete checkout - error user --> BUG: some items cannot be added or removed",
+    "should increment cart count when adding items and complete checkout - error user --> BUG: some items cannot be added or removed @regression",
     async ({ productsPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       const badge = await productsPage.waitForCartBadge();
@@ -305,7 +305,7 @@ test.describe("Increment items - different users", () => {
     },
   );
   visualUser(
-    "should increment cart count when adding items and complete checkout - visual user",
+    "should increment cart count when adding items and complete checkout - visual user @regression",
     async ({ productsPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       const badge = await productsPage.waitForCartBadge();

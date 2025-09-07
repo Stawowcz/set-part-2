@@ -6,7 +6,7 @@ import { ProductNames } from "@typings/common";
 standardUser.describe(
   "Products - content and style checks - standard user",
   () => {
-    standardUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+    standardUser.beforeEach(async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
     });
@@ -93,7 +93,7 @@ standardUser.describe(
 );
 
 visualUser.describe("Products - content and style checks - visual user", () => {
-  visualUser.beforeEach(async ({  loginPage: _, productsPage }) => {
+  visualUser.beforeEach(async ({ loginPage: _, productsPage }) => {
     await productsPage.expectUrlContains("inventory");
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });
@@ -176,60 +176,69 @@ visualUser.describe("Products - content and style checks - visual user", () => {
   );
 });
 
-standardUser.describe("Price consistency between users on inventory page", () => {
-  standardUser.beforeEach(async ({  loginPage: _, productsPage }) => {
-    await productsPage.expectUrlContains("inventory");
-    await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
-  });
+standardUser.describe(
+  "Price consistency between users on inventory page",
+  () => {
+    standardUser.beforeEach(async ({ loginPage: _, productsPage }) => {
+      await productsPage.expectUrlContains("inventory");
+      await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
+    });
 
-  standardUser("should compare product prices for standard, problem, and error users", async ({
-    loginPage,
-    productsPage,
-  }) => {
-    const productNames = [
-      ProductNames.Backpack,
-      ProductNames.BikeLight,
-      ProductNames.BoltTShirt,
-      ProductNames.FleeceJacket,
-      ProductNames.Onesie,
-      ProductNames.RedTShirt,
-    ];
+    standardUser(
+      "should compare product prices for standard, problem, and error users",
+      async ({ loginPage, productsPage }) => {
+        const productNames = [
+          ProductNames.Backpack,
+          ProductNames.BikeLight,
+          ProductNames.BoltTShirt,
+          ProductNames.FleeceJacket,
+          ProductNames.Onesie,
+          ProductNames.RedTShirt,
+        ];
 
-    const standardPrices: number[] = [];
-    const problemPrices: number[] = [];
-    const errorPrices: number[] = [];
+        const standardPrices: number[] = [];
+        const problemPrices: number[] = [];
+        const errorPrices: number[] = [];
 
-    for (const name of productNames) {
-      const price = await productsPage.getProductPriceByName(name);
-      standardPrices.push(price);
-    }
+        for (const name of productNames) {
+          const price = await productsPage.getProductPriceByName(name);
+          standardPrices.push(price);
+        }
 
-    await productsPage.openMenu();
-    await productsPage.clickLogout();
+        await productsPage.openMenu();
+        await productsPage.clickLogout();
 
-    await loginPage.login(env.SAUCE_DEMO_PROBLEM_USER, env.SAUCE_DEMO_PASSWORD);
+        await loginPage.login(
+          env.SAUCE_DEMO_PROBLEM_USER,
+          env.SAUCE_DEMO_PASSWORD,
+        );
 
-    for (const name of productNames) {
-      const price = await productsPage.getProductPriceByName(name);
-      problemPrices.push(price);
-    }
+        for (const name of productNames) {
+          const price = await productsPage.getProductPriceByName(name);
+          problemPrices.push(price);
+        }
 
-    await productsPage.openMenu();
-    await productsPage.clickLogout();
+        await productsPage.openMenu();
+        await productsPage.clickLogout();
 
-    await loginPage.login(env.SAUCE_DEMO_ERROR_USER, env.SAUCE_DEMO_PASSWORD);
+        await loginPage.login(
+          env.SAUCE_DEMO_ERROR_USER,
+          env.SAUCE_DEMO_PASSWORD,
+        );
 
-    for (const name of productNames) {
-      const price = await productsPage.getProductPriceByName(name);
-      errorPrices.push(price);
-    }
+        for (const name of productNames) {
+          const price = await productsPage.getProductPriceByName(name);
+          errorPrices.push(price);
+        }
 
-    for (let i = 0; i < productNames.length; i++) {
-      expect.soft(problemPrices[i]).toBeCloseTo(standardPrices[i], 2);
-    }
+        for (let i = 0; i < productNames.length; i++) {
+          expect.soft(problemPrices[i]).toBeCloseTo(standardPrices[i], 2);
+        }
 
-    for (let i = 0; i < productNames.length; i++) {
-      expect.soft(errorPrices[i]).toBeCloseTo(standardPrices[i], 2);
-    }
-  });
-});
+        for (let i = 0; i < productNames.length; i++) {
+          expect.soft(errorPrices[i]).toBeCloseTo(standardPrices[i], 2);
+        }
+      },
+    );
+  },
+);

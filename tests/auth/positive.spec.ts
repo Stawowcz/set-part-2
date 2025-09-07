@@ -5,7 +5,7 @@ import { env } from "@utils";
 
 test.describe("Positive scenarios – authentication with different users", () => {
   standardUser(
-    "should log in - standard user",
+    "should log in - standard user @smoke @regression",
     async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect
@@ -17,7 +17,7 @@ test.describe("Positive scenarios – authentication with different users", () =
   );
 
   lockedUser(
-    "should log in – locked out user --> BUG: user is locked",
+    "should log in – locked out user --> BUG: user is locked @regression",
     async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect
@@ -28,7 +28,7 @@ test.describe("Positive scenarios – authentication with different users", () =
     },
   );
 
-  test("should log in - glitch user --> BUG: login takes longer than 1.5s", async ({
+  test("should log in - glitch user --> BUG: login takes longer than 1.5s @regression", async ({
     loginPage,
     productsPage,
   }) => {

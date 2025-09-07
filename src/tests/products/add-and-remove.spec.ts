@@ -13,7 +13,7 @@ import { ProductPageItemIds, ProductsPageTexts } from "@typings/products";
 test.describe("Add/Remove from cart - different users", () => {
   standardUser(
     "should add and remove items from cart - standard user",
-    async ({  loginPage: _, productsPage }) => {
+    async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
       await expect
@@ -50,7 +50,7 @@ test.describe("Add/Remove from cart - different users", () => {
 
   problemUser(
     "should add and remove items from cart - problem user --> BUG: some items cannot be added or removed",
-    async ({  loginPage: _, productsPage }) => {
+    async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
       await expect
@@ -87,7 +87,7 @@ test.describe("Add/Remove from cart - different users", () => {
 
   errorUser(
     "should add and remove items from cart - error user --> BUG: some items cannot be added or removed",
-    async ({  loginPage: _, productsPage }) => {
+    async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
       await expect
@@ -124,7 +124,7 @@ test.describe("Add/Remove from cart - different users", () => {
 
   visualUser(
     "should add and remove items from cart - visual user --> BUG: some items cannot be added or removed",
-    async ({  loginPage: _, productsPage }) => {
+    async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
       await expect
@@ -161,7 +161,7 @@ test.describe("Add/Remove from cart - different users", () => {
 
   standardUser(
     "should remove item from cart on the details page - standard user",
-    async ({  loginPage: _, productsPage }) => {
+    async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
       await expect
@@ -214,7 +214,7 @@ test.describe("Add/Remove from cart - different users", () => {
 
   performanceGlitchUser(
     "should remove item from cart on the details page - glitch user --> BUG: back navigation takes more than 1.5s",
-    async ({  loginPage: _, productsPage }) => {
+    async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
       await expect
@@ -265,7 +265,7 @@ test.describe("Add/Remove from cart - different users", () => {
 });
 
 test.describe("Increment items - different users", () => {
-  test.beforeEach(async ({  loginPage: _, productsPage }) => {
+  test.beforeEach(async ({ loginPage: _, productsPage }) => {
     await productsPage.expectUrlContains("inventory");
     await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
   });

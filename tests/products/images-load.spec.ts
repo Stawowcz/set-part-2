@@ -5,7 +5,7 @@ import { expect, test } from "@fixtures";
 
 test.describe("Images loading - different users", () => {
   standardUser(
-    "should load images correctly on the product page - standard user",
+    "should load images correctly on the product page - standard user @regression",
     async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
@@ -30,7 +30,7 @@ test.describe("Images loading - different users", () => {
   );
 
   problemUser(
-    "should load images correctly on the product page - problem user --> BUG: dogs everywhere",
+    "should load images correctly on the product page - problem user --> BUG: dogs everywhere @regression",
     async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);
@@ -55,7 +55,7 @@ test.describe("Images loading - different users", () => {
   );
 
   visualUser(
-    "should load images correctly on the product page - visual user --> BUG: dogs in one place",
+    "should load images correctly on the product page - visual user --> BUG: dogs in one place @regression",
     async ({ loginPage: _, productsPage }) => {
       await productsPage.expectUrlContains("inventory");
       await expect.soft(productsPage.title).toHaveText(ProductsPageTexts.Title);

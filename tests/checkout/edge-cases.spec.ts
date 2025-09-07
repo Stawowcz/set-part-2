@@ -12,7 +12,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   });
 
   standardUser(
-    "should show “Basket is empty” popup when trying to proceed with empty cart --> BUG: popup not exits",
+    "should show “Basket is empty” popup when trying to proceed with empty cart --> BUG: popup not exits @regression",
     async ({ page, productsPage, cartPage }) => {
       await productsPage.clickOnCartBasket();
 
@@ -28,7 +28,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   );
 
   standardUser(
-    "should support navigation between checkout steps using goBack and goForward",
+    "should support navigation between checkout steps using goBack and goForward @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       const badge = await productsPage.waitForCartBadge();
@@ -74,7 +74,7 @@ standardUser.describe("Checkout flow - standard user", () => {
   );
 
   standardUser(
-    "should support reload in checkout",
+    "should support reload in checkout @regression",
     async ({ productsPage, checkoutPage, cartPage }) => {
       await productsPage.addProductToCart(ProductPageItemIds.Backpack);
       const badge = await productsPage.waitForCartBadge();

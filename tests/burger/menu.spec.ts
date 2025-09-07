@@ -15,7 +15,7 @@ standardUser.describe(
       });
 
       standardUser(
-        "should navigate to Saucelabs in the same tab when clicking 'About'",
+        "should navigate to Saucelabs in the same tab when clicking 'About' @regression",
         async ({ page, productsPage, aboutPage }) => {
           await productsPage.openMenu();
 
@@ -30,7 +30,7 @@ standardUser.describe(
       );
 
       standardUser(
-        "should navigate to login page after clicking 'Logout'",
+        "should navigate to login page after clicking 'Logout' @regression",
         async ({ productsPage }) => {
           await productsPage.openMenu();
 
@@ -42,24 +42,27 @@ standardUser.describe(
         },
       );
 
-      standardUser("should close burger menu", async ({ productsPage }) => {
-        await productsPage.openMenu();
+      standardUser(
+        "should close burger menu @regression",
+        async ({ productsPage }) => {
+          await productsPage.openMenu();
 
-        await expect.soft(productsPage.menuLogoutLink).toBeVisible();
-        await expect(productsPage.burgerMenu).toHaveAttribute(
-          "aria-hidden",
-          "false",
-        );
+          await expect.soft(productsPage.menuLogoutLink).toBeVisible();
+          await expect(productsPage.burgerMenu).toHaveAttribute(
+            "aria-hidden",
+            "false",
+          );
 
-        await productsPage.clickBurgerMenuCLoseButton();
+          await productsPage.clickBurgerMenuCLoseButton();
 
-        await expect(productsPage.burgerMenu).toHaveAttribute(
-          "aria-hidden",
-          "true",
-        );
+          await expect(productsPage.burgerMenu).toHaveAttribute(
+            "aria-hidden",
+            "true",
+          );
 
-        await expect.soft(productsPage.menuLogoutLink).not.toBeVisible();
-      });
+          await expect.soft(productsPage.menuLogoutLink).not.toBeVisible();
+        },
+      );
     });
 
     problemUser.describe("Burger menu scenarios - problem user", () => {
@@ -71,7 +74,7 @@ standardUser.describe(
       });
 
       problemUser(
-        "should navigate to Saucelabs in the same tab when clicking 'About' --> BUG: 404 page shown",
+        "should navigate to Saucelabs in the same tab when clicking 'About' --> BUG: 404 page shown @regression",
         async ({ page, productsPage, aboutPage }) => {
           await productsPage.openMenu();
 
@@ -86,7 +89,7 @@ standardUser.describe(
       );
 
       problemUser(
-        "should navigate to login page after clicking 'Logout'",
+        "should navigate to login page after clicking 'Logout' @regression",
         async ({ productsPage }) => {
           await productsPage.openMenu();
 
@@ -98,24 +101,27 @@ standardUser.describe(
         },
       );
 
-      problemUser("should close burger menu", async ({ productsPage }) => {
-        await productsPage.openMenu();
+      problemUser(
+        "should close burger menu @regression",
+        async ({ productsPage }) => {
+          await productsPage.openMenu();
 
-        await expect.soft(productsPage.menuLogoutLink).toBeVisible();
-        await expect(productsPage.burgerMenu).toHaveAttribute(
-          "aria-hidden",
-          "false",
-        );
+          await expect.soft(productsPage.menuLogoutLink).toBeVisible();
+          await expect(productsPage.burgerMenu).toHaveAttribute(
+            "aria-hidden",
+            "false",
+          );
 
-        await productsPage.clickBurgerMenuCLoseButton();
+          await productsPage.clickBurgerMenuCLoseButton();
 
-        await expect(productsPage.burgerMenu).toHaveAttribute(
-          "aria-hidden",
-          "true",
-        );
+          await expect(productsPage.burgerMenu).toHaveAttribute(
+            "aria-hidden",
+            "true",
+          );
 
-        await expect.soft(productsPage.menuLogoutLink).not.toBeVisible();
-      });
+          await expect.soft(productsPage.menuLogoutLink).not.toBeVisible();
+        },
+      );
     });
 
     errorUser.describe("Burger menu scenarios - error user", () => {
@@ -127,7 +133,7 @@ standardUser.describe(
       });
 
       errorUser(
-        "should navigate to Saucelabs in the same tab when clicking 'About'",
+        "should navigate to Saucelabs in the same tab when clicking 'About' @regression",
         async ({ page, productsPage, aboutPage }) => {
           await productsPage.openMenu();
 
@@ -142,7 +148,7 @@ standardUser.describe(
       );
 
       errorUser(
-        "should navigate to login page after clicking 'Logout'",
+        "should navigate to login page after clicking 'Logout' @regression",
         async ({ productsPage }) => {
           await productsPage.openMenu();
 
@@ -154,24 +160,27 @@ standardUser.describe(
         },
       );
 
-      errorUser("should close burger menu", async ({ productsPage }) => {
-        await productsPage.openMenu();
+      errorUser(
+        "should close burger menu @regression",
+        async ({ productsPage }) => {
+          await productsPage.openMenu();
 
-        await expect.soft(productsPage.menuLogoutLink).toBeVisible();
-        await expect(productsPage.burgerMenu).toHaveAttribute(
-          "aria-hidden",
-          "false",
-        );
+          await expect.soft(productsPage.menuLogoutLink).toBeVisible();
+          await expect(productsPage.burgerMenu).toHaveAttribute(
+            "aria-hidden",
+            "false",
+          );
 
-        await productsPage.clickBurgerMenuCLoseButton();
+          await productsPage.clickBurgerMenuCLoseButton();
 
-        await expect(productsPage.burgerMenu).toHaveAttribute(
-          "aria-hidden",
-          "true",
-        );
+          await expect(productsPage.burgerMenu).toHaveAttribute(
+            "aria-hidden",
+            "true",
+          );
 
-        await expect.soft(productsPage.menuLogoutLink).not.toBeVisible();
-      });
+          await expect.soft(productsPage.menuLogoutLink).not.toBeVisible();
+        },
+      );
     });
 
     standardUser.describe(
@@ -185,7 +194,7 @@ standardUser.describe(
         });
 
         standardUser(
-          "should reset cart, filters and buttons --> BUG: reset does not affect the state",
+          "should reset cart, filters and buttons --> BUG: reset does not affect the state @regression",
           async ({ productsPage }) => {
             await productsPage.addProductToCart(ProductPageItemIds.Backpack);
             await productsPage.addProductToCart(ProductPageItemIds.BikeLight);
@@ -250,7 +259,7 @@ standardUser.describe(
         });
 
         problemUser(
-          "sshould reset cart, filters and buttons --> BUG: reset does not affect the state",
+          "sshould reset cart, filters and buttons --> BUG: reset does not affect the state @regression",
           async ({ productsPage }) => {
             await productsPage.addProductToCart(ProductPageItemIds.Backpack);
             await productsPage.addProductToCart(ProductPageItemIds.BikeLight);

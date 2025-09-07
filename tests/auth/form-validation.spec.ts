@@ -6,7 +6,7 @@ incorrectUser.describe(
   "Negatvie scenarios - authentication with user using wrong credentials",
   () => {
     incorrectUser(
-      "should show error for incorrect username",
+      "should show error for incorrect username @smoke @regression",
       async ({ loginPage }) => {
         await expect.soft(loginPage.errorButton).toBeVisible();
         await expect
@@ -16,7 +16,7 @@ incorrectUser.describe(
     );
 
     incorrectPassword(
-      "should show error for incorrect password",
+      "should show error for incorrect password @smoke @regression",
       async ({ loginPage }) => {
         await expect.soft(loginPage.errorButton).toBeVisible();
         await expect
