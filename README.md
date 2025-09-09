@@ -65,3 +65,5 @@ Configured in `.github/workflows/playwright.yml` to:
   [`docs/documentation.md`](docs/architecture-overview.md)
 - Assumptions & Limitations:\
   [`docs/assumptions-limitations.md`](docs/assumptions-limitations.md)
+- Tests checklist:\
+  [`docs/test-checklist.md`](docs/test-checklist.md)
